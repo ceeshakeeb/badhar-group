@@ -16,8 +16,8 @@
   <style>
     body {
       font-family: 'Plus Jakarta Sans', sans-serif;
-      background-color: #1C1B1F;
-      color: #E6E1E5;
+      background-color: #E6EEF8;
+      color: #1F2937;
       margin: 0;
       height: 100%;
       overflow: hidden;
@@ -33,18 +33,28 @@
       -ms-overflow-style: none;
       scrollbar-width: none;
     }
-    /* Ambient Glow Effects */
-    .glow-card::after {
-      content: '';
-      position: absolute;
-      top: -10%;
-      right: -10%;
-      width: 140px;
-      height: 140px;
-      background: rgba(208, 188, 255, 0.08);
-      filter: blur(40px);
-      border-radius: 50%;
-      pointer-events: none;
+    /* Neumorphic shadow classes */
+    .neumorphic-card {
+      background: #E6EEF8 !important;
+      border-radius: 24px;
+      box-shadow: 6px 6px 14px #bccadf, -6px -6px 14px #ffffff !important;
+      border: 1px solid rgba(255,255,255,0.4) !important;
+    }
+    .neumorphic-inset {
+      background: #E6EEF8 !important;
+      border-radius: 14px;
+      box-shadow: inset 4px 4px 8px #bccadf, inset -4px -4px 8px #ffffff !important;
+      border: 1px solid rgba(255,255,255,0.2) !important;
+    }
+    .neumorphic-btn {
+      background: #E6EEF8 !important;
+      border-radius: 16px;
+      box-shadow: 4px 4px 10px #bccadf, -4px -4px 10px #ffffff !important;
+      transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+      border: 1px solid rgba(255,255,255,0.3) !important;
+    }
+    .neumorphic-btn:active, .neumorphic-btn-active {
+      box-shadow: inset 3px 3px 6px #bccadf, inset -3px -3px 6px #ffffff !important;
     }
     /* Active bottom nav indicator style */
     .nav-indicator {
@@ -57,7 +67,7 @@
       left: 25%;
       width: 50%;
       height: 3px;
-      background-color: #D0BCFF;
+      background-color: #FF5E3A;
       border-radius: 9999px;
     }
   </style>
@@ -65,37 +75,37 @@
 <body class="flex flex-col md:flex-row h-full">
 
   <!-- Desktop Navigation Sidebar -->
-  <aside class="hidden md:flex flex-col w-64 bg-[#2B2930] border-r border-[#49454F] px-4 py-6 justify-between shrink-0">
+  <aside class="hidden md:flex flex-col w-64 bg-[#E6EEF8] border-r border-[#BCCADF]/50 px-4 py-6 justify-between shrink-0">
     <div class="space-y-8">
       <!-- App Header -->
       <div class="px-3">
-        <span class="text-[#938F99] text-xs font-bold uppercase tracking-widest">BUSINESS DASHBOARD</span>
-        <h1 class="text-2xl font-bold text-white mt-1 heading-font">Badhar Business <span class="text-[#D0BCFF]">Group</span></h1>
+        <span class="text-[#4B5563] text-xs font-bold uppercase tracking-widest">BUSINESS DASHBOARD</span>
+        <h1 class="text-2xl font-bold text-[#1F2937] mt-1 heading-font">Badhar Business <span class="text-[#FF5E3A]">Group</span></h1>
       </div>
 
       <!-- Navigation Menus -->
-      <nav class="space-y-1">
-        <button onclick="switchScreen('dashboard')" id="aside-btn-dashboard" class="sidebar-link w-full flex items-center gap-4 px-4 py-3 rounded-2xl bg-[#49454F]/40 text-[#D0BCFF] font-semibold transition-all">
+      <nav class="space-y-2">
+        <button onclick="switchScreen('dashboard')" id="aside-btn-dashboard" class="sidebar-link w-full flex items-center gap-4 px-4 py-3 rounded-2xl neumorphic-inset text-[#FF5E3A] font-semibold transition-all">
           <span class="material-symbols-outlined">dashboard</span>
           Dashboard
         </button>
-        <button onclick="switchScreen('income')" id="aside-btn-income" class="sidebar-link w-full flex items-center gap-4 px-4 py-3 rounded-2xl text-[#938F99] hover:bg-[#49454F]/20 hover:text-white font-medium transition-all">
+        <button onclick="switchScreen('income')" id="aside-btn-income" class="sidebar-link w-full flex items-center gap-4 px-4 py-3 rounded-2xl text-[#4B5563] hover:bg-[#BCCADF]/30 hover:text-[#1F2937] font-medium transition-all">
           <span class="material-symbols-outlined">add_circle</span>
           Machinery Income
         </button>
-        <button onclick="switchScreen('expense')" id="aside-btn-expense" class="sidebar-link w-full flex items-center gap-4 px-4 py-3 rounded-2xl text-[#938F99] hover:bg-[#49454F]/20 hover:text-white font-medium transition-all">
+        <button onclick="switchScreen('expense')" id="aside-btn-expense" class="sidebar-link w-full flex items-center gap-4 px-4 py-3 rounded-2xl text-[#4B5563] hover:bg-[#BCCADF]/30 hover:text-[#1F2937] font-medium transition-all">
           <span class="material-symbols-outlined">remove_circle</span>
           Expenses Log
         </button>
-        <button onclick="switchScreen('machines')" id="aside-btn-machines" class="sidebar-link w-full flex items-center gap-4 px-4 py-3 rounded-2xl text-[#938F99] hover:bg-[#49454F]/20 hover:text-white font-medium transition-all">
+        <button onclick="switchScreen('machines')" id="aside-btn-machines" class="sidebar-link w-full flex items-center gap-4 px-4 py-3 rounded-2xl text-[#4B5563] hover:bg-[#BCCADF]/30 hover:text-[#1F2937] font-medium transition-all">
           <span class="material-symbols-outlined">construction</span>
           Machines & Rates
         </button>
-        <button onclick="switchScreen('reports')" id="aside-btn-reports" class="sidebar-link w-full flex items-center gap-4 px-4 py-3 rounded-2xl text-[#938F99] hover:bg-[#49454F]/20 hover:text-white font-medium transition-all">
+        <button onclick="switchScreen('reports')" id="aside-btn-reports" class="sidebar-link w-full flex items-center gap-4 px-4 py-3 rounded-2xl text-[#4B5563] hover:bg-[#BCCADF]/30 hover:text-[#1F2937] font-medium transition-all">
           <span class="material-symbols-outlined">analytics</span>
           Reports & Export
         </button>
-        <button onclick="switchScreen('settings')" id="aside-btn-settings" class="sidebar-link w-full flex items-center gap-4 px-4 py-3 rounded-2xl text-[#938F99] hover:bg-[#49454F]/20 hover:text-white font-medium transition-all">
+        <button onclick="switchScreen('settings')" id="aside-btn-settings" class="sidebar-link w-full flex items-center gap-4 px-4 py-3 rounded-2xl text-[#4B5563] hover:bg-[#BCCADF]/30 hover:text-[#1F2937] font-medium transition-all">
           <span class="material-symbols-outlined">settings</span>
           Data Settings
         </button>
@@ -103,40 +113,40 @@
     </div>
 
     <!-- User Profile and Sync Status -->
-    <div class="bg-[#1C1B1F] rounded-2xl p-4 border border-[#49454F]/50">
+    <div class="neumorphic-card p-4">
       <div class="flex items-center gap-3">
-        <div class="w-10 h-10 rounded-full bg-[#49454F] border border-[#938F99] flex items-center justify-center text-white font-bold">
+        <div class="w-10 h-10 rounded-full bg-[#E6EEF8] neumorphic-card flex items-center justify-center text-[#1F2937] font-bold">
           JD
         </div>
         <div>
-          <h4 class="text-sm font-semibold text-white">John Doe</h4>
-          <span class="text-xs text-[#938F99]">Operator Admin</span>
+          <h4 class="text-sm font-semibold text-[#1F2937]">John Doe</h4>
+          <span class="text-xs text-[#4B5563]">Operator Admin</span>
         </div>
       </div>
-      <div class="mt-3 pt-3 border-t border-[#49454F]/50 flex justify-between items-center text-xs">
-        <span class="flex items-center gap-1 text-[#BACF9E]">
-          <span class="w-2 h-2 rounded-full bg-[#BACF9E] animate-pulse"></span> Offline Synced
+      <div class="mt-3 pt-3 border-t border-[#BCCADF]/50 flex justify-between items-center text-xs">
+        <span class="flex items-center gap-1 text-[#10B981]">
+          <span class="w-2 h-2 rounded-full bg-[#10B981] animate-pulse"></span> Offline Synced
         </span>
-        <button onclick="triggerCloudSyncSim()" class="text-[#D0BCFF] font-semibold hover:underline">Sync now</button>
+        <button onclick="triggerCloudSyncSim()" class="text-[#FF5E3A] font-semibold hover:underline">Sync now</button>
       </div>
     </div>
   </aside>
 
   <!-- Main Content Container -->
-  <div class="flex-1 flex flex-col h-full overflow-hidden">
+  <div class="flex-1 flex flex-col h-full overflow-hidden bg-[#E6EEF8]">
     
     <!-- Top Mobile Header / App Bar -->
-    <header class="md:hidden px-6 pt-6 pb-4 flex justify-between items-center bg-[#1C1B1F] shrink-0">
+    <header class="md:hidden px-6 pt-6 pb-4 flex justify-between items-center bg-[#E6EEF8] border-b border-[#BCCADF]/30 shrink-0">
       <div class="flex flex-col">
-        <span class="text-[#938F99] text-[10px] font-bold uppercase tracking-wider">BUSINESS DASHBOARD</span>
-        <h1 class="text-xl font-bold text-white heading-font">Badhar Business <span class="text-[#D0BCFF]">Group</span></h1>
+        <span class="text-[#4B5563] text-[10px] font-bold uppercase tracking-wider">BUSINESS DASHBOARD</span>
+        <h1 class="text-xl font-bold text-[#1F2937] heading-font">Badhar Business <span class="text-[#FF5E3A]">Group</span></h1>
       </div>
       <div class="flex items-center gap-2">
-        <button onclick="triggerCloudSyncSim()" class="p-2 text-[#D0BCFF] hover:bg-[#2B2930] rounded-full flex items-center justify-center">
+        <button onclick="triggerCloudSyncSim()" class="w-10 h-10 neumorphic-btn text-[#FF5E3A] flex items-center justify-center">
           <span class="material-symbols-outlined" id="sync-icon">sync</span>
         </button>
-        <div class="w-9 h-9 rounded-full bg-[#49454F] border border-[#938F99] flex items-center justify-center">
-          <span class="text-xs font-semibold text-white">JD</span>
+        <div class="w-9 h-9 rounded-full bg-[#E6EEF8] neumorphic-card flex items-center justify-center">
+          <span class="text-xs font-semibold text-[#1F2937]">JD</span>
         </div>
       </div>
     </header>
@@ -147,45 +157,45 @@
       <!-- SCREEN: DASHBOARD -->
       <div id="screen-dashboard" class="screen-content space-y-6">
         <!-- Hero Balance Summary Card -->
-        <div class="bg-[#2B2930] rounded-3xl p-6 shadow-xl border border-[#49454F] relative overflow-hidden glow-card">
+        <div class="neumorphic-card p-6 relative overflow-hidden">
           <div class="flex justify-between items-start mb-4">
             <div>
-              <p class="text-[#938F99] text-xs font-semibold uppercase tracking-wider">Daily Net Balance</p>
-              <h2 id="hero-net-balance" class="text-4xl font-extrabold text-white tracking-tight mt-1 heading-font">₹0</h2>
+              <p class="text-[#4B5563] text-xs font-semibold uppercase tracking-wider">Daily Net Balance</p>
+              <h2 id="hero-net-balance" class="text-4xl font-extrabold text-[#1F2937] tracking-tight mt-1 heading-font">₹0</h2>
             </div>
-            <div id="balance-badge" class="bg-[#386A20] text-[#E8F3D6] px-3 py-1 rounded-full text-xs font-bold transition-all">
+            <div id="balance-badge" class="bg-[#10B981]/15 text-[#10B981] px-3 py-1 rounded-full text-xs font-bold transition-all">
               +100%
             </div>
           </div>
-          <div class="grid grid-cols-2 gap-4 pt-4 border-t border-[#49454F]/40">
+          <div class="grid grid-cols-2 gap-4 pt-4 border-t border-[#BCCADF]/40">
             <div class="space-y-1">
-              <p class="text-[#938F99] text-[10px] uppercase font-bold tracking-widest">Total Income</p>
-              <p id="hero-total-income" class="text-[#BACF9E] font-bold text-xl heading-font">₹0</p>
+              <p class="text-[#4B5563] text-[10px] uppercase font-bold tracking-widest">Total Income</p>
+              <p id="hero-total-income" class="text-[#10B981] font-bold text-xl heading-font">₹0</p>
             </div>
             <div class="space-y-1">
-              <p class="text-[#938F99] text-[10px] uppercase font-bold tracking-widest">Total Expense</p>
-              <p id="hero-total-expense" class="text-[#F2B8B5] font-bold text-xl heading-font">₹0</p>
+              <p class="text-[#4B5563] text-[10px] uppercase font-bold tracking-widest">Total Expense</p>
+              <p id="hero-total-expense" class="text-[#EF4444] font-bold text-xl heading-font">₹0</p>
             </div>
           </div>
         </div>
 
         <!-- Quick Access Income / Expense Buttons -->
         <div class="flex gap-4">
-          <button onclick="switchScreen('income')" class="flex-1 bg-[#D0BCFF] text-[#381E72] h-14 rounded-2xl flex items-center justify-center gap-2 font-bold active:scale-98 transition-all hover:brightness-110 shadow-lg cursor-pointer">
-            <span class="material-symbols-outlined">add_circle</span> Add Income
+          <button onclick="switchScreen('income')" class="flex-1 neumorphic-btn h-14 flex items-center justify-center gap-2 font-bold hover:text-[#FF5E3A] cursor-pointer">
+            <span class="material-symbols-outlined text-[#FF5E3A]">add_circle</span> Add Income
           </button>
-          <button onclick="switchScreen('expense')" class="flex-1 bg-[#49454F] text-[#E6E1E5] h-14 rounded-2xl flex items-center justify-center gap-2 font-bold active:scale-98 transition-all hover:bg-[#49454F]/80 border border-[#938F99] shadow-md cursor-pointer">
-            <span class="material-symbols-outlined">remove_circle</span> Add Expense
+          <button onclick="switchScreen('expense')" class="flex-1 neumorphic-btn h-14 flex items-center justify-center gap-2 font-bold hover:text-[#EF4444] cursor-pointer">
+            <span class="material-symbols-outlined text-[#EF4444]">remove_circle</span> Add Expense
           </button>
         </div>
 
         <!-- Two Columns Layout for Desktop Charts & Feeds -->
         <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
           <!-- Charts Section (Col-span 2) -->
-          <div class="lg:col-span-2 bg-[#2B2930] rounded-3xl p-5 border border-[#49454F] flex flex-col justify-between">
+          <div class="lg:col-span-2 neumorphic-card p-5 flex flex-col justify-between">
             <div class="flex justify-between items-center mb-4">
-              <h3 class="font-bold text-lg text-white">Financial Trends</h3>
-              <span class="text-[#D0BCFF] text-xs font-semibold">Real-time stats</span>
+              <h3 class="font-bold text-lg text-[#1F2937]">Financial Trends</h3>
+              <span class="text-[#FF5E3A] text-xs font-semibold">Real-time stats</span>
             </div>
             <div class="h-64 flex items-center justify-center">
               <canvas id="dashboardChart"></canvas>
@@ -193,16 +203,16 @@
           </div>
 
           <!-- Quick Stats / Seed Feed -->
-          <div class="bg-[#2B2930] rounded-3xl p-5 border border-[#49454F] space-y-4">
-            <h3 class="font-bold text-lg text-white">Quarry Activity Metrics</h3>
+          <div class="neumorphic-card p-5 space-y-4">
+            <h3 class="font-bold text-lg text-[#1F2937]">Quarry Activity Metrics</h3>
             <div class="space-y-3">
-              <div class="bg-[#1C1B1F] p-4 rounded-2xl border border-[#49454F]/30">
-                <p class="text-xs text-[#938F99]">ACTIVE MACHINERY</p>
-                <p id="metric-active-machines" class="text-2xl font-bold text-white mt-1 heading-font">0 Machines</p>
+              <div class="neumorphic-inset p-4">
+                <p class="text-xs text-[#4B5563]">ACTIVE MACHINERY</p>
+                <p id="metric-active-machines" class="text-2xl font-bold text-[#1F2937] mt-1 heading-font">0 Machines</p>
               </div>
-              <div class="bg-[#1C1B1F] p-4 rounded-2xl border border-[#49454F]/30">
-                <p class="text-xs text-[#938F99]">TOTAL TRANSACTIONS</p>
-                <p id="metric-total-tx" class="text-2xl font-bold text-white mt-1 heading-font">0 Entries</p>
+              <div class="neumorphic-inset p-4">
+                <p class="text-xs text-[#4B5563]">TOTAL TRANSACTIONS</p>
+                <p id="metric-total-tx" class="text-2xl font-bold text-[#1F2937] mt-1 heading-font">0 Entries</p>
               </div>
             </div>
           </div>
@@ -211,8 +221,8 @@
         <!-- Recent Activity Logs Feed -->
         <div class="flex flex-col space-y-3 pb-4">
           <div class="flex justify-between items-end">
-            <h3 class="font-bold text-lg text-white">Recent Ledger Stream</h3>
-            <button onclick="switchScreen('reports')" class="text-[#D0BCFF] text-xs font-semibold hover:underline">View report logs</button>
+            <h3 class="font-bold text-lg text-[#1F2937]">Recent Ledger Stream</h3>
+            <button onclick="switchScreen('reports')" class="text-[#FF5E3A] text-xs font-semibold hover:underline">View report logs</button>
           </div>
           <div id="recent-feed-container" class="space-y-3">
             <!-- Dynamic entries loaded here -->
@@ -223,69 +233,69 @@
       <!-- SCREEN: MACHINERY INCOME -->
       <div id="screen-income" class="screen-content space-y-6 hidden">
         <div class="flex items-center justify-between">
-          <h2 class="text-2xl font-bold text-white heading-font">Record Machinery Income</h2>
-          <span class="bg-[#BACF9E]/10 text-[#BACF9E] text-xs font-bold px-3 py-1 rounded-full border border-[#BACF9E]/30">Income Entry</span>
+          <h2 class="text-2xl font-bold text-[#1F2937] heading-font">Record Machinery Income</h2>
+          <span class="bg-[#10B981]/15 text-[#10B981] text-xs font-bold px-3 py-1 rounded-full border border-[#10B981]/30">Income Entry</span>
         </div>
 
         <!-- Income Entry Form -->
-        <form id="income-form" onsubmit="handleIncomeSubmit(event)" class="bg-[#2B2930] rounded-3xl p-6 border border-[#49454F] space-y-4">
+        <form id="income-form" onsubmit="handleIncomeSubmit(event)" class="neumorphic-card p-6 space-y-4">
           <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
             <!-- Date -->
             <div class="flex flex-col gap-1.5">
-              <label class="text-xs font-semibold text-[#938F99] uppercase tracking-wider">Work Date</label>
-              <input type="date" id="income-date" required class="bg-[#1C1B1F] border border-[#49454F] rounded-xl px-4 py-3 text-white focus:outline-none focus:border-[#D0BCFF] transition-all" />
+              <label class="text-xs font-semibold text-[#4B5563] uppercase tracking-wider">Work Date</label>
+              <input type="date" id="income-date" required class="neumorphic-inset rounded-xl px-4 py-3 text-[#1F2937] focus:outline-none focus:ring-2 focus:ring-[#FF5E3A]/40 transition-all" />
             </div>
 
             <!-- Machine Selector -->
             <div class="flex flex-col gap-1.5">
-              <label class="text-xs font-semibold text-[#938F99] uppercase tracking-wider">Select Machinery</label>
-              <select id="income-machine" required onchange="updateRateEstimate()" class="bg-[#1C1B1F] border border-[#49454F] rounded-xl px-4 py-3 text-white focus:outline-none focus:border-[#D0BCFF] transition-all">
+              <label class="text-xs font-semibold text-[#4B5563] uppercase tracking-wider">Select Machinery</label>
+              <select id="income-machine" required onchange="updateRateEstimate()" class="neumorphic-inset rounded-xl px-4 py-3 text-[#1F2937] focus:outline-none focus:ring-2 focus:ring-[#FF5E3A]/40 transition-all">
                 <!-- Loaded Dynamically -->
               </select>
             </div>
 
             <!-- Unit Type Selector -->
             <div class="flex flex-col gap-1.5">
-              <label class="text-xs font-semibold text-[#938F99] uppercase tracking-wider">Unit Measurement</label>
-              <select id="income-unit" required onchange="updateRateEstimate()" class="bg-[#1C1B1F] border border-[#49454F] rounded-xl px-4 py-3 text-white focus:outline-none focus:border-[#D0BCFF] transition-all">
+              <label class="text-xs font-semibold text-[#4B5563] uppercase tracking-wider">Unit Measurement</label>
+              <select id="income-unit" required onchange="updateRateEstimate()" class="neumorphic-inset rounded-xl px-4 py-3 text-[#1F2937] focus:outline-none focus:ring-2 focus:ring-[#FF5E3A]/40 transition-all">
                 <!-- Loaded Dynamically -->
               </select>
             </div>
 
             <!-- Quantity -->
             <div class="flex flex-col gap-1.5">
-              <label class="text-xs font-semibold text-[#938F99] uppercase tracking-wider">Quantity / Units</label>
-              <input type="number" step="any" id="income-qty" required placeholder="e.g. 8.5" oninput="calculateTotalIncomeAmt()" class="bg-[#1C1B1F] border border-[#49454F] rounded-xl px-4 py-3 text-white focus:outline-none focus:border-[#D0BCFF] transition-all" />
+              <label class="text-xs font-semibold text-[#4B5563] uppercase tracking-wider">Quantity / Units</label>
+              <input type="number" step="any" id="income-qty" required placeholder="e.g. 8.5" oninput="calculateTotalIncomeAmt()" class="neumorphic-inset rounded-xl px-4 py-3 text-[#1F2937] focus:outline-none focus:ring-2 focus:ring-[#FF5E3A]/40 transition-all" />
             </div>
 
             <!-- Unit Rate -->
             <div class="flex flex-col gap-1.5">
-              <label class="text-xs font-semibold text-[#938F99] uppercase tracking-wider">Rate per Unit (₹)</label>
-              <input type="number" step="any" id="income-rate" required placeholder="e.g. 3500" oninput="calculateTotalIncomeAmt()" class="bg-[#1C1B1F] border border-[#49454F] rounded-xl px-4 py-3 text-white focus:outline-none focus:border-[#D0BCFF] transition-all" />
+              <label class="text-xs font-semibold text-[#4B5563] uppercase tracking-wider">Rate per Unit (₹)</label>
+              <input type="number" step="any" id="income-rate" required placeholder="e.g. 3500" oninput="calculateTotalIncomeAmt()" class="neumorphic-inset rounded-xl px-4 py-3 text-[#1F2937] focus:outline-none focus:ring-2 focus:ring-[#FF5E3A]/40 transition-all" />
             </div>
 
             <!-- Live Total Display -->
-            <div class="flex flex-col justify-end bg-[#1C1B1F]/60 border border-[#49454F]/50 rounded-xl px-5 py-3 h-full">
-              <span class="text-[10px] font-bold text-[#938F99] uppercase tracking-widest">Live Computed Amount</span>
-              <p id="income-total-live" class="text-2xl font-black text-[#BACF9E] mt-1 heading-font">₹0.00</p>
+            <div class="neumorphic-inset px-5 py-3 h-full flex flex-col justify-center">
+              <span class="text-[10px] font-bold text-[#4B5563] uppercase tracking-widest">Live Computed Amount</span>
+              <p id="income-total-live" class="text-2xl font-black text-[#10B981] mt-1 heading-font">₹0.00</p>
             </div>
           </div>
 
           <!-- Remarks -->
           <div class="flex flex-col gap-1.5">
-            <label class="text-xs font-semibold text-[#938F99] uppercase tracking-wider">Job Details / Remarks</label>
-            <input type="text" id="income-remarks" placeholder="e.g. North end granite breaking job" class="bg-[#1C1B1F] border border-[#49454F] rounded-xl px-4 py-3 text-white focus:outline-none focus:border-[#D0BCFF] transition-all" />
+            <label class="text-xs font-semibold text-[#4B5563] uppercase tracking-wider">Job Details / Remarks</label>
+            <input type="text" id="income-remarks" placeholder="e.g. North end granite breaking job" class="neumorphic-inset rounded-xl px-4 py-3 text-[#1F2937] focus:outline-none focus:ring-2 focus:ring-[#FF5E3A]/40 transition-all" />
           </div>
 
           <!-- Save Button -->
-          <button type="submit" class="w-full h-14 bg-[#BACF9E] text-[#1C1B1F] rounded-2xl flex items-center justify-center gap-2 font-bold hover:brightness-110 active:scale-98 transition-all cursor-pointer">
+          <button type="submit" class="w-full h-14 neumorphic-btn text-[#FF5E3A] flex items-center justify-center gap-2 font-bold active:scale-98 transition-all cursor-pointer">
             <span class="material-symbols-outlined">save</span> Add Income Entry
           </button>
         </form>
 
         <!-- Income Entries List -->
         <div class="space-y-3">
-          <h3 class="font-bold text-lg text-white">Historical Machinery Incomes</h3>
+          <h3 class="font-bold text-lg text-[#1F2937]">Historical Machinery Incomes</h3>
           <div id="income-list" class="space-y-2">
             <!-- Dynamic entries loaded here -->
           </div>
@@ -295,23 +305,23 @@
       <!-- SCREEN: EXPENSES LOG -->
       <div id="screen-expense" class="screen-content space-y-6 hidden">
         <div class="flex items-center justify-between">
-          <h2 class="text-2xl font-bold text-white heading-font">Record Operational Expense</h2>
-          <span class="bg-[#F2B8B5]/10 text-[#F2B8B5] text-xs font-bold px-3 py-1 rounded-full border border-[#F2B8B5]/30">Expense Entry</span>
+          <h2 class="text-2xl font-bold text-[#1F2937] heading-font">Record Operational Expense</h2>
+          <span class="bg-[#EF4444]/15 text-[#EF4444] text-xs font-bold px-3 py-1 rounded-full border border-[#EF4444]/30">Expense Entry</span>
         </div>
 
         <!-- Expense Entry Form -->
-        <form id="expense-form" onsubmit="handleExpenseSubmit(event)" class="bg-[#2B2930] rounded-3xl p-6 border border-[#49454F] space-y-4">
+        <form id="expense-form" onsubmit="handleExpenseSubmit(event)" class="neumorphic-card p-6 space-y-4">
           <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
             <!-- Date -->
             <div class="flex flex-col gap-1.5">
-              <label class="text-xs font-semibold text-[#938F99] uppercase tracking-wider">Expense Date</label>
-              <input type="date" id="expense-date" required class="bg-[#1C1B1F] border border-[#49454F] rounded-xl px-4 py-3 text-white focus:outline-none focus:border-[#D0BCFF] transition-all" />
+              <label class="text-xs font-semibold text-[#4B5563] uppercase tracking-wider">Expense Date</label>
+              <input type="date" id="expense-date" required class="neumorphic-inset rounded-xl px-4 py-3 text-[#1F2937] focus:outline-none focus:ring-2 focus:ring-[#FF5E3A]/40 transition-all" />
             </div>
 
             <!-- Category -->
             <div class="flex flex-col gap-1.5">
-              <label class="text-xs font-semibold text-[#938F99] uppercase tracking-wider">Expense Category</label>
-              <select id="expense-category" required class="bg-[#1C1B1F] border border-[#49454F] rounded-xl px-4 py-3 text-white focus:outline-none focus:border-[#D0BCFF] transition-all">
+              <label class="text-xs font-semibold text-[#4B5563] uppercase tracking-wider">Expense Category</label>
+              <select id="expense-category" required class="neumorphic-inset rounded-xl px-4 py-3 text-[#1F2937] focus:outline-none focus:ring-2 focus:ring-[#FF5E3A]/40 transition-all">
                 <option value="Diesel">Diesel / Fuel</option>
                 <option value="Labour Salary">Labour Salary</option>
                 <option value="Food">Food & Mess</option>
@@ -325,26 +335,26 @@
 
             <!-- Amount -->
             <div class="flex flex-col gap-1.5">
-              <label class="text-xs font-semibold text-[#938F99] uppercase tracking-wider">Paid Amount (₹)</label>
-              <input type="number" step="any" id="expense-amount" required placeholder="e.g. 15000" class="bg-[#1C1B1F] border border-[#49454F] rounded-xl px-4 py-3 text-white focus:outline-none focus:border-[#D0BCFF] transition-all" />
+              <label class="text-xs font-semibold text-[#4B5563] uppercase tracking-wider">Paid Amount (₹)</label>
+              <input type="number" step="any" id="expense-amount" required placeholder="e.g. 15000" class="neumorphic-inset rounded-xl px-4 py-3 text-[#1F2937] focus:outline-none focus:ring-2 focus:ring-[#FF5E3A]/40 transition-all" />
             </div>
 
             <!-- Remarks -->
             <div class="flex flex-col gap-1.5">
-              <label class="text-xs font-semibold text-[#938F99] uppercase tracking-wider">Remarks / Recipient</label>
-              <input type="text" id="expense-remarks" required placeholder="e.g. Fuel generator refill 150L" class="bg-[#1C1B1F] border border-[#49454F] rounded-xl px-4 py-3 text-white focus:outline-none focus:border-[#D0BCFF] transition-all" />
+              <label class="text-xs font-semibold text-[#4B5563] uppercase tracking-wider">Remarks / Recipient</label>
+              <input type="text" id="expense-remarks" required placeholder="e.g. Fuel generator refill 150L" class="neumorphic-inset rounded-xl px-4 py-3 text-[#1F2937] focus:outline-none focus:ring-2 focus:ring-[#FF5E3A]/40 transition-all" />
             </div>
           </div>
 
           <!-- Save Button -->
-          <button type="submit" class="w-full h-14 bg-[#F2B8B5] text-[#1C1B1F] rounded-2xl flex items-center justify-center gap-2 font-bold hover:brightness-110 active:scale-98 transition-all cursor-pointer">
+          <button type="submit" class="w-full h-14 neumorphic-btn text-[#EF4444] flex items-center justify-center gap-2 font-bold active:scale-98 transition-all cursor-pointer">
             <span class="material-symbols-outlined">save</span> Add Expense Entry
           </button>
         </form>
 
         <!-- Expense Entries List -->
         <div class="space-y-3">
-          <h3 class="font-bold text-lg text-white">Historical Expenses</h3>
+          <h3 class="font-bold text-lg text-[#1F2937]">Historical Expenses</h3>
           <div id="expense-list" class="space-y-2">
             <!-- Dynamic entries loaded here -->
           </div>
@@ -353,17 +363,17 @@
 
       <!-- SCREEN: MACHINES & RATES -->
       <div id="screen-machines" class="screen-content space-y-6 hidden">
-        <h2 class="text-2xl font-bold text-white heading-font">Machine & Rate Configuration</h2>
+        <h2 class="text-2xl font-bold text-[#1F2937] heading-font">Machine & Rate Configuration</h2>
 
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
           <!-- Add Machine & Unit Column -->
           <div class="space-y-6">
             <!-- Machines Card -->
-            <div class="bg-[#2B2930] rounded-3xl p-6 border border-[#49454F] space-y-4">
-              <h3 class="font-bold text-lg text-white">Manage Machinery Fleet</h3>
+            <div class="neumorphic-card p-6 space-y-4">
+              <h3 class="font-bold text-lg text-[#1F2937]">Manage Machinery Fleet</h3>
               <form id="add-machine-form" onsubmit="handleMachineSubmit(event)" class="flex gap-2">
-                <input type="text" id="new-machine-name" required placeholder="Machine Name (e.g. Caterpillar-05)" class="flex-1 bg-[#1C1B1F] border border-[#49454F] rounded-xl px-4 py-3 text-white focus:outline-none focus:border-[#D0BCFF] transition-all" />
-                <button type="submit" class="bg-[#D0BCFF] text-[#381E72] px-4 rounded-xl font-bold flex items-center justify-center cursor-pointer">
+                <input type="text" id="new-machine-name" required placeholder="Machine Name (e.g. Caterpillar-05)" class="flex-1 neumorphic-inset rounded-xl px-4 py-3 text-[#1F2937] focus:outline-none focus:ring-2 focus:ring-[#FF5E3A]/40 transition-all" />
+                <button type="submit" class="neumorphic-btn text-[#FF5E3A] px-4 rounded-xl font-bold flex items-center justify-center cursor-pointer">
                   <span class="material-symbols-outlined">add</span>
                 </button>
               </form>
@@ -373,11 +383,11 @@
             </div>
 
             <!-- Units Card -->
-            <div class="bg-[#2B2930] rounded-3xl p-6 border border-[#49454F] space-y-4">
-              <h3 class="font-bold text-lg text-white">Manage Unit Metrics</h3>
+            <div class="neumorphic-card p-6 space-y-4">
+              <h3 class="font-bold text-lg text-[#1F2937]">Manage Unit Metrics</h3>
               <form id="add-unit-form" onsubmit="handleUnitSubmit(event)" class="flex gap-2">
-                <input type="text" id="new-unit-name" required placeholder="Unit Name (e.g. Load, Ton, Trip)" class="flex-1 bg-[#1C1B1F] border border-[#49454F] rounded-xl px-4 py-3 text-white focus:outline-none focus:border-[#D0BCFF] transition-all" />
-                <button type="submit" class="bg-[#D0BCFF] text-[#381E72] px-4 rounded-xl font-bold flex items-center justify-center cursor-pointer">
+                <input type="text" id="new-unit-name" required placeholder="Unit Name (e.g. Load, Ton, Trip)" class="flex-1 neumorphic-inset rounded-xl px-4 py-3 text-[#1F2937] focus:outline-none focus:ring-2 focus:ring-[#FF5E3A]/40 transition-all" />
+                <button type="submit" class="neumorphic-btn text-[#FF5E3A] px-4 rounded-xl font-bold flex items-center justify-center cursor-pointer">
                   <span class="material-symbols-outlined">add</span>
                 </button>
               </form>
@@ -388,28 +398,28 @@
           </div>
 
           <!-- Add Rates Column -->
-          <div class="bg-[#2B2930] rounded-3xl p-6 border border-[#49454F] space-y-4">
-            <h3 class="font-bold text-lg text-white">Set Machinery Base Rates</h3>
+          <div class="neumorphic-card p-6 space-y-4">
+            <h3 class="font-bold text-lg text-[#1F2937]">Set Machinery Base Rates</h3>
             <form id="add-rate-form" onsubmit="handleRateSubmit(event)" class="space-y-3">
               <div class="flex flex-col gap-1">
-                <label class="text-xs text-[#938F99]">Machine</label>
-                <select id="rate-machine" required class="bg-[#1C1B1F] border border-[#49454F] rounded-xl px-4 py-2.5 text-white"></select>
+                <label class="text-xs text-[#4B5563]">Machine</label>
+                <select id="rate-machine" required class="neumorphic-inset rounded-xl px-4 py-2.5 text-[#1F2937]"></select>
               </div>
               <div class="flex flex-col gap-1">
-                <label class="text-xs text-[#938F99]">Unit Metric</label>
-                <select id="rate-unit" required class="bg-[#1C1B1F] border border-[#49454F] rounded-xl px-4 py-2.5 text-white"></select>
+                <label class="text-xs text-[#4B5563]">Unit Metric</label>
+                <select id="rate-unit" required class="neumorphic-inset rounded-xl px-4 py-2.5 text-[#1F2937]"></select>
               </div>
               <div class="flex flex-col gap-1">
-                <label class="text-xs text-[#938F99]">Base Rate (₹)</label>
-                <input type="number" step="any" id="rate-val" required placeholder="e.g. 2600" class="bg-[#1C1B1F] border border-[#49454F] rounded-xl px-4 py-2.5 text-white" />
+                <label class="text-xs text-[#4B5563]">Base Rate (₹)</label>
+                <input type="number" step="any" id="rate-val" required placeholder="e.g. 2600" class="neumorphic-inset rounded-xl px-4 py-2.5 text-[#1F2937]" />
               </div>
-              <button type="submit" class="w-full h-12 bg-[#D0BCFF] text-[#381E72] rounded-xl font-bold hover:brightness-110 active:scale-98 transition-all cursor-pointer">
+              <button type="submit" class="w-full h-12 neumorphic-btn text-[#FF5E3A] rounded-xl font-bold active:scale-98 transition-all cursor-pointer">
                 Save Rate Rule
               </button>
             </form>
 
-            <div class="pt-4 border-t border-[#49454F]/40 space-y-2">
-              <h4 class="text-xs font-bold text-[#938F99] uppercase tracking-wider">Configured Rates</h4>
+            <div class="pt-4 border-t border-[#BCCADF]/40 space-y-2">
+              <h4 class="text-xs font-bold text-[#4B5563] uppercase tracking-wider">Configured Rates</h4>
               <div id="rates-list-configs" class="space-y-1.5 max-h-52 overflow-y-auto no-scrollbar">
                 <!-- Loaded dynamically -->
               </div>
@@ -420,45 +430,50 @@
 
       <!-- SCREEN: REPORTS -->
       <div id="screen-reports" class="screen-content space-y-6 hidden">
-        <h2 class="text-2xl font-bold text-white heading-font">Ledger Reports & Visualizations</h2>
+        <h2 class="text-2xl font-bold text-[#1F2937] heading-font">Ledger Reports & Visualizations</h2>
 
         <!-- Report range filters -->
-        <div class="bg-[#2B2930] rounded-3xl p-5 border border-[#49454F] space-y-4">
+        <div class="neumorphic-card p-5 space-y-4">
           <div class="flex flex-wrap gap-2">
-            <button onclick="setReportPeriod('daily')" id="period-daily" class="flex-1 min-w-[80px] py-2 px-3 rounded-xl bg-[#49454F] text-white font-semibold text-xs transition-all cursor-pointer">Daily</button>
-            <button onclick="setReportPeriod('weekly')" id="period-weekly" class="flex-1 min-w-[80px] py-2 px-3 rounded-xl bg-[#1C1B1F] text-[#938F99] hover:bg-[#49454F]/50 font-semibold text-xs transition-all cursor-pointer">Weekly</button>
-            <button onclick="setReportPeriod('monthly')" id="period-monthly" class="flex-1 min-w-[80px] py-2 px-3 rounded-xl bg-[#1C1B1F] text-[#938F99] hover:bg-[#49454F]/50 font-semibold text-xs transition-all cursor-pointer">30 Days</button>
-            <button onclick="setReportPeriod('all')" id="period-all" class="flex-1 min-w-[80px] py-2 px-3 rounded-xl bg-[#1C1B1F] text-[#938F99] hover:bg-[#49454F]/50 font-semibold text-xs transition-all cursor-pointer">All Time</button>
+            <button onclick="setReportPeriod('daily')" id="period-daily" class="flex-1 min-w-[80px] py-2 px-3 rounded-xl neumorphic-btn text-[#FF5E3A] neumorphic-btn-active font-semibold text-xs transition-all cursor-pointer">Daily</button>
+            <button onclick="setReportPeriod('weekly')" id="period-weekly" class="flex-1 min-w-[80px] py-2 px-3 rounded-xl neumorphic-btn text-[#4B5563] font-semibold text-xs transition-all cursor-pointer">Weekly</button>
+            <button onclick="setReportPeriod('monthly')" id="period-monthly" class="flex-1 min-w-[80px] py-2 px-3 rounded-xl neumorphic-btn text-[#4B5563] font-semibold text-xs transition-all cursor-pointer">30 Days</button>
+            <button onclick="setReportPeriod('all')" id="period-all" class="flex-1 min-w-[80px] py-2 px-3 rounded-xl neumorphic-btn text-[#4B5563] font-semibold text-xs transition-all cursor-pointer">All Time</button>
           </div>
 
-          <div class="flex justify-between items-center pt-3 border-t border-[#49454F]/40">
-            <div class="text-xs text-[#938F99]">
+          <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 pt-3 border-t border-[#BCCADF]/40">
+            <div class="text-xs text-[#4B5563]">
               Showing summary logs based on your selection
             </div>
-            <button onclick="exportToCSV()" class="h-10 px-4 bg-[#D0BCFF] text-[#381E72] rounded-xl text-xs font-bold flex items-center gap-1.5 hover:brightness-110 active:scale-98 transition-all cursor-pointer">
-              <span class="material-symbols-outlined text-sm">download</span> Export Ledger CSV
-            </button>
+            <div class="flex flex-wrap gap-2 w-full sm:w-auto">
+              <button onclick="exportToExcel()" class="flex-1 sm:flex-none h-10 px-4 neumorphic-btn text-[#10B981] font-bold flex items-center justify-center gap-1.5 active:scale-98 transition-all cursor-pointer">
+                <span class="material-symbols-outlined text-sm">table_view</span> Export to Excel
+              </button>
+              <button onclick="printReport()" class="flex-1 sm:flex-none h-10 px-4 neumorphic-btn text-[#FF5E3A] font-bold flex items-center justify-center gap-1.5 active:scale-98 transition-all cursor-pointer">
+                <span class="material-symbols-outlined text-sm">print</span> Print Report
+              </button>
+            </div>
           </div>
         </div>
 
         <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-          <div class="bg-[#2B2930] p-4 rounded-2xl border border-[#49454F]/50">
-            <span class="text-[10px] text-[#938F99] font-bold uppercase tracking-wider">Report Net profit</span>
-            <p id="report-net" class="text-2xl font-black text-[#BACF9E] mt-1 heading-font">₹0</p>
+          <div class="neumorphic-card p-4">
+            <span class="text-[10px] text-[#4B5563] font-bold uppercase tracking-wider">Report Net profit</span>
+            <p id="report-net" class="text-2xl font-black text-[#10B981] mt-1 heading-font">₹0</p>
           </div>
-          <div class="bg-[#2B2930] p-4 rounded-2xl border border-[#49454F]/50">
-            <span class="text-[10px] text-[#938F99] font-bold uppercase tracking-wider">Report Incomes</span>
-            <p id="report-inc" class="text-2xl font-black text-white mt-1 heading-font">₹0</p>
+          <div class="neumorphic-card p-4">
+            <span class="text-[10px] text-[#4B5563] font-bold uppercase tracking-wider">Report Incomes</span>
+            <p id="report-inc" class="text-2xl font-black text-[#1F2937] mt-1 heading-font">₹0</p>
           </div>
-          <div class="bg-[#2B2930] p-4 rounded-2xl border border-[#49454F]/50">
-            <span class="text-[10px] text-[#938F99] font-bold uppercase tracking-wider">Report Expenses</span>
-            <p id="report-exp" class="text-2xl font-black text-[#F2B8B5] mt-1 heading-font">₹0</p>
+          <div class="neumorphic-card p-4">
+            <span class="text-[10px] text-[#4B5563] font-bold uppercase tracking-wider">Report Expenses</span>
+            <p id="report-exp" class="text-2xl font-black text-[#EF4444] mt-1 heading-font">₹0</p>
           </div>
         </div>
 
         <!-- Full historical list of logs -->
         <div class="space-y-3">
-          <h3 class="font-bold text-lg text-white">Consolidated Ledger Entries</h3>
+          <h3 class="font-bold text-lg text-[#1F2937]">Consolidated Ledger Entries</h3>
           <div id="reports-logs-container" class="space-y-2">
             <!-- Loaded dynamically -->
           </div>
@@ -467,40 +482,40 @@
 
       <!-- SCREEN: DATA SETTINGS -->
       <div id="screen-settings" class="screen-content space-y-6 hidden">
-        <h2 class="text-2xl font-bold text-white heading-font">Database & Sync Center</h2>
+        <h2 class="text-2xl font-bold text-[#1F2937] heading-font">Database & Sync Center</h2>
 
         <div class="space-y-4">
           <!-- Backup Card -->
-          <div class="bg-[#2B2930] rounded-3xl p-6 border border-[#49454F] space-y-4">
-            <h3 class="font-bold text-lg text-white flex items-center gap-2">
-              <span class="material-symbols-outlined text-[#D0BCFF]">cloud_sync</span> Cloud Simulation
+          <div class="neumorphic-card p-6 space-y-4">
+            <h3 class="font-bold text-lg text-[#1F2937] flex items-center gap-2">
+              <span class="material-symbols-outlined text-[#FF5E3A]">cloud_sync</span> Cloud Simulation
             </h3>
-            <p class="text-sm text-[#938F99]">
+            <p class="text-sm text-[#4B5563]">
               Simulate cloud replication to an offsite secure backup server. Since Vercel deployments run clientside, this validates offline first architecture sync flows.
             </p>
             <div class="flex items-center gap-4">
-              <button onclick="triggerCloudSyncSim()" class="px-5 h-12 bg-[#D0BCFF] text-[#381E72] rounded-xl font-bold hover:brightness-110 active:scale-98 transition-all flex items-center gap-2 cursor-pointer">
+              <button onclick="triggerCloudSyncSim()" class="px-5 h-12 neumorphic-btn text-[#FF5E3A] font-bold active:scale-98 transition-all flex items-center gap-2 cursor-pointer">
                 <span class="material-symbols-outlined">sync</span> Trigger Cloud Sync
               </button>
-              <div id="settings-sync-status" class="text-xs text-[#BACF9E]">
+              <div id="settings-sync-status" class="text-xs text-[#10B981]">
                 Cloud status: synced
               </div>
             </div>
           </div>
 
           <!-- JSON Export/Import Card -->
-          <div class="bg-[#2B2930] rounded-3xl p-6 border border-[#49454F] space-y-4">
-            <h3 class="font-bold text-lg text-white flex items-center gap-2">
-              <span class="material-symbols-outlined text-[#D0BCFF]">database</span> Backup & Restore (JSON)
+          <div class="neumorphic-card p-6 space-y-4">
+            <h3 class="font-bold text-lg text-[#1F2937] flex items-center gap-2">
+              <span class="material-symbols-outlined text-[#FF5E3A]">database</span> Backup & Restore (JSON)
             </h3>
-            <p class="text-sm text-[#938F99]">
+            <p class="text-sm text-[#4B5563]">
               Save your ledger configurations and entries as a local JSON file, or restore them from an existing backup file.
             </p>
             <div class="flex flex-wrap gap-2 pt-2">
-              <button onclick="backupAsJSON()" class="h-12 px-5 bg-[#49454F] text-white border border-[#938F99] rounded-xl font-bold hover:bg-[#49454F]/80 active:scale-98 transition-all flex items-center gap-2 cursor-pointer">
+              <button onclick="backupAsJSON()" class="h-12 px-5 neumorphic-btn text-[#1F2937] font-bold active:scale-98 transition-all flex items-center gap-2 cursor-pointer">
                 <span class="material-symbols-outlined">download_for_offline</span> Backup to File
               </button>
-              <label class="h-12 px-5 bg-[#49454F] text-white border border-[#938F99] rounded-xl font-bold hover:bg-[#49454F]/80 active:scale-98 transition-all flex items-center gap-2 cursor-pointer">
+              <label class="h-12 px-5 neumorphic-btn text-[#1F2937] font-bold active:scale-98 transition-all flex items-center gap-2 cursor-pointer">
                 <span class="material-symbols-outlined">upload_file</span> Restore from File
                 <input type="file" id="import-json-file" class="hidden" accept=".json" onchange="restoreFromJSON(event)" />
               </label>
@@ -508,14 +523,14 @@
           </div>
 
           <!-- Reset Card -->
-          <div class="bg-[#2B2930] rounded-3xl p-6 border border-[#49454F] space-y-4">
-            <h3 class="font-bold text-lg text-white flex items-center gap-2">
-              <span class="material-symbols-outlined text-red-400">warning</span> Danger Zone
+          <div class="neumorphic-card p-6 space-y-4">
+            <h3 class="font-bold text-lg text-[#1F2937] flex items-center gap-2">
+              <span class="material-symbols-outlined text-[#EF4444]">warning</span> Danger Zone
             </h3>
-            <p class="text-sm text-[#938F99]">
+            <p class="text-sm text-[#4B5563]">
               Resetting will completely wipe out your custom inputs, machines, logs, and configure default system sample seed values again.
             </p>
-            <button onclick="resetLedgerToDefaults()" class="px-5 h-12 bg-red-900/30 text-red-300 border border-red-800 rounded-xl font-bold hover:bg-red-900/50 active:scale-98 transition-all cursor-pointer">
+            <button onclick="resetLedgerToDefaults()" class="px-5 h-12 bg-[#EF4444]/10! text-[#EF4444] border border-[#EF4444]/30 neumorphic-btn font-bold active:scale-98 transition-all cursor-pointer">
               Format Ledger Database
             </button>
           </div>
@@ -525,24 +540,24 @@
     </main>
 
     <!-- Mobile Bottom Navigation Bar -->
-    <nav class="md:hidden fixed bottom-0 left-0 right-0 h-18 bg-[#2B2930] border-t border-[#49454F] flex items-center justify-around px-2 z-50">
-      <button onclick="switchScreen('dashboard')" id="nav-btn-dashboard" class="flex flex-col items-center justify-center space-y-1 text-[#D0BCFF] nav-indicator active w-14 py-2">
+    <nav class="md:hidden fixed bottom-0 left-0 right-0 h-18 bg-[#E6EEF8] border-t border-[#BCCADF]/50 flex items-center justify-around px-2 z-50">
+      <button onclick="switchScreen('dashboard')" id="nav-btn-dashboard" class="flex flex-col items-center justify-center space-y-1 text-[#FF5E3A] nav-indicator active w-14 py-2">
         <span class="material-symbols-outlined">dashboard</span>
         <span class="text-[9px] font-bold uppercase">Home</span>
       </button>
-      <button onclick="switchScreen('income')" id="nav-btn-income" class="flex flex-col items-center justify-center space-y-1 text-[#938F99] nav-indicator w-14 py-2">
+      <button onclick="switchScreen('income')" id="nav-btn-income" class="flex flex-col items-center justify-center space-y-1 text-[#4B5563] nav-indicator w-14 py-2">
         <span class="material-symbols-outlined">add_circle</span>
         <span class="text-[9px] font-bold uppercase">Incomes</span>
       </button>
-      <button onclick="switchScreen('expense')" id="nav-btn-expense" class="flex flex-col items-center justify-center space-y-1 text-[#938F99] nav-indicator w-14 py-2">
+      <button onclick="switchScreen('expense')" id="nav-btn-expense" class="flex flex-col items-center justify-center space-y-1 text-[#4B5563] nav-indicator w-14 py-2">
         <span class="material-symbols-outlined">remove_circle</span>
         <span class="text-[9px] font-bold uppercase">Expenses</span>
       </button>
-      <button onclick="switchScreen('machines')" id="nav-btn-machines" class="flex flex-col items-center justify-center space-y-1 text-[#938F99] nav-indicator w-14 py-2">
+      <button onclick="switchScreen('machines')" id="nav-btn-machines" class="flex flex-col items-center justify-center space-y-1 text-[#4B5563] nav-indicator w-14 py-2">
         <span class="material-symbols-outlined">construction</span>
         <span class="text-[9px] font-bold uppercase">Specs</span>
       </button>
-      <button onclick="switchScreen('reports')" id="nav-btn-reports" class="flex flex-col items-center justify-center space-y-1 text-[#938F99] nav-indicator w-14 py-2">
+      <button onclick="switchScreen('reports')" id="nav-btn-reports" class="flex flex-col items-center justify-center space-y-1 text-[#4B5563] nav-indicator w-14 py-2">
         <span class="material-symbols-outlined">analytics</span>
         <span class="text-[9px] font-bold uppercase">Report</span>
       </button>
@@ -551,8 +566,8 @@
   </div>
 
   <!-- Notification Toast -->
-  <div id="toast" class="fixed bottom-22 md:bottom-6 right-6 bg-[#381E72] text-white border border-[#D0BCFF]/50 px-5 py-3 rounded-2xl shadow-2xl flex items-center gap-2 transform translate-y-20 opacity-0 transition-all duration-300 pointer-events-none z-50">
-    <span class="material-symbols-outlined text-[#D0BCFF]" id="toast-icon">check_circle</span>
+  <div id="toast" class="fixed bottom-22 md:bottom-6 right-6 bg-[#E6EEF8] text-[#1F2937] border border-[#BCCADF]/80 px-5 py-3 rounded-2xl shadow-2xl flex items-center gap-2 transform translate-y-20 opacity-0 transition-all duration-300 pointer-events-none z-50">
+    <span class="material-symbols-outlined text-[#FF5E3A]" id="toast-icon">check_circle</span>
     <span id="toast-text" class="text-sm font-semibold">Database updated!</span>
   </div>
 
@@ -856,22 +871,22 @@
 
       recentList.forEach(item => {
         const isIncome = item.type === 'income';
-        const colorClass = isIncome ? 'border-[#BACF9E]' : 'border-[#F2B8B5]';
-        const badgeBgClass = isIncome ? 'bg-[#BACF9E]/10 text-[#BACF9E]' : 'bg-[#F2B8B5]/10 text-[#F2B8B5]';
-        const amtColor = isIncome ? 'text-[#BACF9E]' : 'text-[#F2B8B5]';
+        const colorClass = isIncome ? 'border-[#10B981]' : 'border-[#EF4444]';
+        const badgeBgClass = isIncome ? 'bg-[#10B981]/15 text-[#10B981]' : 'bg-[#EF4444]/15 text-[#EF4444]';
+        const amtColor = isIncome ? 'text-[#10B981]' : 'text-[#EF4444]';
         const amtStr = isIncome ? `+${formatINR(item.amount)}` : `-${formatINR(Math.abs(item.amount))}`;
 
         const itemHtml = `
-          <div class="flex items-center bg-[#2B2930] p-4 rounded-2xl border-l-4 ${colorClass} hover:brightness-102 transition-all">
+          <div class="flex items-center neumorphic-card p-4 border-l-4 ${colorClass} transition-all">
             <div class="w-10 h-10 rounded-xl ${badgeBgClass} flex items-center justify-center mr-4 text-xs font-bold shrink-0">
               ${item.badge}
             </div>
             <div class="flex-1 min-w-0">
               <div class="flex justify-between items-start gap-2">
-                <p class="font-bold text-[#E6E1E5] truncate">${item.title}</p>
+                <p class="font-bold text-[#1F2937] truncate">${item.title}</p>
                 <p class="font-bold ${amtColor} shrink-0">${amtStr}</p>
               </div>
-              <p class="text-xs text-[#938F99] truncate mt-0.5">${item.subtitle}</p>
+              <p class="text-xs text-[#4B5563] truncate mt-0.5">${item.subtitle}</p>
             </div>
           </div>
         `;
@@ -922,14 +937,14 @@
             {
               label: 'Incomes (₹)',
               data: incomesData,
-              backgroundColor: '#BACF9E',
+              backgroundColor: '#10B981',
               borderRadius: 6,
               borderSkipped: false
             },
             {
               label: 'Expenses (₹)',
               data: expensesData,
-              backgroundColor: '#F2B8B5',
+              backgroundColor: '#EF4444',
               borderRadius: 6,
               borderSkipped: false
             }
@@ -941,7 +956,7 @@
           plugins: {
             legend: {
               labels: {
-                color: '#E6E1E5',
+                color: '#1F2937',
                 font: { family: 'Plus Jakarta Sans', weight: 'bold' }
               }
             }
@@ -949,11 +964,11 @@
           scales: {
             x: {
               grid: { display: false },
-              ticks: { color: '#938F99', font: { family: 'Plus Jakarta Sans' } }
+              ticks: { color: '#4B5563', font: { family: 'Plus Jakarta Sans' } }
             },
             y: {
-              grid: { color: '#49454F', drawBorder: false },
-              ticks: { color: '#938F99', font: { family: 'Plus Jakarta Sans' } }
+              grid: { color: '#BCCADF', drawBorder: false },
+              ticks: { color: '#4B5563', font: { family: 'Plus Jakarta Sans' } }
             }
           }
         }
@@ -1059,20 +1074,20 @@
       const sorted = [...db.incomeEntries].sort((a, b) => b.date - a.date);
 
       if (sorted.length === 0) {
-        container.innerHTML = `<div class="text-center py-6 text-[#938F99] text-sm">No recorded income entries yet.</div>`;
+        container.innerHTML = `<div class="text-center py-6 text-[#4B5563] text-sm">No recorded income entries yet.</div>`;
         return;
       }
 
       sorted.forEach(entry => {
         const itemHtml = `
-          <div class="bg-[#2B2930] p-4 rounded-2xl border border-[#49454F] flex justify-between items-center hover:bg-[#2B2930]/80 transition-all">
+          <div class="neumorphic-card p-4 flex justify-between items-center transition-all">
             <div class="min-w-0">
-              <p class="font-bold text-[#E6E1E5]">${entry.machineName} - ${entry.quantity} ${entry.unitType}</p>
-              <p class="text-xs text-[#938F99] mt-0.5">Rate: ${formatINR(entry.rate)} | ${entry.remarks}</p>
-              <p class="text-[10px] text-[#BACF9E] mt-1 font-semibold">${formatDateTime(entry.date)}</p>
+              <p class="font-bold text-[#1F2937]">${entry.machineName} - ${entry.quantity} ${entry.unitType}</p>
+              <p class="text-xs text-[#4B5563] mt-0.5">Rate: ${formatINR(entry.rate)} | ${entry.remarks}</p>
+              <p class="text-[10px] text-[#10B981] mt-1 font-semibold">${formatDateTime(entry.date)}</p>
             </div>
             <div class="flex items-center gap-3 shrink-0">
-              <span class="font-bold text-[#BACF9E] text-lg">${formatINR(entry.totalAmount)}</span>
+              <span class="font-bold text-[#10B981] text-lg">${formatINR(entry.totalAmount)}</span>
               <button onclick="deleteIncome(${entry.id})" class="text-red-400 p-1.5 hover:bg-red-950/20 rounded-lg flex items-center justify-center cursor-pointer">
                 <span class="material-symbols-outlined text-sm">delete</span>
               </button>
@@ -1139,20 +1154,20 @@
       const sorted = [...db.expenseEntries].sort((a, b) => b.date - a.date);
 
       if (sorted.length === 0) {
-        container.innerHTML = `<div class="text-center py-6 text-[#938F99] text-sm">No recorded operational expenses.</div>`;
+        container.innerHTML = `<div class="text-center py-6 text-[#4B5563] text-sm">No recorded operational expenses.</div>`;
         return;
       }
 
       sorted.forEach(entry => {
         const itemHtml = `
-          <div class="bg-[#2B2930] p-4 rounded-2xl border border-[#49454F] flex justify-between items-center hover:bg-[#2B2930]/80 transition-all">
+          <div class="neumorphic-card p-4 flex justify-between items-center transition-all">
             <div class="min-w-0">
-              <p class="font-bold text-[#E6E1E5]">${entry.category}</p>
-              <p class="text-xs text-[#938F99] mt-0.5">${entry.remarks}</p>
-              <p class="text-[10px] text-[#F2B8B5] mt-1 font-semibold">${formatDateTime(entry.date)}</p>
+              <p class="font-bold text-[#1F2937]">${entry.category}</p>
+              <p class="text-xs text-[#4B5563] mt-0.5">${entry.remarks}</p>
+              <p class="text-[10px] text-[#EF4444] mt-1 font-semibold">${formatDateTime(entry.date)}</p>
             </div>
             <div class="flex items-center gap-3 shrink-0">
-              <span class="font-bold text-[#F2B8B5] text-lg">-${formatINR(entry.amount)}</span>
+              <span class="font-bold text-[#EF4444] text-lg">-${formatINR(entry.amount)}</span>
               <button onclick="deleteExpense(${entry.id})" class="text-red-400 p-1.5 hover:bg-red-950/20 rounded-lg flex items-center justify-center cursor-pointer">
                 <span class="material-symbols-outlined text-sm">delete</span>
               </button>
@@ -1188,7 +1203,7 @@
       machContainer.innerHTML = '';
       db.machines.forEach(m => {
         machContainer.insertAdjacentHTML('beforeend', `
-          <span class="bg-[#1C1B1F] border border-[#49454F] text-[#E6E1E5] px-3.5 py-1.5 rounded-full text-xs font-semibold flex items-center gap-2">
+          <span class="neumorphic-inset text-[#1F2937] px-3.5 py-1.5 rounded-full text-xs font-semibold flex items-center gap-2">
             ${m.name}
             <button onclick="deleteMachine(${m.id})" class="text-red-400 hover:text-red-300 font-bold">×</button>
           </span>
@@ -1200,7 +1215,7 @@
       unitContainer.innerHTML = '';
       db.unitTypes.forEach(u => {
         unitContainer.insertAdjacentHTML('beforeend', `
-          <span class="bg-[#1C1B1F] border border-[#49454F] text-[#E6E1E5] px-3.5 py-1.5 rounded-full text-xs font-semibold flex items-center gap-2">
+          <span class="neumorphic-inset text-[#1F2937] px-3.5 py-1.5 rounded-full text-xs font-semibold flex items-center gap-2">
             ${u.name}
             <button onclick="deleteUnit(${u.id})" class="text-red-400 hover:text-red-300 font-bold">×</button>
           </span>
@@ -1299,19 +1314,19 @@
       container.innerHTML = '';
 
       if (db.rates.length === 0) {
-        container.innerHTML = `<div class="text-xs text-[#938F99]">No rates configured. Default is manually inputted during log.</div>`;
+        container.innerHTML = `<div class="text-xs text-[#4B5563]">No rates configured. Default is manually inputted during log.</div>`;
         return;
       }
 
       db.rates.forEach(r => {
         container.insertAdjacentHTML('beforeend', `
-          <div class="flex justify-between items-center bg-[#1C1B1F] p-3 rounded-xl border border-[#49454F]/40 text-xs">
+          <div class="flex justify-between items-center neumorphic-inset p-3 rounded-xl text-xs">
             <div>
-              <p class="font-bold text-white">${r.machineName}</p>
-              <p class="text-[10px] text-[#938F99] mt-0.5">${r.unitName}</p>
+              <p class="font-bold text-[#1F2937]">${r.machineName}</p>
+              <p class="text-[10px] text-[#4B5563] mt-0.5">${r.unitName}</p>
             </div>
             <div class="flex items-center gap-2">
-              <span class="font-bold text-[#D0BCFF]">${formatINR(r.rate)}</span>
+              <span class="font-bold text-[#FF5E3A]">${formatINR(r.rate)}</span>
               <button onclick="deleteRate(${r.id})" class="text-red-400 hover:text-red-300 font-bold text-sm">×</button>
             </div>
           </div>
@@ -1325,9 +1340,9 @@
       ['daily', 'weekly', 'monthly', 'all'].forEach(p => {
         const btn = document.getElementById('period-' + p);
         if (p === selectedReportPeriod) {
-          btn.className = "flex-1 min-w-[80px] py-2 px-3 rounded-xl bg-[#D0BCFF] text-[#381E72] font-semibold text-xs transition-all cursor-pointer";
+          btn.className = "flex-1 min-w-[80px] py-2 px-3 rounded-xl neumorphic-btn text-[#FF5E3A] neumorphic-btn-active font-semibold text-xs transition-all cursor-pointer";
         } else {
-          btn.className = "flex-1 min-w-[80px] py-2 px-3 rounded-xl bg-[#1C1B1F] text-[#938F99] hover:bg-[#49454F]/50 font-semibold text-xs transition-all cursor-pointer";
+          btn.className = "flex-1 min-w-[80px] py-2 px-3 rounded-xl neumorphic-btn text-[#4B5563] font-semibold text-xs transition-all cursor-pointer";
         }
       });
 
@@ -1343,22 +1358,22 @@
       container.innerHTML = '';
 
       if (filtered.merged.length === 0) {
-        container.innerHTML = `<div class="text-center py-6 text-[#938F99] text-sm">No ledger entries for this range.</div>`;
+        container.innerHTML = `<div class="text-center py-6 text-[#4B5563] text-sm">No ledger entries for this range.</div>`;
         return;
       }
 
       filtered.merged.forEach(item => {
         const isIncome = item.type === 'income';
-        const colorClass = isIncome ? 'border-[#BACF9E]' : 'border-[#F2B8B5]';
-        const amtColor = isIncome ? 'text-[#BACF9E]' : 'text-[#F2B8B5]';
+        const colorClass = isIncome ? 'border-[#10B981]' : 'border-[#EF4444]';
+        const amtColor = isIncome ? 'text-[#10B981]' : 'text-[#EF4444]';
         const amtStr = isIncome ? `+${formatINR(item.amount)}` : `-${formatINR(item.amount)}`;
 
         container.insertAdjacentHTML('beforeend', `
-          <div class="bg-[#2B2930] p-4 rounded-2xl border-l-4 ${colorClass} flex justify-between items-center">
+          <div class="neumorphic-card p-4 border-l-4 ${colorClass} flex justify-between items-center">
             <div>
-              <p class="font-bold text-[#E6E1E5]">${item.title}</p>
-              <p class="text-xs text-[#938F99] mt-0.5">${item.subtitle}</p>
-              <p class="text-[10px] text-[#938F99] font-medium mt-1">${formatDateTime(item.date)}</p>
+              <p class="font-bold text-[#1F2937]">${item.title}</p>
+              <p class="text-xs text-[#4B5563] mt-0.5">${item.subtitle}</p>
+              <p class="text-[10px] text-[#4B5563] font-medium mt-1">${formatDateTime(item.date)}</p>
             </div>
             <span class="font-bold ${amtColor} text-lg">${amtStr}</span>
           </div>
@@ -1422,15 +1437,28 @@
       };
     }
 
-    // CSV Download
-    function exportToCSV() {
+    // Excel Spreadsheet Export
+    function exportToExcel() {
       const filtered = getFilteredData(selectedReportPeriod);
-      let csvContent = "data:text/csv;charset=utf-8,";
-      csvContent += "Type,Date,Title,Subtitle,Amount (INR)\n";
+      
+      // UTF-8 BOM so Excel opens it with correct characters and structure
+      let csvContent = "\uFEFF";
+      
+      csvContent += "BADHAR BUSINESS GROUP - QUARRY LEDGER REPORT\n";
+      csvContent += `Period, ${selectedReportPeriod.toUpperCase()}\n`;
+      csvContent += `Total Income, ₹${filtered.totalIncome}\n`;
+      csvContent += `Total Expense, ₹${filtered.totalExpense}\n`;
+      csvContent += `Net Profit, ₹${filtered.totalIncome - filtered.totalExpense}\n\n`;
+      
+      csvContent += "Type,Date,Category/Machine,Remarks/Details,Amount (INR)\n";
 
       filtered.merged.forEach(item => {
         const type = item.type.toUpperCase();
-        const date = new Date(item.date).toISOString().split('T')[0];
+        const date = new Date(item.date).toLocaleDateString('en-IN', {
+          day: '2-digit',
+          month: 'short',
+          year: 'numeric'
+        });
         const title = `"${item.title.replace(/"/g, '""')}"`;
         const subtitle = `"${item.subtitle.replace(/"/g, '""')}"`;
         const amount = item.type === 'income' ? item.amount : -item.amount;
@@ -1438,14 +1466,137 @@
         csvContent += `${type},${date},${title},${subtitle},${amount}\n`;
       });
 
-      const encodedUri = encodeURI(csvContent);
+      const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+      const url = URL.createObjectURL(blob);
       const link = document.createElement("a");
-      link.setAttribute("href", encodedUri);
-      link.setAttribute("download", `badhar_business_ledger_${selectedReportPeriod}.csv`);
+      link.setAttribute("href", url);
+      link.setAttribute("download", `badhar_business_excel_ledger_${selectedReportPeriod}.csv`);
       document.body.appendChild(link);
       link.click();
       document.body.removeChild(link);
-      showToast("CSV report generated and downloaded!");
+      showToast("Excel spreadsheet report generated and downloaded!");
+    }
+
+    // Direct Web & Mobile Printing Function
+    function printReport() {
+      const filtered = getFilteredData(selectedReportPeriod);
+      const printWindow = window.open('', '_blank');
+      
+      const dateStr = new Date().toLocaleDateString('en-IN', {
+        day: '2-digit',
+        month: 'short',
+        year: 'numeric',
+        hour: '2-digit',
+        minute: '2-digit'
+      });
+
+      let rowsHtml = '';
+      filtered.merged.forEach(item => {
+        const isIncome = item.type === 'income';
+        const date = new Date(item.date).toLocaleDateString('en-IN', {
+          day: '2-digit',
+          month: 'short',
+          year: 'numeric'
+        });
+        const amtStr = isIncome ? `+₹${item.amount.toLocaleString('en-IN')}` : `-₹${item.amount.toLocaleString('en-IN')}`;
+        const amtColor = isIncome ? '#2e7d32' : '#c62828';
+        const typeStr = isIncome ? 'Income' : 'Expense';
+
+        rowsHtml += `
+          <tr>
+            <td>${date}</td>
+            <td style="color: ${amtColor}; font-weight: bold;">${typeStr}</td>
+            <td>${item.title}</td>
+            <td>${item.subtitle}</td>
+            <td style="color: ${amtColor}; font-weight: bold; text-align: right;">${amtStr}</td>
+          </tr>
+        `;
+      });
+
+      if (filtered.merged.length === 0) {
+        rowsHtml = `<tr><td colspan="5" style="text-align: center; color: #999;">No entries found for this range.</td></tr>`;
+      }
+
+      printWindow.document.write(`
+        <!DOCTYPE html>
+        <html>
+        <head>
+          <title>Badhar Business Group - Ledger Report</title>
+          <style>
+            body { font-family: sans-serif; padding: 20px; color: #333; line-height: 1.4; }
+            h1 { color: #5c6bc0; margin: 0 0 5px 0; font-size: 24px; }
+            .subtitle { font-size: 13px; color: #666; margin-bottom: 25px; }
+            .summary-box { display: flex; gap: 15px; margin-bottom: 25px; }
+            .card { flex: 1; padding: 15px; border-radius: 6px; border: 1px solid #ddd; background: #fafafa; }
+            .card h3 { margin: 0 0 5px 0; font-size: 11px; text-transform: uppercase; color: #888; }
+            .card p { margin: 0; font-size: 18px; font-weight: bold; }
+            .profit { color: #2e7d32; }
+            .loss { color: #c62828; }
+            table { width: 100%; border-collapse: collapse; margin-top: 15px; }
+            th, td { border: 1px solid #e0e0e0; padding: 10px; text-align: left; font-size: 12px; }
+            th { background-color: #f5f5f5; font-weight: bold; }
+            tr:nth-child(even) { background-color: #fcfcfc; }
+            .footer { margin-top: 40px; font-size: 10px; text-align: center; color: #999; border-top: 1px solid #eee; padding-top: 10px; }
+            @media print {
+              body { padding: 0; }
+              button { display: none; }
+            }
+          </style>
+        </head>
+        <body>
+          <h1>BADHAR BUSINESS GROUP</h1>
+          <div class="subtitle">
+            <strong>Quarry Ledger Report Period:</strong> \${selectedReportPeriod.toUpperCase()} <br/>
+            <strong>Generated On:</strong> \${dateStr}
+          </div>
+
+          <div class="summary-box">
+            <div class="card">
+              <h3>Total Income</h3>
+              <p class="profit">+₹\${filtered.totalIncome.toLocaleString('en-IN')}</p>
+            </div>
+            <div class="card">
+              <h3>Total Expense</h3>
+              <p class="loss">-₹\${filtered.totalExpense.toLocaleString('en-IN')}</p>
+            </div>
+            <div class="card">
+              <h3>Net Balance</h3>
+              <p class="\${(filtered.totalIncome - filtered.totalExpense) >= 0 ? 'profit' : 'loss'}">
+                ₹\${(filtered.totalIncome - filtered.totalExpense).toLocaleString('en-IN')}
+              </p>
+            </div>
+          </div>
+
+          <h3>Detailed Ledger Entries</h3>
+          <table>
+            <thead>
+              <tr>
+                <th>Date</th>
+                <th>Type</th>
+                <th>Category / Machine</th>
+                <th>Remarks / Details</th>
+                <th style="text-align: right;">Amount</th>
+              </tr>
+            </thead>
+            <tbody>
+              \${rowsHtml}
+            </tbody>
+          </table>
+
+          <div class="footer">
+            Generated via Badhar Business Group (QuarrySync Pro) Web App.
+          </div>
+
+          <script>
+            window.onload = function() {
+              window.print();
+              setTimeout(function() { window.close(); }, 500);
+            };
+          <\/script>
+        </body>
+        </html>
+      `);
+      printWindow.document.close();
     }
 
     // Settings Functions
