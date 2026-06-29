@@ -1,0 +1,1502 @@
+<!DOCTYPE html>
+<html lang="en" class="h-full">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Badhar Business Group - QuarrySync Pro</title>
+  <!-- Tailwind CSS v4 CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+  <!-- Material Symbols Outlined -->
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet" />
+  <!-- Google Fonts: Space Grotesk and Plus Jakarta Sans -->
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+  <!-- Chart.js CDN for Analytics -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+  <style>
+    body {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      background-color: #1C1B1F;
+      color: #E6E1E5;
+      margin: 0;
+      height: 100%;
+      overflow: hidden;
+    }
+    .heading-font {
+      font-family: 'Space Grotesk', sans-serif;
+    }
+    /* Hide scrollbars but keep functionality */
+    .no-scrollbar::-webkit-scrollbar {
+      display: none;
+    }
+    .no-scrollbar {
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+    }
+    /* Ambient Glow Effects */
+    .glow-card::after {
+      content: '';
+      position: absolute;
+      top: -10%;
+      right: -10%;
+      width: 140px;
+      height: 140px;
+      background: rgba(208, 188, 255, 0.08);
+      filter: blur(40px);
+      border-radius: 50%;
+      pointer-events: none;
+    }
+    /* Active bottom nav indicator style */
+    .nav-indicator {
+      position: relative;
+    }
+    .nav-indicator.active::after {
+      content: '';
+      position: absolute;
+      bottom: -6px;
+      left: 25%;
+      width: 50%;
+      height: 3px;
+      background-color: #D0BCFF;
+      border-radius: 9999px;
+    }
+  </style>
+</head>
+<body class="flex flex-col md:flex-row h-full">
+
+  <!-- Desktop Navigation Sidebar -->
+  <aside class="hidden md:flex flex-col w-64 bg-[#2B2930] border-r border-[#49454F] px-4 py-6 justify-between shrink-0">
+    <div class="space-y-8">
+      <!-- App Header -->
+      <div class="px-3">
+        <span class="text-[#938F99] text-xs font-bold uppercase tracking-widest">BUSINESS DASHBOARD</span>
+        <h1 class="text-2xl font-bold text-white mt-1 heading-font">Badhar Business <span class="text-[#D0BCFF]">Group</span></h1>
+      </div>
+
+      <!-- Navigation Menus -->
+      <nav class="space-y-1">
+        <button onclick="switchScreen('dashboard')" id="aside-btn-dashboard" class="sidebar-link w-full flex items-center gap-4 px-4 py-3 rounded-2xl bg-[#49454F]/40 text-[#D0BCFF] font-semibold transition-all">
+          <span class="material-symbols-outlined">dashboard</span>
+          Dashboard
+        </button>
+        <button onclick="switchScreen('income')" id="aside-btn-income" class="sidebar-link w-full flex items-center gap-4 px-4 py-3 rounded-2xl text-[#938F99] hover:bg-[#49454F]/20 hover:text-white font-medium transition-all">
+          <span class="material-symbols-outlined">add_circle</span>
+          Machinery Income
+        </button>
+        <button onclick="switchScreen('expense')" id="aside-btn-expense" class="sidebar-link w-full flex items-center gap-4 px-4 py-3 rounded-2xl text-[#938F99] hover:bg-[#49454F]/20 hover:text-white font-medium transition-all">
+          <span class="material-symbols-outlined">remove_circle</span>
+          Expenses Log
+        </button>
+        <button onclick="switchScreen('machines')" id="aside-btn-machines" class="sidebar-link w-full flex items-center gap-4 px-4 py-3 rounded-2xl text-[#938F99] hover:bg-[#49454F]/20 hover:text-white font-medium transition-all">
+          <span class="material-symbols-outlined">construction</span>
+          Machines & Rates
+        </button>
+        <button onclick="switchScreen('reports')" id="aside-btn-reports" class="sidebar-link w-full flex items-center gap-4 px-4 py-3 rounded-2xl text-[#938F99] hover:bg-[#49454F]/20 hover:text-white font-medium transition-all">
+          <span class="material-symbols-outlined">analytics</span>
+          Reports & Export
+        </button>
+        <button onclick="switchScreen('settings')" id="aside-btn-settings" class="sidebar-link w-full flex items-center gap-4 px-4 py-3 rounded-2xl text-[#938F99] hover:bg-[#49454F]/20 hover:text-white font-medium transition-all">
+          <span class="material-symbols-outlined">settings</span>
+          Data Settings
+        </button>
+      </nav>
+    </div>
+
+    <!-- User Profile and Sync Status -->
+    <div class="bg-[#1C1B1F] rounded-2xl p-4 border border-[#49454F]/50">
+      <div class="flex items-center gap-3">
+        <div class="w-10 h-10 rounded-full bg-[#49454F] border border-[#938F99] flex items-center justify-center text-white font-bold">
+          JD
+        </div>
+        <div>
+          <h4 class="text-sm font-semibold text-white">John Doe</h4>
+          <span class="text-xs text-[#938F99]">Operator Admin</span>
+        </div>
+      </div>
+      <div class="mt-3 pt-3 border-t border-[#49454F]/50 flex justify-between items-center text-xs">
+        <span class="flex items-center gap-1 text-[#BACF9E]">
+          <span class="w-2 h-2 rounded-full bg-[#BACF9E] animate-pulse"></span> Offline Synced
+        </span>
+        <button onclick="triggerCloudSyncSim()" class="text-[#D0BCFF] font-semibold hover:underline">Sync now</button>
+      </div>
+    </div>
+  </aside>
+
+  <!-- Main Content Container -->
+  <div class="flex-1 flex flex-col h-full overflow-hidden">
+    
+    <!-- Top Mobile Header / App Bar -->
+    <header class="md:hidden px-6 pt-6 pb-4 flex justify-between items-center bg-[#1C1B1F] shrink-0">
+      <div class="flex flex-col">
+        <span class="text-[#938F99] text-[10px] font-bold uppercase tracking-wider">BUSINESS DASHBOARD</span>
+        <h1 class="text-xl font-bold text-white heading-font">Badhar Business <span class="text-[#D0BCFF]">Group</span></h1>
+      </div>
+      <div class="flex items-center gap-2">
+        <button onclick="triggerCloudSyncSim()" class="p-2 text-[#D0BCFF] hover:bg-[#2B2930] rounded-full flex items-center justify-center">
+          <span class="material-symbols-outlined" id="sync-icon">sync</span>
+        </button>
+        <div class="w-9 h-9 rounded-full bg-[#49454F] border border-[#938F99] flex items-center justify-center">
+          <span class="text-xs font-semibold text-white">JD</span>
+        </div>
+      </div>
+    </header>
+
+    <!-- Main Screens Content -->
+    <main class="flex-1 overflow-y-auto no-scrollbar px-4 md:px-8 py-4 space-y-6 pb-24 md:pb-8">
+      
+      <!-- SCREEN: DASHBOARD -->
+      <div id="screen-dashboard" class="screen-content space-y-6">
+        <!-- Hero Balance Summary Card -->
+        <div class="bg-[#2B2930] rounded-3xl p-6 shadow-xl border border-[#49454F] relative overflow-hidden glow-card">
+          <div class="flex justify-between items-start mb-4">
+            <div>
+              <p class="text-[#938F99] text-xs font-semibold uppercase tracking-wider">Daily Net Balance</p>
+              <h2 id="hero-net-balance" class="text-4xl font-extrabold text-white tracking-tight mt-1 heading-font">₹0</h2>
+            </div>
+            <div id="balance-badge" class="bg-[#386A20] text-[#E8F3D6] px-3 py-1 rounded-full text-xs font-bold transition-all">
+              +100%
+            </div>
+          </div>
+          <div class="grid grid-cols-2 gap-4 pt-4 border-t border-[#49454F]/40">
+            <div class="space-y-1">
+              <p class="text-[#938F99] text-[10px] uppercase font-bold tracking-widest">Total Income</p>
+              <p id="hero-total-income" class="text-[#BACF9E] font-bold text-xl heading-font">₹0</p>
+            </div>
+            <div class="space-y-1">
+              <p class="text-[#938F99] text-[10px] uppercase font-bold tracking-widest">Total Expense</p>
+              <p id="hero-total-expense" class="text-[#F2B8B5] font-bold text-xl heading-font">₹0</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quick Access Income / Expense Buttons -->
+        <div class="flex gap-4">
+          <button onclick="switchScreen('income')" class="flex-1 bg-[#D0BCFF] text-[#381E72] h-14 rounded-2xl flex items-center justify-center gap-2 font-bold active:scale-98 transition-all hover:brightness-110 shadow-lg cursor-pointer">
+            <span class="material-symbols-outlined">add_circle</span> Add Income
+          </button>
+          <button onclick="switchScreen('expense')" class="flex-1 bg-[#49454F] text-[#E6E1E5] h-14 rounded-2xl flex items-center justify-center gap-2 font-bold active:scale-98 transition-all hover:bg-[#49454F]/80 border border-[#938F99] shadow-md cursor-pointer">
+            <span class="material-symbols-outlined">remove_circle</span> Add Expense
+          </button>
+        </div>
+
+        <!-- Two Columns Layout for Desktop Charts & Feeds -->
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+          <!-- Charts Section (Col-span 2) -->
+          <div class="lg:col-span-2 bg-[#2B2930] rounded-3xl p-5 border border-[#49454F] flex flex-col justify-between">
+            <div class="flex justify-between items-center mb-4">
+              <h3 class="font-bold text-lg text-white">Financial Trends</h3>
+              <span class="text-[#D0BCFF] text-xs font-semibold">Real-time stats</span>
+            </div>
+            <div class="h-64 flex items-center justify-center">
+              <canvas id="dashboardChart"></canvas>
+            </div>
+          </div>
+
+          <!-- Quick Stats / Seed Feed -->
+          <div class="bg-[#2B2930] rounded-3xl p-5 border border-[#49454F] space-y-4">
+            <h3 class="font-bold text-lg text-white">Quarry Activity Metrics</h3>
+            <div class="space-y-3">
+              <div class="bg-[#1C1B1F] p-4 rounded-2xl border border-[#49454F]/30">
+                <p class="text-xs text-[#938F99]">ACTIVE MACHINERY</p>
+                <p id="metric-active-machines" class="text-2xl font-bold text-white mt-1 heading-font">0 Machines</p>
+              </div>
+              <div class="bg-[#1C1B1F] p-4 rounded-2xl border border-[#49454F]/30">
+                <p class="text-xs text-[#938F99]">TOTAL TRANSACTIONS</p>
+                <p id="metric-total-tx" class="text-2xl font-bold text-white mt-1 heading-font">0 Entries</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Recent Activity Logs Feed -->
+        <div class="flex flex-col space-y-3 pb-4">
+          <div class="flex justify-between items-end">
+            <h3 class="font-bold text-lg text-white">Recent Ledger Stream</h3>
+            <button onclick="switchScreen('reports')" class="text-[#D0BCFF] text-xs font-semibold hover:underline">View report logs</button>
+          </div>
+          <div id="recent-feed-container" class="space-y-3">
+            <!-- Dynamic entries loaded here -->
+          </div>
+        </div>
+      </div>
+
+      <!-- SCREEN: MACHINERY INCOME -->
+      <div id="screen-income" class="screen-content space-y-6 hidden">
+        <div class="flex items-center justify-between">
+          <h2 class="text-2xl font-bold text-white heading-font">Record Machinery Income</h2>
+          <span class="bg-[#BACF9E]/10 text-[#BACF9E] text-xs font-bold px-3 py-1 rounded-full border border-[#BACF9E]/30">Income Entry</span>
+        </div>
+
+        <!-- Income Entry Form -->
+        <form id="income-form" onsubmit="handleIncomeSubmit(event)" class="bg-[#2B2930] rounded-3xl p-6 border border-[#49454F] space-y-4">
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <!-- Date -->
+            <div class="flex flex-col gap-1.5">
+              <label class="text-xs font-semibold text-[#938F99] uppercase tracking-wider">Work Date</label>
+              <input type="date" id="income-date" required class="bg-[#1C1B1F] border border-[#49454F] rounded-xl px-4 py-3 text-white focus:outline-none focus:border-[#D0BCFF] transition-all" />
+            </div>
+
+            <!-- Machine Selector -->
+            <div class="flex flex-col gap-1.5">
+              <label class="text-xs font-semibold text-[#938F99] uppercase tracking-wider">Select Machinery</label>
+              <select id="income-machine" required onchange="updateRateEstimate()" class="bg-[#1C1B1F] border border-[#49454F] rounded-xl px-4 py-3 text-white focus:outline-none focus:border-[#D0BCFF] transition-all">
+                <!-- Loaded Dynamically -->
+              </select>
+            </div>
+
+            <!-- Unit Type Selector -->
+            <div class="flex flex-col gap-1.5">
+              <label class="text-xs font-semibold text-[#938F99] uppercase tracking-wider">Unit Measurement</label>
+              <select id="income-unit" required onchange="updateRateEstimate()" class="bg-[#1C1B1F] border border-[#49454F] rounded-xl px-4 py-3 text-white focus:outline-none focus:border-[#D0BCFF] transition-all">
+                <!-- Loaded Dynamically -->
+              </select>
+            </div>
+
+            <!-- Quantity -->
+            <div class="flex flex-col gap-1.5">
+              <label class="text-xs font-semibold text-[#938F99] uppercase tracking-wider">Quantity / Units</label>
+              <input type="number" step="any" id="income-qty" required placeholder="e.g. 8.5" oninput="calculateTotalIncomeAmt()" class="bg-[#1C1B1F] border border-[#49454F] rounded-xl px-4 py-3 text-white focus:outline-none focus:border-[#D0BCFF] transition-all" />
+            </div>
+
+            <!-- Unit Rate -->
+            <div class="flex flex-col gap-1.5">
+              <label class="text-xs font-semibold text-[#938F99] uppercase tracking-wider">Rate per Unit (₹)</label>
+              <input type="number" step="any" id="income-rate" required placeholder="e.g. 3500" oninput="calculateTotalIncomeAmt()" class="bg-[#1C1B1F] border border-[#49454F] rounded-xl px-4 py-3 text-white focus:outline-none focus:border-[#D0BCFF] transition-all" />
+            </div>
+
+            <!-- Live Total Display -->
+            <div class="flex flex-col justify-end bg-[#1C1B1F]/60 border border-[#49454F]/50 rounded-xl px-5 py-3 h-full">
+              <span class="text-[10px] font-bold text-[#938F99] uppercase tracking-widest">Live Computed Amount</span>
+              <p id="income-total-live" class="text-2xl font-black text-[#BACF9E] mt-1 heading-font">₹0.00</p>
+            </div>
+          </div>
+
+          <!-- Remarks -->
+          <div class="flex flex-col gap-1.5">
+            <label class="text-xs font-semibold text-[#938F99] uppercase tracking-wider">Job Details / Remarks</label>
+            <input type="text" id="income-remarks" placeholder="e.g. North end granite breaking job" class="bg-[#1C1B1F] border border-[#49454F] rounded-xl px-4 py-3 text-white focus:outline-none focus:border-[#D0BCFF] transition-all" />
+          </div>
+
+          <!-- Save Button -->
+          <button type="submit" class="w-full h-14 bg-[#BACF9E] text-[#1C1B1F] rounded-2xl flex items-center justify-center gap-2 font-bold hover:brightness-110 active:scale-98 transition-all cursor-pointer">
+            <span class="material-symbols-outlined">save</span> Add Income Entry
+          </button>
+        </form>
+
+        <!-- Income Entries List -->
+        <div class="space-y-3">
+          <h3 class="font-bold text-lg text-white">Historical Machinery Incomes</h3>
+          <div id="income-list" class="space-y-2">
+            <!-- Dynamic entries loaded here -->
+          </div>
+        </div>
+      </div>
+
+      <!-- SCREEN: EXPENSES LOG -->
+      <div id="screen-expense" class="screen-content space-y-6 hidden">
+        <div class="flex items-center justify-between">
+          <h2 class="text-2xl font-bold text-white heading-font">Record Operational Expense</h2>
+          <span class="bg-[#F2B8B5]/10 text-[#F2B8B5] text-xs font-bold px-3 py-1 rounded-full border border-[#F2B8B5]/30">Expense Entry</span>
+        </div>
+
+        <!-- Expense Entry Form -->
+        <form id="expense-form" onsubmit="handleExpenseSubmit(event)" class="bg-[#2B2930] rounded-3xl p-6 border border-[#49454F] space-y-4">
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <!-- Date -->
+            <div class="flex flex-col gap-1.5">
+              <label class="text-xs font-semibold text-[#938F99] uppercase tracking-wider">Expense Date</label>
+              <input type="date" id="expense-date" required class="bg-[#1C1B1F] border border-[#49454F] rounded-xl px-4 py-3 text-white focus:outline-none focus:border-[#D0BCFF] transition-all" />
+            </div>
+
+            <!-- Category -->
+            <div class="flex flex-col gap-1.5">
+              <label class="text-xs font-semibold text-[#938F99] uppercase tracking-wider">Expense Category</label>
+              <select id="expense-category" required class="bg-[#1C1B1F] border border-[#49454F] rounded-xl px-4 py-3 text-white focus:outline-none focus:border-[#D0BCFF] transition-all">
+                <option value="Diesel">Diesel / Fuel</option>
+                <option value="Labour Salary">Labour Salary</option>
+                <option value="Food">Food & Mess</option>
+                <option value="Vehicle Repair">Vehicle Repair</option>
+                <option value="Spare Parts">Spare Parts</option>
+                <option value="Oil">Oil & Lubricants</option>
+                <option value="Maintenance">General Maintenance</option>
+                <option value="Other">Other Expenses</option>
+              </select>
+            </div>
+
+            <!-- Amount -->
+            <div class="flex flex-col gap-1.5">
+              <label class="text-xs font-semibold text-[#938F99] uppercase tracking-wider">Paid Amount (₹)</label>
+              <input type="number" step="any" id="expense-amount" required placeholder="e.g. 15000" class="bg-[#1C1B1F] border border-[#49454F] rounded-xl px-4 py-3 text-white focus:outline-none focus:border-[#D0BCFF] transition-all" />
+            </div>
+
+            <!-- Remarks -->
+            <div class="flex flex-col gap-1.5">
+              <label class="text-xs font-semibold text-[#938F99] uppercase tracking-wider">Remarks / Recipient</label>
+              <input type="text" id="expense-remarks" required placeholder="e.g. Fuel generator refill 150L" class="bg-[#1C1B1F] border border-[#49454F] rounded-xl px-4 py-3 text-white focus:outline-none focus:border-[#D0BCFF] transition-all" />
+            </div>
+          </div>
+
+          <!-- Save Button -->
+          <button type="submit" class="w-full h-14 bg-[#F2B8B5] text-[#1C1B1F] rounded-2xl flex items-center justify-center gap-2 font-bold hover:brightness-110 active:scale-98 transition-all cursor-pointer">
+            <span class="material-symbols-outlined">save</span> Add Expense Entry
+          </button>
+        </form>
+
+        <!-- Expense Entries List -->
+        <div class="space-y-3">
+          <h3 class="font-bold text-lg text-white">Historical Expenses</h3>
+          <div id="expense-list" class="space-y-2">
+            <!-- Dynamic entries loaded here -->
+          </div>
+        </div>
+      </div>
+
+      <!-- SCREEN: MACHINES & RATES -->
+      <div id="screen-machines" class="screen-content space-y-6 hidden">
+        <h2 class="text-2xl font-bold text-white heading-font">Machine & Rate Configuration</h2>
+
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+          <!-- Add Machine & Unit Column -->
+          <div class="space-y-6">
+            <!-- Machines Card -->
+            <div class="bg-[#2B2930] rounded-3xl p-6 border border-[#49454F] space-y-4">
+              <h3 class="font-bold text-lg text-white">Manage Machinery Fleet</h3>
+              <form id="add-machine-form" onsubmit="handleMachineSubmit(event)" class="flex gap-2">
+                <input type="text" id="new-machine-name" required placeholder="Machine Name (e.g. Caterpillar-05)" class="flex-1 bg-[#1C1B1F] border border-[#49454F] rounded-xl px-4 py-3 text-white focus:outline-none focus:border-[#D0BCFF] transition-all" />
+                <button type="submit" class="bg-[#D0BCFF] text-[#381E72] px-4 rounded-xl font-bold flex items-center justify-center cursor-pointer">
+                  <span class="material-symbols-outlined">add</span>
+                </button>
+              </form>
+              <div id="machines-list-configs" class="flex flex-wrap gap-2 pt-2">
+                <!-- Loaded dynamically -->
+              </div>
+            </div>
+
+            <!-- Units Card -->
+            <div class="bg-[#2B2930] rounded-3xl p-6 border border-[#49454F] space-y-4">
+              <h3 class="font-bold text-lg text-white">Manage Unit Metrics</h3>
+              <form id="add-unit-form" onsubmit="handleUnitSubmit(event)" class="flex gap-2">
+                <input type="text" id="new-unit-name" required placeholder="Unit Name (e.g. Load, Ton, Trip)" class="flex-1 bg-[#1C1B1F] border border-[#49454F] rounded-xl px-4 py-3 text-white focus:outline-none focus:border-[#D0BCFF] transition-all" />
+                <button type="submit" class="bg-[#D0BCFF] text-[#381E72] px-4 rounded-xl font-bold flex items-center justify-center cursor-pointer">
+                  <span class="material-symbols-outlined">add</span>
+                </button>
+              </form>
+              <div id="units-list-configs" class="flex flex-wrap gap-2 pt-2">
+                <!-- Loaded dynamically -->
+              </div>
+            </div>
+          </div>
+
+          <!-- Add Rates Column -->
+          <div class="bg-[#2B2930] rounded-3xl p-6 border border-[#49454F] space-y-4">
+            <h3 class="font-bold text-lg text-white">Set Machinery Base Rates</h3>
+            <form id="add-rate-form" onsubmit="handleRateSubmit(event)" class="space-y-3">
+              <div class="flex flex-col gap-1">
+                <label class="text-xs text-[#938F99]">Machine</label>
+                <select id="rate-machine" required class="bg-[#1C1B1F] border border-[#49454F] rounded-xl px-4 py-2.5 text-white"></select>
+              </div>
+              <div class="flex flex-col gap-1">
+                <label class="text-xs text-[#938F99]">Unit Metric</label>
+                <select id="rate-unit" required class="bg-[#1C1B1F] border border-[#49454F] rounded-xl px-4 py-2.5 text-white"></select>
+              </div>
+              <div class="flex flex-col gap-1">
+                <label class="text-xs text-[#938F99]">Base Rate (₹)</label>
+                <input type="number" step="any" id="rate-val" required placeholder="e.g. 2600" class="bg-[#1C1B1F] border border-[#49454F] rounded-xl px-4 py-2.5 text-white" />
+              </div>
+              <button type="submit" class="w-full h-12 bg-[#D0BCFF] text-[#381E72] rounded-xl font-bold hover:brightness-110 active:scale-98 transition-all cursor-pointer">
+                Save Rate Rule
+              </button>
+            </form>
+
+            <div class="pt-4 border-t border-[#49454F]/40 space-y-2">
+              <h4 class="text-xs font-bold text-[#938F99] uppercase tracking-wider">Configured Rates</h4>
+              <div id="rates-list-configs" class="space-y-1.5 max-h-52 overflow-y-auto no-scrollbar">
+                <!-- Loaded dynamically -->
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- SCREEN: REPORTS -->
+      <div id="screen-reports" class="screen-content space-y-6 hidden">
+        <h2 class="text-2xl font-bold text-white heading-font">Ledger Reports & Visualizations</h2>
+
+        <!-- Report range filters -->
+        <div class="bg-[#2B2930] rounded-3xl p-5 border border-[#49454F] space-y-4">
+          <div class="flex flex-wrap gap-2">
+            <button onclick="setReportPeriod('daily')" id="period-daily" class="flex-1 min-w-[80px] py-2 px-3 rounded-xl bg-[#49454F] text-white font-semibold text-xs transition-all cursor-pointer">Daily</button>
+            <button onclick="setReportPeriod('weekly')" id="period-weekly" class="flex-1 min-w-[80px] py-2 px-3 rounded-xl bg-[#1C1B1F] text-[#938F99] hover:bg-[#49454F]/50 font-semibold text-xs transition-all cursor-pointer">Weekly</button>
+            <button onclick="setReportPeriod('monthly')" id="period-monthly" class="flex-1 min-w-[80px] py-2 px-3 rounded-xl bg-[#1C1B1F] text-[#938F99] hover:bg-[#49454F]/50 font-semibold text-xs transition-all cursor-pointer">30 Days</button>
+            <button onclick="setReportPeriod('all')" id="period-all" class="flex-1 min-w-[80px] py-2 px-3 rounded-xl bg-[#1C1B1F] text-[#938F99] hover:bg-[#49454F]/50 font-semibold text-xs transition-all cursor-pointer">All Time</button>
+          </div>
+
+          <div class="flex justify-between items-center pt-3 border-t border-[#49454F]/40">
+            <div class="text-xs text-[#938F99]">
+              Showing summary logs based on your selection
+            </div>
+            <button onclick="exportToCSV()" class="h-10 px-4 bg-[#D0BCFF] text-[#381E72] rounded-xl text-xs font-bold flex items-center gap-1.5 hover:brightness-110 active:scale-98 transition-all cursor-pointer">
+              <span class="material-symbols-outlined text-sm">download</span> Export Ledger CSV
+            </button>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+          <div class="bg-[#2B2930] p-4 rounded-2xl border border-[#49454F]/50">
+            <span class="text-[10px] text-[#938F99] font-bold uppercase tracking-wider">Report Net profit</span>
+            <p id="report-net" class="text-2xl font-black text-[#BACF9E] mt-1 heading-font">₹0</p>
+          </div>
+          <div class="bg-[#2B2930] p-4 rounded-2xl border border-[#49454F]/50">
+            <span class="text-[10px] text-[#938F99] font-bold uppercase tracking-wider">Report Incomes</span>
+            <p id="report-inc" class="text-2xl font-black text-white mt-1 heading-font">₹0</p>
+          </div>
+          <div class="bg-[#2B2930] p-4 rounded-2xl border border-[#49454F]/50">
+            <span class="text-[10px] text-[#938F99] font-bold uppercase tracking-wider">Report Expenses</span>
+            <p id="report-exp" class="text-2xl font-black text-[#F2B8B5] mt-1 heading-font">₹0</p>
+          </div>
+        </div>
+
+        <!-- Full historical list of logs -->
+        <div class="space-y-3">
+          <h3 class="font-bold text-lg text-white">Consolidated Ledger Entries</h3>
+          <div id="reports-logs-container" class="space-y-2">
+            <!-- Loaded dynamically -->
+          </div>
+        </div>
+      </div>
+
+      <!-- SCREEN: DATA SETTINGS -->
+      <div id="screen-settings" class="screen-content space-y-6 hidden">
+        <h2 class="text-2xl font-bold text-white heading-font">Database & Sync Center</h2>
+
+        <div class="space-y-4">
+          <!-- Backup Card -->
+          <div class="bg-[#2B2930] rounded-3xl p-6 border border-[#49454F] space-y-4">
+            <h3 class="font-bold text-lg text-white flex items-center gap-2">
+              <span class="material-symbols-outlined text-[#D0BCFF]">cloud_sync</span> Cloud Simulation
+            </h3>
+            <p class="text-sm text-[#938F99]">
+              Simulate cloud replication to an offsite secure backup server. Since Vercel deployments run clientside, this validates offline first architecture sync flows.
+            </p>
+            <div class="flex items-center gap-4">
+              <button onclick="triggerCloudSyncSim()" class="px-5 h-12 bg-[#D0BCFF] text-[#381E72] rounded-xl font-bold hover:brightness-110 active:scale-98 transition-all flex items-center gap-2 cursor-pointer">
+                <span class="material-symbols-outlined">sync</span> Trigger Cloud Sync
+              </button>
+              <div id="settings-sync-status" class="text-xs text-[#BACF9E]">
+                Cloud status: synced
+              </div>
+            </div>
+          </div>
+
+          <!-- JSON Export/Import Card -->
+          <div class="bg-[#2B2930] rounded-3xl p-6 border border-[#49454F] space-y-4">
+            <h3 class="font-bold text-lg text-white flex items-center gap-2">
+              <span class="material-symbols-outlined text-[#D0BCFF]">database</span> Backup & Restore (JSON)
+            </h3>
+            <p class="text-sm text-[#938F99]">
+              Save your ledger configurations and entries as a local JSON file, or restore them from an existing backup file.
+            </p>
+            <div class="flex flex-wrap gap-2 pt-2">
+              <button onclick="backupAsJSON()" class="h-12 px-5 bg-[#49454F] text-white border border-[#938F99] rounded-xl font-bold hover:bg-[#49454F]/80 active:scale-98 transition-all flex items-center gap-2 cursor-pointer">
+                <span class="material-symbols-outlined">download_for_offline</span> Backup to File
+              </button>
+              <label class="h-12 px-5 bg-[#49454F] text-white border border-[#938F99] rounded-xl font-bold hover:bg-[#49454F]/80 active:scale-98 transition-all flex items-center gap-2 cursor-pointer">
+                <span class="material-symbols-outlined">upload_file</span> Restore from File
+                <input type="file" id="import-json-file" class="hidden" accept=".json" onchange="restoreFromJSON(event)" />
+              </label>
+            </div>
+          </div>
+
+          <!-- Reset Card -->
+          <div class="bg-[#2B2930] rounded-3xl p-6 border border-[#49454F] space-y-4">
+            <h3 class="font-bold text-lg text-white flex items-center gap-2">
+              <span class="material-symbols-outlined text-red-400">warning</span> Danger Zone
+            </h3>
+            <p class="text-sm text-[#938F99]">
+              Resetting will completely wipe out your custom inputs, machines, logs, and configure default system sample seed values again.
+            </p>
+            <button onclick="resetLedgerToDefaults()" class="px-5 h-12 bg-red-900/30 text-red-300 border border-red-800 rounded-xl font-bold hover:bg-red-900/50 active:scale-98 transition-all cursor-pointer">
+              Format Ledger Database
+            </button>
+          </div>
+        </div>
+      </div>
+
+    </main>
+
+    <!-- Mobile Bottom Navigation Bar -->
+    <nav class="md:hidden fixed bottom-0 left-0 right-0 h-18 bg-[#2B2930] border-t border-[#49454F] flex items-center justify-around px-2 z-50">
+      <button onclick="switchScreen('dashboard')" id="nav-btn-dashboard" class="flex flex-col items-center justify-center space-y-1 text-[#D0BCFF] nav-indicator active w-14 py-2">
+        <span class="material-symbols-outlined">dashboard</span>
+        <span class="text-[9px] font-bold uppercase">Home</span>
+      </button>
+      <button onclick="switchScreen('income')" id="nav-btn-income" class="flex flex-col items-center justify-center space-y-1 text-[#938F99] nav-indicator w-14 py-2">
+        <span class="material-symbols-outlined">add_circle</span>
+        <span class="text-[9px] font-bold uppercase">Incomes</span>
+      </button>
+      <button onclick="switchScreen('expense')" id="nav-btn-expense" class="flex flex-col items-center justify-center space-y-1 text-[#938F99] nav-indicator w-14 py-2">
+        <span class="material-symbols-outlined">remove_circle</span>
+        <span class="text-[9px] font-bold uppercase">Expenses</span>
+      </button>
+      <button onclick="switchScreen('machines')" id="nav-btn-machines" class="flex flex-col items-center justify-center space-y-1 text-[#938F99] nav-indicator w-14 py-2">
+        <span class="material-symbols-outlined">construction</span>
+        <span class="text-[9px] font-bold uppercase">Specs</span>
+      </button>
+      <button onclick="switchScreen('reports')" id="nav-btn-reports" class="flex flex-col items-center justify-center space-y-1 text-[#938F99] nav-indicator w-14 py-2">
+        <span class="material-symbols-outlined">analytics</span>
+        <span class="text-[9px] font-bold uppercase">Report</span>
+      </button>
+    </nav>
+
+  </div>
+
+  <!-- Notification Toast -->
+  <div id="toast" class="fixed bottom-22 md:bottom-6 right-6 bg-[#381E72] text-white border border-[#D0BCFF]/50 px-5 py-3 rounded-2xl shadow-2xl flex items-center gap-2 transform translate-y-20 opacity-0 transition-all duration-300 pointer-events-none z-50">
+    <span class="material-symbols-outlined text-[#D0BCFF]" id="toast-icon">check_circle</span>
+    <span id="toast-text" class="text-sm font-semibold">Database updated!</span>
+  </div>
+
+  <!-- JAVASCRIPT STATE AND DATABASE CONTROLLERS -->
+  <script>
+    // Local database objects
+    let db = {
+      machines: [],
+      unitTypes: [],
+      rates: [],
+      incomeEntries: [],
+      expenseEntries: []
+    };
+
+    // Chart.js reference
+    let trendChartInstance = null;
+    let selectedReportPeriod = 'daily';
+
+    // Seed Data
+    const defaultSeed = {
+      machines: [
+        { id: 1, name: "JCB", createdTimestamp: Date.now() - 10 * 24 * 3600000 },
+        { id: 2, name: "Hitachi", createdTimestamp: Date.now() - 10 * 24 * 3600000 },
+        { id: 3, name: "Hyundai", createdTimestamp: Date.now() - 10 * 24 * 3600000 },
+        { id: 4, name: "Volvo", createdTimestamp: Date.now() - 10 * 24 * 3600000 }
+      ],
+      unitTypes: [
+        { id: 1, name: "Bucket" },
+        { id: 2, name: "Breaker Hour" },
+        { id: 3, name: "Hour" },
+        { id: 4, name: "Trip" },
+        { id: 5, name: "Ton" }
+      ],
+      rates: [
+        { id: 1, machineName: "JCB", unitName: "Bucket", rate: 2600.0 },
+        { id: 2, machineName: "Hitachi", unitName: "Bucket", rate: 2700.0 },
+        { id: 3, machineName: "Hyundai", unitName: "Bucket", rate: 3000.0 },
+        { id: 4, machineName: "Hitachi", unitName: "Breaker Hour", rate: 3500.0 },
+        { id: 5, machineName: "Volvo", unitName: "Hour", rate: 4000.0 },
+        { id: 6, machineName: "JCB", unitName: "Hour", rate: 2200.0 }
+      ],
+      incomeEntries: [
+        {
+          id: 1,
+          date: Date.now() - 2 * 24 * 3600000,
+          machineName: "JCB",
+          unitType: "Bucket",
+          quantity: 10,
+          rate: 2600,
+          totalAmount: 26000,
+          remarks: "North section excavation"
+        },
+        {
+          id: 2,
+          date: Date.now() - 24 * 3600000,
+          machineName: "Hitachi",
+          unitType: "Breaker Hour",
+          quantity: 5,
+          rate: 3500,
+          totalAmount: 17500,
+          remarks: "Hard granite breaking"
+        },
+        {
+          id: 3,
+          date: Date.now(),
+          machineName: "Hyundai",
+          unitType: "Bucket",
+          quantity: 12,
+          rate: 3000,
+          totalAmount: 36000,
+          remarks: "East wall loading"
+        }
+      ],
+      expenseEntries: [
+        {
+          id: 1,
+          date: Date.now() - 2 * 24 * 3600000,
+          category: "Diesel",
+          amount: 8500,
+          remarks: "JCB full tank refill"
+        },
+        {
+          id: 2,
+          date: Date.now() - 24 * 3600000,
+          category: "Labour Salary",
+          amount: 3200,
+          remarks: "3 operators daily wages"
+        },
+        {
+          id: 3,
+          date: Date.now(),
+          category: "Food",
+          amount: 450,
+          remarks: "Staff lunch and refreshments"
+        },
+        {
+          id: 4,
+          date: Date.now(),
+          category: "Maintenance",
+          amount: 1200,
+          remarks: "Hydraulic pipe replacement"
+        }
+      ]
+    };
+
+    // Load Database from LocalStorage or seed defaults
+    function loadDB() {
+      const savedData = localStorage.getItem('badhar_quarry_db');
+      if (savedData) {
+        try {
+          db = JSON.parse(savedData);
+        } catch (e) {
+          console.error("Failed to parse database, reloading seed", e);
+          db = JSON.parse(JSON.stringify(defaultSeed));
+          saveDB();
+        }
+      } else {
+        db = JSON.parse(JSON.stringify(defaultSeed));
+        saveDB();
+      }
+    }
+
+    function saveDB() {
+      localStorage.setItem('badhar_quarry_db', JSON.stringify(db));
+    }
+
+    // Toast alerts helper
+    function showToast(text, isError = false) {
+      const toast = document.getElementById('toast');
+      const toastText = document.getElementById('toast-text');
+      const toastIcon = document.getElementById('toast-icon');
+
+      toastText.innerText = text;
+      if (isError) {
+        toastIcon.innerText = "error";
+        toastIcon.className = "material-symbols-outlined text-red-400";
+      } else {
+        toastIcon.innerText = "check_circle";
+        toastIcon.className = "material-symbols-outlined text-[#D0BCFF]";
+      }
+
+      toast.classList.remove('translate-y-20', 'opacity-0');
+      toast.classList.add('translate-y-0', 'opacity-100');
+
+      setTimeout(() => {
+        toast.classList.remove('translate-y-0', 'opacity-100');
+        toast.classList.add('translate-y-20', 'opacity-0');
+      }, 3000);
+    }
+
+    // Sync animation simulator
+    function triggerCloudSyncSim() {
+      const syncIcon = document.getElementById('sync-icon');
+      if (syncIcon) {
+        syncIcon.classList.add('animate-spin');
+      }
+      showToast("Syncing database backups to cloud security node...");
+      
+      setTimeout(() => {
+        if (syncIcon) {
+          syncIcon.classList.remove('animate-spin');
+        }
+        showToast("Database backups successfully synchronized!");
+      }, 1500);
+    }
+
+    // Format currency (INR formatting)
+    function formatINR(val) {
+      return new Intl.NumberFormat('en-IN', {
+        style: 'currency',
+        currency: 'INR',
+        maximumFractionDigits: 0
+      }).format(val);
+    }
+
+    // Format epoch timestamp
+    function formatDateTime(epoch) {
+      const d = new Date(epoch);
+      return d.toLocaleDateString('en-IN', {
+        day: '2-digit',
+        month: 'short',
+        year: 'numeric'
+      });
+    }
+
+    // Switch screen view
+    function switchScreen(screenId) {
+      // Hide all screen contents
+      document.querySelectorAll('.screen-content').forEach(el => el.classList.add('hidden'));
+      // Show selected screen
+      document.getElementById('screen-' + screenId).classList.remove('hidden');
+
+      // Update mobile nav indicators
+      document.querySelectorAll('nav button').forEach(el => {
+        el.classList.remove('text-[#D0BCFF]', 'active');
+        el.classList.add('text-[#938F99]');
+      });
+      const activeNavBtn = document.getElementById('nav-btn-' + screenId);
+      if (activeNavBtn) {
+        activeNavBtn.classList.remove('text-[#938F99]');
+        activeNavBtn.classList.add('text-[#D0BCFF]', 'active');
+      }
+
+      // Update desktop sidebar indicators
+      document.querySelectorAll('.sidebar-link').forEach(el => {
+        el.classList.remove('bg-[#49454F]/40', 'text-[#D0BCFF]', 'font-semibold');
+        el.classList.add('text-[#938F99]', 'font-medium');
+      });
+      const activeAsideBtn = document.getElementById('aside-btn-' + screenId);
+      if (activeAsideBtn) {
+        activeAsideBtn.classList.remove('text-[#938F99]', 'font-medium');
+        activeAsideBtn.classList.add('bg-[#49454F]/40', 'text-[#D0BCFF]', 'font-semibold');
+      }
+
+      // Trigger updates specific to screens
+      if (screenId === 'dashboard') {
+        renderDashboard();
+      } else if (screenId === 'income') {
+        renderIncomeScreen();
+      } else if (screenId === 'expense') {
+        renderExpenseScreen();
+      } else if (screenId === 'machines') {
+        renderMachinesScreen();
+      } else if (screenId === 'reports') {
+        renderReportsScreen();
+      }
+    }
+
+    // Render Dashboard statistics and feeds
+    function renderDashboard() {
+      // Compute Totals
+      let totalIncome = db.incomeEntries.reduce((sum, entry) => sum + entry.totalAmount, 0);
+      let totalExpense = db.expenseEntries.reduce((sum, entry) => sum + entry.amount, 0);
+      let netBalance = totalIncome - totalExpense;
+
+      // Update Stats UI
+      document.getElementById('hero-net-balance').innerText = formatINR(netBalance);
+      document.getElementById('hero-total-income').innerText = formatINR(totalIncome);
+      document.getElementById('hero-total-expense').innerText = formatINR(totalExpense);
+
+      const balanceBadge = document.getElementById('balance-badge');
+      if (netBalance >= 0) {
+        balanceBadge.className = "bg-[#386A20] text-[#E8F3D6] px-3 py-1 rounded-full text-xs font-bold";
+        balanceBadge.innerText = `Profit`;
+      } else {
+        balanceBadge.className = "bg-red-900/40 text-red-300 border border-red-800 px-3 py-1 rounded-full text-xs font-bold";
+        balanceBadge.innerText = `Loss`;
+      }
+
+      // Metadata metrics
+      document.getElementById('metric-active-machines').innerText = `${db.machines.length} Machines`;
+      document.getElementById('metric-total-tx').innerText = `${db.incomeEntries.length + db.expenseEntries.length} Entries`;
+
+      // Render Feed
+      renderRecentFeed();
+
+      // Render Chart
+      renderChart();
+    }
+
+    // Render historical feed
+    function renderRecentFeed() {
+      const container = document.getElementById('recent-feed-container');
+      container.innerHTML = '';
+
+      // Merge and sort logs
+      let items = [];
+      db.incomeEntries.forEach(entry => {
+        items.push({
+          type: 'income',
+          id: entry.id,
+          date: entry.date,
+          title: `${entry.machineName} • ${entry.quantity} ${entry.unitType}`,
+          subtitle: `Rate: ${formatINR(entry.rate)} | ${entry.remarks}`,
+          amount: entry.totalAmount,
+          badge: entry.machineName.substring(0, 3).toUpperCase()
+        });
+      });
+
+      db.expenseEntries.forEach(entry => {
+        items.push({
+          type: 'expense',
+          id: entry.id,
+          date: entry.date,
+          title: entry.category,
+          subtitle: entry.remarks,
+          amount: -entry.amount,
+          badge: entry.category.substring(0, 3).toUpperCase()
+        });
+      });
+
+      items.sort((a, b) => b.date - a.date);
+
+      // Take latest 5
+      const recentList = items.slice(0, 5);
+
+      if (recentList.length === 0) {
+        container.innerHTML = `<div class="text-center py-6 text-[#938F99] text-sm">No ledger entries recorded yet.</div>`;
+        return;
+      }
+
+      recentList.forEach(item => {
+        const isIncome = item.type === 'income';
+        const colorClass = isIncome ? 'border-[#BACF9E]' : 'border-[#F2B8B5]';
+        const badgeBgClass = isIncome ? 'bg-[#BACF9E]/10 text-[#BACF9E]' : 'bg-[#F2B8B5]/10 text-[#F2B8B5]';
+        const amtColor = isIncome ? 'text-[#BACF9E]' : 'text-[#F2B8B5]';
+        const amtStr = isIncome ? `+${formatINR(item.amount)}` : `-${formatINR(Math.abs(item.amount))}`;
+
+        const itemHtml = `
+          <div class="flex items-center bg-[#2B2930] p-4 rounded-2xl border-l-4 ${colorClass} hover:brightness-102 transition-all">
+            <div class="w-10 h-10 rounded-xl ${badgeBgClass} flex items-center justify-center mr-4 text-xs font-bold shrink-0">
+              ${item.badge}
+            </div>
+            <div class="flex-1 min-w-0">
+              <div class="flex justify-between items-start gap-2">
+                <p class="font-bold text-[#E6E1E5] truncate">${item.title}</p>
+                <p class="font-bold ${amtColor} shrink-0">${amtStr}</p>
+              </div>
+              <p class="text-xs text-[#938F99] truncate mt-0.5">${item.subtitle}</p>
+            </div>
+          </div>
+        `;
+        container.insertAdjacentHTML('beforeend', itemHtml);
+      });
+    }
+
+    // Render visual Chart.js trends
+    function renderChart() {
+      const ctx = document.getElementById('dashboardChart').getContext('2d');
+      
+      // Cleanup previous charts
+      if (trendChartInstance) {
+        trendChartInstance.destroy();
+      }
+
+      // Extract last 7 days of dates
+      let labels = [];
+      let incomesData = [];
+      let expensesData = [];
+
+      for (let i = 6; i >= 0; i--) {
+        const d = new Date();
+        d.setDate(d.getDate() - i);
+        labels.push(d.toLocaleDateString('en-IN', { day: '2-digit', month: 'short' }));
+        
+        // Sum incomes for this date range day
+        const dayStart = new Date(d.getFullYear(), d.getMonth(), d.getDate(), 0, 0, 0).getTime();
+        const dayEnd = new Date(d.getFullYear(), d.getMonth(), d.getDate(), 23, 59, 59).getTime();
+
+        const dayIncome = db.incomeEntries
+          .filter(e => e.date >= dayStart && e.date <= dayEnd)
+          .reduce((sum, e) => sum + e.totalAmount, 0);
+
+        const dayExpense = db.expenseEntries
+          .filter(e => e.date >= dayStart && e.date <= dayEnd)
+          .reduce((sum, e) => sum + e.amount, 0);
+
+        incomesData.push(dayIncome);
+        expensesData.push(dayExpense);
+      }
+
+      trendChartInstance = new Chart(ctx, {
+        type: 'bar',
+        data: {
+          labels: labels,
+          datasets: [
+            {
+              label: 'Incomes (₹)',
+              data: incomesData,
+              backgroundColor: '#BACF9E',
+              borderRadius: 6,
+              borderSkipped: false
+            },
+            {
+              label: 'Expenses (₹)',
+              data: expensesData,
+              backgroundColor: '#F2B8B5',
+              borderRadius: 6,
+              borderSkipped: false
+            }
+          ]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: {
+            legend: {
+              labels: {
+                color: '#E6E1E5',
+                font: { family: 'Plus Jakarta Sans', weight: 'bold' }
+              }
+            }
+          },
+          scales: {
+            x: {
+              grid: { display: false },
+              ticks: { color: '#938F99', font: { family: 'Plus Jakarta Sans' } }
+            },
+            y: {
+              grid: { color: '#49454F', drawBorder: false },
+              ticks: { color: '#938F99', font: { family: 'Plus Jakarta Sans' } }
+            }
+          }
+        }
+      });
+    }
+
+    // Screen-specific: Machinery Income Screen Loader
+    function renderIncomeScreen() {
+      // Set Default Date Picker
+      const today = new Date().toISOString().split('T')[0];
+      document.getElementById('income-date').value = today;
+
+      // Populate Select Dropdowns
+      const machineSelect = document.getElementById('income-machine');
+      machineSelect.innerHTML = '';
+      db.machines.forEach(m => {
+        machineSelect.insertAdjacentHTML('beforeend', `<option value="${m.name}">${m.name}</option>`);
+      });
+
+      const unitSelect = document.getElementById('income-unit');
+      unitSelect.innerHTML = '';
+      db.unitTypes.forEach(u => {
+        unitSelect.insertAdjacentHTML('beforeend', `<option value="${u.name}">${u.name}</option>`);
+      });
+
+      updateRateEstimate();
+      renderIncomeList();
+    }
+
+    // Auto calculate rate configurations
+    function updateRateEstimate() {
+      const selectedMachine = document.getElementById('income-machine').value;
+      const selectedUnit = document.getElementById('income-unit').value;
+      
+      const config = db.rates.find(r => r.machineName === selectedMachine && r.unitName === selectedUnit);
+      const rateInput = document.getElementById('income-rate');
+
+      if (config) {
+        rateInput.value = config.rate;
+      } else {
+        rateInput.value = '';
+      }
+      calculateTotalIncomeAmt();
+    }
+
+    function calculateTotalIncomeAmt() {
+      const qty = parseFloat(document.getElementById('income-qty').value) || 0;
+      const rate = parseFloat(document.getElementById('income-rate').value) || 0;
+      document.getElementById('income-total-live').innerText = formatINR(qty * rate);
+    }
+
+    function handleIncomeSubmit(e) {
+      e.preventDefault();
+      const rawDate = document.getElementById('income-date').value;
+      const dateEpoch = rawDate ? new Date(rawDate).getTime() : Date.now();
+      const machine = document.getElementById('income-machine').value;
+      const unit = document.getElementById('income-unit').value;
+      const qty = parseFloat(document.getElementById('income-qty').value) || 0;
+      const rate = parseFloat(document.getElementById('income-rate').value) || 0;
+      const remarks = document.getElementById('income-remarks').value || 'Work Logging';
+
+      if (!machine || !unit || qty <= 0 || rate <= 0) {
+        showToast("Please input valid rates and quantities", true);
+        return;
+      }
+
+      const total = qty * rate;
+      const newEntry = {
+        id: Date.now(),
+        date: dateEpoch,
+        machineName: machine,
+        unitType: unit,
+        quantity: qty,
+        rate: rate,
+        totalAmount: total,
+        remarks: remarks
+      };
+
+      db.incomeEntries.push(newEntry);
+      saveDB();
+      showToast("Machinery Income logged successfully!");
+      
+      // Clear inputs
+      document.getElementById('income-qty').value = '';
+      document.getElementById('income-remarks').value = '';
+      
+      renderIncomeScreen();
+    }
+
+    function deleteIncome(id) {
+      if (confirm("Are you sure you want to delete this income entry?")) {
+        db.incomeEntries = db.incomeEntries.filter(e => e.id !== id);
+        saveDB();
+        showToast("Income entry deleted!");
+        renderIncomeScreen();
+      }
+    }
+
+    function renderIncomeList() {
+      const container = document.getElementById('income-list');
+      container.innerHTML = '';
+
+      const sorted = [...db.incomeEntries].sort((a, b) => b.date - a.date);
+
+      if (sorted.length === 0) {
+        container.innerHTML = `<div class="text-center py-6 text-[#938F99] text-sm">No recorded income entries yet.</div>`;
+        return;
+      }
+
+      sorted.forEach(entry => {
+        const itemHtml = `
+          <div class="bg-[#2B2930] p-4 rounded-2xl border border-[#49454F] flex justify-between items-center hover:bg-[#2B2930]/80 transition-all">
+            <div class="min-w-0">
+              <p class="font-bold text-[#E6E1E5]">${entry.machineName} - ${entry.quantity} ${entry.unitType}</p>
+              <p class="text-xs text-[#938F99] mt-0.5">Rate: ${formatINR(entry.rate)} | ${entry.remarks}</p>
+              <p class="text-[10px] text-[#BACF9E] mt-1 font-semibold">${formatDateTime(entry.date)}</p>
+            </div>
+            <div class="flex items-center gap-3 shrink-0">
+              <span class="font-bold text-[#BACF9E] text-lg">${formatINR(entry.totalAmount)}</span>
+              <button onclick="deleteIncome(${entry.id})" class="text-red-400 p-1.5 hover:bg-red-950/20 rounded-lg flex items-center justify-center cursor-pointer">
+                <span class="material-symbols-outlined text-sm">delete</span>
+              </button>
+            </div>
+          </div>
+        `;
+        container.insertAdjacentHTML('beforeend', itemHtml);
+      });
+    }
+
+    // Screen-specific: Operational Expenses Screen Loader
+    function renderExpenseScreen() {
+      const today = new Date().toISOString().split('T')[0];
+      document.getElementById('expense-date').value = today;
+
+      renderExpenseList();
+    }
+
+    function handleExpenseSubmit(e) {
+      e.preventDefault();
+      const rawDate = document.getElementById('expense-date').value;
+      const dateEpoch = rawDate ? new Date(rawDate).getTime() : Date.now();
+      const category = document.getElementById('expense-category').value;
+      const amount = parseFloat(document.getElementById('expense-amount').value) || 0;
+      const remarks = document.getElementById('expense-remarks').value || 'Operational Refills';
+
+      if (amount <= 0 || !category) {
+        showToast("Please input valid amount and category", true);
+        return;
+      }
+
+      const newEntry = {
+        id: Date.now(),
+        date: dateEpoch,
+        category: category,
+        amount: amount,
+        remarks: remarks
+      };
+
+      db.expenseEntries.push(newEntry);
+      saveDB();
+      showToast("Operational Expense logged successfully!");
+
+      // Clear inputs
+      document.getElementById('expense-amount').value = '';
+      document.getElementById('expense-remarks').value = '';
+
+      renderExpenseScreen();
+    }
+
+    function deleteExpense(id) {
+      if (confirm("Are you sure you want to delete this expense entry?")) {
+        db.expenseEntries = db.expenseEntries.filter(e => e.id !== id);
+        saveDB();
+        showToast("Expense entry deleted!");
+        renderExpenseScreen();
+      }
+    }
+
+    function renderExpenseList() {
+      const container = document.getElementById('expense-list');
+      container.innerHTML = '';
+
+      const sorted = [...db.expenseEntries].sort((a, b) => b.date - a.date);
+
+      if (sorted.length === 0) {
+        container.innerHTML = `<div class="text-center py-6 text-[#938F99] text-sm">No recorded operational expenses.</div>`;
+        return;
+      }
+
+      sorted.forEach(entry => {
+        const itemHtml = `
+          <div class="bg-[#2B2930] p-4 rounded-2xl border border-[#49454F] flex justify-between items-center hover:bg-[#2B2930]/80 transition-all">
+            <div class="min-w-0">
+              <p class="font-bold text-[#E6E1E5]">${entry.category}</p>
+              <p class="text-xs text-[#938F99] mt-0.5">${entry.remarks}</p>
+              <p class="text-[10px] text-[#F2B8B5] mt-1 font-semibold">${formatDateTime(entry.date)}</p>
+            </div>
+            <div class="flex items-center gap-3 shrink-0">
+              <span class="font-bold text-[#F2B8B5] text-lg">-${formatINR(entry.amount)}</span>
+              <button onclick="deleteExpense(${entry.id})" class="text-red-400 p-1.5 hover:bg-red-950/20 rounded-lg flex items-center justify-center cursor-pointer">
+                <span class="material-symbols-outlined text-sm">delete</span>
+              </button>
+            </div>
+          </div>
+        `;
+        container.insertAdjacentHTML('beforeend', itemHtml);
+      });
+    }
+
+    // Screen-specific: Machines Screen Loader
+    function renderMachinesScreen() {
+      renderFleetAndMetrics();
+      renderConfiguredRates();
+
+      // Populate Selector dropdowns in rate form
+      const machineSel = document.getElementById('rate-machine');
+      machineSel.innerHTML = '';
+      db.machines.forEach(m => {
+        machineSel.insertAdjacentHTML('beforeend', `<option value="${m.name}">${m.name}</option>`);
+      });
+
+      const unitSel = document.getElementById('rate-unit');
+      unitSel.innerHTML = '';
+      db.unitTypes.forEach(u => {
+        unitSel.insertAdjacentHTML('beforeend', `<option value="${u.name}">${u.name}</option>`);
+      });
+    }
+
+    function renderFleetAndMetrics() {
+      // Machines config
+      const machContainer = document.getElementById('machines-list-configs');
+      machContainer.innerHTML = '';
+      db.machines.forEach(m => {
+        machContainer.insertAdjacentHTML('beforeend', `
+          <span class="bg-[#1C1B1F] border border-[#49454F] text-[#E6E1E5] px-3.5 py-1.5 rounded-full text-xs font-semibold flex items-center gap-2">
+            ${m.name}
+            <button onclick="deleteMachine(${m.id})" class="text-red-400 hover:text-red-300 font-bold">×</button>
+          </span>
+        `);
+      });
+
+      // Units Config
+      const unitContainer = document.getElementById('units-list-configs');
+      unitContainer.innerHTML = '';
+      db.unitTypes.forEach(u => {
+        unitContainer.insertAdjacentHTML('beforeend', `
+          <span class="bg-[#1C1B1F] border border-[#49454F] text-[#E6E1E5] px-3.5 py-1.5 rounded-full text-xs font-semibold flex items-center gap-2">
+            ${u.name}
+            <button onclick="deleteUnit(${u.id})" class="text-red-400 hover:text-red-300 font-bold">×</button>
+          </span>
+        `);
+      });
+    }
+
+    function handleMachineSubmit(e) {
+      e.preventDefault();
+      const val = document.getElementById('new-machine-name').value.trim();
+      if (!val) return;
+
+      if (db.machines.some(m => m.name.toLowerCase() === val.toLowerCase())) {
+        showToast("Machine already exists!", true);
+        return;
+      }
+
+      db.machines.push({ id: Date.now(), name: val, createdTimestamp: Date.now() });
+      saveDB();
+      document.getElementById('new-machine-name').value = '';
+      showToast("Machinery fleet updated!");
+      renderMachinesScreen();
+    }
+
+    function deleteMachine(id) {
+      if (confirm("Are you sure you want to retire this machine?")) {
+        db.machines = db.machines.filter(m => m.id !== id);
+        saveDB();
+        showToast("Machine retired!");
+        renderMachinesScreen();
+      }
+    }
+
+    function handleUnitSubmit(e) {
+      e.preventDefault();
+      const val = document.getElementById('new-unit-name').value.trim();
+      if (!val) return;
+
+      if (db.unitTypes.some(u => u.name.toLowerCase() === val.toLowerCase())) {
+        showToast("Metric already exists!", true);
+        return;
+      }
+
+      db.unitTypes.push({ id: Date.now(), name: val });
+      saveDB();
+      document.getElementById('new-unit-name').value = '';
+      showToast("Unit metrics updated!");
+      renderMachinesScreen();
+    }
+
+    function deleteUnit(id) {
+      if (confirm("Are you sure you want to delete this unit metric?")) {
+        db.unitTypes = db.unitTypes.filter(u => u.id !== id);
+        saveDB();
+        showToast("Metric deleted!");
+        renderMachinesScreen();
+      }
+    }
+
+    function handleRateSubmit(e) {
+      e.preventDefault();
+      const machine = document.getElementById('rate-machine').value;
+      const unit = document.getElementById('rate-unit').value;
+      const rateVal = parseFloat(document.getElementById('rate-val').value) || 0;
+
+      if (!machine || !unit || rateVal <= 0) {
+        showToast("Please inputs valid fields!", true);
+        return;
+      }
+
+      // Check if existing
+      const existingIdx = db.rates.findIndex(r => r.machineName === machine && r.unitName === unit);
+      if (existingIdx !== -1) {
+        db.rates[existingIdx].rate = rateVal;
+      } else {
+        db.rates.push({ id: Date.now(), machineName: machine, unitName: unit, rate: rateVal });
+      }
+
+      saveDB();
+      showToast("Rule base rate updated!");
+      document.getElementById('rate-val').value = '';
+      renderMachinesScreen();
+    }
+
+    function deleteRate(id) {
+      if (confirm("Are you sure you want to delete this rate config?")) {
+        db.rates = db.rates.filter(r => r.id !== id);
+        saveDB();
+        showToast("Rate configuration deleted!");
+        renderMachinesScreen();
+      }
+    }
+
+    function renderConfiguredRates() {
+      const container = document.getElementById('rates-list-configs');
+      container.innerHTML = '';
+
+      if (db.rates.length === 0) {
+        container.innerHTML = `<div class="text-xs text-[#938F99]">No rates configured. Default is manually inputted during log.</div>`;
+        return;
+      }
+
+      db.rates.forEach(r => {
+        container.insertAdjacentHTML('beforeend', `
+          <div class="flex justify-between items-center bg-[#1C1B1F] p-3 rounded-xl border border-[#49454F]/40 text-xs">
+            <div>
+              <p class="font-bold text-white">${r.machineName}</p>
+              <p class="text-[10px] text-[#938F99] mt-0.5">${r.unitName}</p>
+            </div>
+            <div class="flex items-center gap-2">
+              <span class="font-bold text-[#D0BCFF]">${formatINR(r.rate)}</span>
+              <button onclick="deleteRate(${r.id})" class="text-red-400 hover:text-red-300 font-bold text-sm">×</button>
+            </div>
+          </div>
+        `);
+      });
+    }
+
+    // Screen-specific: Reports Screen Loader
+    function renderReportsScreen() {
+      // Toggle button highlights
+      ['daily', 'weekly', 'monthly', 'all'].forEach(p => {
+        const btn = document.getElementById('period-' + p);
+        if (p === selectedReportPeriod) {
+          btn.className = "flex-1 min-w-[80px] py-2 px-3 rounded-xl bg-[#D0BCFF] text-[#381E72] font-semibold text-xs transition-all cursor-pointer";
+        } else {
+          btn.className = "flex-1 min-w-[80px] py-2 px-3 rounded-xl bg-[#1C1B1F] text-[#938F99] hover:bg-[#49454F]/50 font-semibold text-xs transition-all cursor-pointer";
+        }
+      });
+
+      // Filter entries
+      const filtered = getFilteredData(selectedReportPeriod);
+
+      document.getElementById('report-net').innerText = formatINR(filtered.netProfit);
+      document.getElementById('report-inc').innerText = formatINR(filtered.totalIncome);
+      document.getElementById('report-exp').innerText = formatINR(filtered.totalExpense);
+
+      // Render logs
+      const container = document.getElementById('reports-logs-container');
+      container.innerHTML = '';
+
+      if (filtered.merged.length === 0) {
+        container.innerHTML = `<div class="text-center py-6 text-[#938F99] text-sm">No ledger entries for this range.</div>`;
+        return;
+      }
+
+      filtered.merged.forEach(item => {
+        const isIncome = item.type === 'income';
+        const colorClass = isIncome ? 'border-[#BACF9E]' : 'border-[#F2B8B5]';
+        const amtColor = isIncome ? 'text-[#BACF9E]' : 'text-[#F2B8B5]';
+        const amtStr = isIncome ? `+${formatINR(item.amount)}` : `-${formatINR(item.amount)}`;
+
+        container.insertAdjacentHTML('beforeend', `
+          <div class="bg-[#2B2930] p-4 rounded-2xl border-l-4 ${colorClass} flex justify-between items-center">
+            <div>
+              <p class="font-bold text-[#E6E1E5]">${item.title}</p>
+              <p class="text-xs text-[#938F99] mt-0.5">${item.subtitle}</p>
+              <p class="text-[10px] text-[#938F99] font-medium mt-1">${formatDateTime(item.date)}</p>
+            </div>
+            <span class="font-bold ${amtColor} text-lg">${amtStr}</span>
+          </div>
+        `);
+      });
+    }
+
+    function setReportPeriod(period) {
+      selectedReportPeriod = period;
+      renderReportsScreen();
+    }
+
+    function getFilteredData(period) {
+      let limitMs = 0;
+      const now = Date.now();
+
+      if (period === 'daily') {
+        const startOfDay = new Date();
+        startOfDay.setHours(0, 0, 0, 0);
+        limitMs = startOfDay.getTime();
+      } else if (period === 'weekly') {
+        limitMs = now - 7 * 24 * 3600000;
+      } else if (period === 'monthly') {
+        limitMs = now - 30 * 24 * 3600000;
+      }
+
+      const filteredIncomes = db.incomeEntries.filter(e => period === 'all' || e.date >= limitMs);
+      const filteredExpenses = db.expenseEntries.filter(e => period === 'all' || e.date >= limitMs);
+
+      const totalIncome = filteredIncomes.reduce((sum, e) => sum + e.totalAmount, 0);
+      const totalExpense = filteredExpenses.reduce((sum, e) => sum + e.amount, 0);
+
+      let merged = [];
+      filteredIncomes.forEach(e => {
+        merged.push({
+          type: 'income',
+          date: e.date,
+          title: `${e.machineName} - ${e.quantity} ${e.unitType}`,
+          subtitle: `Rate: ${formatINR(e.rate)} | ${e.remarks}`,
+          amount: e.totalAmount
+        });
+      });
+
+      filteredExpenses.forEach(e => {
+        merged.push({
+          type: 'expense',
+          date: e.date,
+          title: `Operational: ${e.category}`,
+          subtitle: e.remarks,
+          amount: e.amount
+        });
+      });
+
+      merged.sort((a, b) => b.date - a.date);
+
+      return {
+        merged,
+        totalIncome,
+        totalExpense,
+        netProfit: totalIncome - totalExpense
+      };
+    }
+
+    // CSV Download
+    function exportToCSV() {
+      const filtered = getFilteredData(selectedReportPeriod);
+      let csvContent = "data:text/csv;charset=utf-8,";
+      csvContent += "Type,Date,Title,Subtitle,Amount (INR)\n";
+
+      filtered.merged.forEach(item => {
+        const type = item.type.toUpperCase();
+        const date = new Date(item.date).toISOString().split('T')[0];
+        const title = `"${item.title.replace(/"/g, '""')}"`;
+        const subtitle = `"${item.subtitle.replace(/"/g, '""')}"`;
+        const amount = item.type === 'income' ? item.amount : -item.amount;
+
+        csvContent += `${type},${date},${title},${subtitle},${amount}\n`;
+      });
+
+      const encodedUri = encodeURI(csvContent);
+      const link = document.createElement("a");
+      link.setAttribute("href", encodedUri);
+      link.setAttribute("download", `badhar_business_ledger_${selectedReportPeriod}.csv`);
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      showToast("CSV report generated and downloaded!");
+    }
+
+    // Settings Functions
+    function backupAsJSON() {
+      const blob = new Blob([JSON.stringify(db, null, 2)], { type: 'application/json' });
+      const link = document.createElement("a");
+      link.href = URL.createObjectURL(blob);
+      link.download = `badhar_business_backup_${Date.now()}.json`;
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      showToast("Database backups safely archived!");
+    }
+
+    function restoreFromJSON(e) {
+      const file = e.target.files[0];
+      if (!file) return;
+
+      const reader = new FileReader();
+      reader.onload = function(evt) {
+        try {
+          const parsed = JSON.parse(evt.target.result);
+          if (parsed.machines && parsed.incomeEntries) {
+            db = parsed;
+            saveDB();
+            showToast("Database backups fully restored!");
+            switchScreen('dashboard');
+          } else {
+            showToast("Invalid backups file format", true);
+          }
+        } catch (err) {
+          showToast("Failed to read JSON backup file", true);
+        }
+      };
+      reader.readAsText(file);
+    }
+
+    function resetLedgerToDefaults() {
+      if (confirm("DANGER: Wiping all transaction archives. Re-initialize default seeds?")) {
+        db = JSON.parse(JSON.stringify(defaultSeed));
+        saveDB();
+        showToast("Ledger format finalized and seeded!");
+        switchScreen('dashboard');
+      }
+    }
+
+    // App Init
+    window.addEventListener('load', () => {
+      loadDB();
+      switchScreen('dashboard');
+    });
+  </script>
+</body>
+</html>
