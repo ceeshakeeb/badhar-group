@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Badhar Business Group - QuarrySync Pro</title>
+  <title>Badhar group business Tracker</title>
   <!-- Tailwind CSS v4 CDN -->
   <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
   <!-- Material Symbols Outlined -->
@@ -16,8 +16,8 @@
   <style>
     body {
       font-family: 'Plus Jakarta Sans', sans-serif;
-      background-color: #E6EEF8;
-      color: #1F2937;
+      background-color: #F3F4F6;
+      color: #111827;
       margin: 0;
       height: 100%;
       overflow: hidden;
@@ -33,28 +33,49 @@
       -ms-overflow-style: none;
       scrollbar-width: none;
     }
-    /* Neumorphic shadow classes */
+    /* Corporate Styled Cards */
     .neumorphic-card {
-      background: #E6EEF8 !important;
-      border-radius: 24px;
-      box-shadow: 6px 6px 14px #bccadf, -6px -6px 14px #ffffff !important;
-      border: 1px solid rgba(255,255,255,0.4) !important;
+      background: #FFFFFF !important;
+      border-radius: 20px;
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03) !important;
+      border: 1px solid #E5E7EB !important;
     }
+    /* Inner form containers */
     .neumorphic-inset {
-      background: #E6EEF8 !important;
-      border-radius: 14px;
-      box-shadow: inset 4px 4px 8px #bccadf, inset -4px -4px 8px #ffffff !important;
-      border: 1px solid rgba(255,255,255,0.2) !important;
+      background: #F9FAFB !important;
+      border-radius: 12px;
+      border: 1px solid #E5E7EB !important;
+      box-shadow: none !important;
     }
+    /* Buttons in the new theme - matching Corporate Primary Blue */
     .neumorphic-btn {
-      background: #E6EEF8 !important;
-      border-radius: 16px;
-      box-shadow: 4px 4px 10px #bccadf, -4px -4px 10px #ffffff !important;
+      background: #0056C6 !important;
+      color: #FFFFFF !important;
+      border-radius: 12px;
+      box-shadow: 0 2px 4px rgba(0, 86, 198, 0.2) !important;
+      border: none !important;
       transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-      border: 1px solid rgba(255,255,255,0.3) !important;
     }
     .neumorphic-btn:active, .neumorphic-btn-active {
-      box-shadow: inset 3px 3px 6px #bccadf, inset -3px -3px 6px #ffffff !important;
+      background: #00439D !important;
+      box-shadow: none !important;
+    }
+    .sidebar-link {
+      color: #4B5563 !important;
+    }
+    .sidebar-link.neumorphic-inset {
+      background: #FFFFFF !important;
+      border: 1px solid #0056C6 !important;
+      color: #0056C6 !important;
+    }
+    /* Explicit legibility overrides for Select dropdowns & option items */
+    select {
+      background-color: #F9FAFB !important;
+      color: #111827 !important;
+    }
+    select option {
+      background-color: #FFFFFF !important;
+      color: #111827 !important;
     }
     /* Active bottom nav indicator style */
     .nav-indicator {
@@ -67,7 +88,7 @@
       left: 25%;
       width: 50%;
       height: 3px;
-      background-color: #FF5E3A;
+      background-color: #0056C6;
       border-radius: 9999px;
     }
   </style>
@@ -75,37 +96,37 @@
 <body class="flex flex-col md:flex-row h-full">
 
   <!-- Desktop Navigation Sidebar -->
-  <aside class="hidden md:flex flex-col w-64 bg-[#E6EEF8] border-r border-[#BCCADF]/50 px-4 py-6 justify-between shrink-0">
+  <aside class="hidden md:flex flex-col w-64 bg-white border-r border-gray-200 px-4 py-6 justify-between shrink-0">
     <div class="space-y-8">
       <!-- App Header -->
       <div class="px-3">
-        <span class="text-[#4B5563] text-xs font-bold uppercase tracking-widest">BUSINESS DASHBOARD</span>
-        <h1 class="text-2xl font-bold text-[#1F2937] mt-1 heading-font">Badhar Business <span class="text-[#FF5E3A]">Group</span></h1>
+        <span class="text-gray-500 text-[10px] font-bold uppercase tracking-widest">BUSINESS DASHBOARD</span>
+        <h1 class="text-2xl font-bold text-[#111827] mt-1 heading-font">Badhar group <span class="text-[#0056C6]">business Tracker</span></h1>
       </div>
 
       <!-- Navigation Menus -->
       <nav class="space-y-2">
-        <button onclick="switchScreen('dashboard')" id="aside-btn-dashboard" class="sidebar-link w-full flex items-center gap-4 px-4 py-3 rounded-2xl neumorphic-inset text-[#FF5E3A] font-semibold transition-all">
+        <button onclick="switchScreen('dashboard')" id="aside-btn-dashboard" class="sidebar-link w-full flex items-center gap-4 px-4 py-3 rounded-2xl neumorphic-inset text-[#0056C6] font-semibold transition-all">
           <span class="material-symbols-outlined">dashboard</span>
           Dashboard
         </button>
-        <button onclick="switchScreen('income')" id="aside-btn-income" class="sidebar-link w-full flex items-center gap-4 px-4 py-3 rounded-2xl text-[#4B5563] hover:bg-[#BCCADF]/30 hover:text-[#1F2937] font-medium transition-all">
+        <button onclick="switchScreen('income')" id="aside-btn-income" class="sidebar-link w-full flex items-center gap-4 px-4 py-3 rounded-2xl text-gray-600 hover:bg-gray-100 hover:text-gray-900 font-medium transition-all">
           <span class="material-symbols-outlined">add_circle</span>
-          Machinery Income
+          Income Log
         </button>
-        <button onclick="switchScreen('expense')" id="aside-btn-expense" class="sidebar-link w-full flex items-center gap-4 px-4 py-3 rounded-2xl text-[#4B5563] hover:bg-[#BCCADF]/30 hover:text-[#1F2937] font-medium transition-all">
+        <button onclick="switchScreen('expense')" id="aside-btn-expense" class="sidebar-link w-full flex items-center gap-4 px-4 py-3 rounded-2xl text-gray-600 hover:bg-gray-100 hover:text-gray-900 font-medium transition-all">
           <span class="material-symbols-outlined">remove_circle</span>
           Expenses Log
         </button>
-        <button onclick="switchScreen('machines')" id="aside-btn-machines" class="sidebar-link w-full flex items-center gap-4 px-4 py-3 rounded-2xl text-[#4B5563] hover:bg-[#BCCADF]/30 hover:text-[#1F2937] font-medium transition-all">
+        <button onclick="switchScreen('machines')" id="aside-btn-machines" class="sidebar-link w-full flex items-center gap-4 px-4 py-3 rounded-2xl text-gray-600 hover:bg-gray-100 hover:text-gray-900 font-medium transition-all">
           <span class="material-symbols-outlined">construction</span>
-          Machines & Rates
+          Rates & Items
         </button>
-        <button onclick="switchScreen('reports')" id="aside-btn-reports" class="sidebar-link w-full flex items-center gap-4 px-4 py-3 rounded-2xl text-[#4B5563] hover:bg-[#BCCADF]/30 hover:text-[#1F2937] font-medium transition-all">
+        <button onclick="switchScreen('reports')" id="aside-btn-reports" class="sidebar-link w-full flex items-center gap-4 px-4 py-3 rounded-2xl text-gray-600 hover:bg-gray-100 hover:text-gray-900 font-medium transition-all">
           <span class="material-symbols-outlined">analytics</span>
           Reports & Export
         </button>
-        <button onclick="switchScreen('settings')" id="aside-btn-settings" class="sidebar-link w-full flex items-center gap-4 px-4 py-3 rounded-2xl text-[#4B5563] hover:bg-[#BCCADF]/30 hover:text-[#1F2937] font-medium transition-all">
+        <button onclick="switchScreen('settings')" id="aside-btn-settings" class="sidebar-link w-full flex items-center gap-4 px-4 py-3 rounded-2xl text-gray-600 hover:bg-gray-100 hover:text-gray-900 font-medium transition-all">
           <span class="material-symbols-outlined">settings</span>
           Data Settings
         </button>
@@ -113,40 +134,40 @@
     </div>
 
     <!-- User Profile and Sync Status -->
-    <div class="neumorphic-card p-4">
+    <div class="neumorphic-card p-4 bg-white">
       <div class="flex items-center gap-3">
-        <div class="w-10 h-10 rounded-full bg-[#E6EEF8] neumorphic-card flex items-center justify-center text-[#1F2937] font-bold">
+        <div class="w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center text-[#111827] font-bold">
           JD
         </div>
         <div>
-          <h4 class="text-sm font-semibold text-[#1F2937]">John Doe</h4>
-          <span class="text-xs text-[#4B5563]">Operator Admin</span>
+          <h4 class="text-sm font-semibold text-gray-900">John Doe</h4>
+          <span class="text-xs text-gray-500">Operator Admin</span>
         </div>
       </div>
-      <div class="mt-3 pt-3 border-t border-[#BCCADF]/50 flex justify-between items-center text-xs">
+      <div class="mt-3 pt-3 border-t border-gray-200 flex justify-between items-center text-xs">
         <span class="flex items-center gap-1 text-[#10B981]">
           <span class="w-2 h-2 rounded-full bg-[#10B981] animate-pulse"></span> Offline Synced
         </span>
-        <button onclick="triggerCloudSyncSim()" class="text-[#FF5E3A] font-semibold hover:underline">Sync now</button>
+        <button onclick="triggerCloudSyncSim()" class="text-[#0056C6] font-semibold hover:underline">Sync now</button>
       </div>
     </div>
   </aside>
 
   <!-- Main Content Container -->
-  <div class="flex-1 flex flex-col h-full overflow-hidden bg-[#E6EEF8]">
+  <div class="flex-1 flex flex-col h-full overflow-hidden bg-[#F3F4F6]">
     
     <!-- Top Mobile Header / App Bar -->
-    <header class="md:hidden px-6 pt-6 pb-4 flex justify-between items-center bg-[#E6EEF8] border-b border-[#BCCADF]/30 shrink-0">
+    <header class="md:hidden px-6 pt-6 pb-4 flex justify-between items-center bg-white border-b border-gray-200 shrink-0">
       <div class="flex flex-col">
-        <span class="text-[#4B5563] text-[10px] font-bold uppercase tracking-wider">BUSINESS DASHBOARD</span>
-        <h1 class="text-xl font-bold text-[#1F2937] heading-font">Badhar Business <span class="text-[#FF5E3A]">Group</span></h1>
+        <span class="text-gray-500 text-[10px] font-bold uppercase tracking-wider">BUSINESS DASHBOARD</span>
+        <h1 class="text-xl font-bold text-[#111827] heading-font">Badhar group <span class="text-[#0056C6]">business Tracker</span></h1>
       </div>
       <div class="flex items-center gap-2">
-        <button onclick="triggerCloudSyncSim()" class="w-10 h-10 neumorphic-btn text-[#FF5E3A] flex items-center justify-center">
+        <button onclick="triggerCloudSyncSim()" class="w-10 h-10 neumorphic-btn text-white flex items-center justify-center">
           <span class="material-symbols-outlined" id="sync-icon">sync</span>
         </button>
-        <div class="w-9 h-9 rounded-full bg-[#E6EEF8] neumorphic-card flex items-center justify-center">
-          <span class="text-xs font-semibold text-[#1F2937]">JD</span>
+        <div class="w-9 h-9 rounded-full bg-gray-100 flex items-center justify-center">
+          <span class="text-xs font-semibold text-[#111827]">JD</span>
         </div>
       </div>
     </header>
@@ -181,12 +202,23 @@
 
         <!-- Quick Access Income / Expense Buttons -->
         <div class="flex gap-4">
-          <button onclick="switchScreen('income')" class="flex-1 neumorphic-btn h-14 flex items-center justify-center gap-2 font-bold hover:text-[#FF5E3A] cursor-pointer">
-            <span class="material-symbols-outlined text-[#FF5E3A]">add_circle</span> Add Income
+          <button onclick="switchScreen('income')" class="flex-1 h-14 bg-emerald-600 text-white rounded-xl flex items-center justify-center gap-2 font-bold hover:bg-emerald-700 transition-all cursor-pointer shadow-sm">
+            <span class="material-symbols-outlined">add_circle</span> Add Income
           </button>
-          <button onclick="switchScreen('expense')" class="flex-1 neumorphic-btn h-14 flex items-center justify-center gap-2 font-bold hover:text-[#EF4444] cursor-pointer">
-            <span class="material-symbols-outlined text-[#EF4444]">remove_circle</span> Add Expense
+          <button onclick="switchScreen('expense')" class="flex-1 h-14 bg-rose-600 text-white rounded-xl flex items-center justify-center gap-2 font-bold hover:bg-rose-700 transition-all cursor-pointer shadow-sm">
+            <span class="material-symbols-outlined">remove_circle</span> Add Expense
           </button>
+        </div>
+
+        <!-- Vendor Outstanding Balances Section -->
+        <div class="space-y-3">
+          <div class="flex justify-between items-center">
+            <h3 class="font-bold text-lg text-gray-900">Vendor Outstanding Balances</h3>
+            <span class="text-xs text-amber-600 font-bold bg-amber-50 px-2.5 py-1 rounded-full border border-amber-200">Active Outstandings</span>
+          </div>
+          <div id="vendor-outstanding-container" class="grid grid-cols-2 md:grid-cols-4 gap-4">
+            <!-- Loaded dynamically in JavaScript -->
+          </div>
         </div>
 
         <!-- Two Columns Layout for Desktop Charts & Feeds -->
@@ -195,7 +227,7 @@
           <div class="lg:col-span-2 neumorphic-card p-5 flex flex-col justify-between">
             <div class="flex justify-between items-center mb-4">
               <h3 class="font-bold text-lg text-[#1F2937]">Financial Trends</h3>
-              <span class="text-[#FF5E3A] text-xs font-semibold">Real-time stats</span>
+              <span class="text-[#0056C6] text-xs font-semibold">Real-time stats</span>
             </div>
             <div class="h-64 flex items-center justify-center">
               <canvas id="dashboardChart"></canvas>
@@ -222,7 +254,7 @@
         <div class="flex flex-col space-y-3 pb-4">
           <div class="flex justify-between items-end">
             <h3 class="font-bold text-lg text-[#1F2937]">Recent Ledger Stream</h3>
-            <button onclick="switchScreen('reports')" class="text-[#FF5E3A] text-xs font-semibold hover:underline">View report logs</button>
+            <button onclick="switchScreen('reports')" class="text-[#0056C6] text-xs font-semibold hover:underline">View report logs</button>
           </div>
           <div id="recent-feed-container" class="space-y-3">
             <!-- Dynamic entries loaded here -->
@@ -233,7 +265,7 @@
       <!-- SCREEN: MACHINERY INCOME -->
       <div id="screen-income" class="screen-content space-y-6 hidden">
         <div class="flex items-center justify-between">
-          <h2 class="text-2xl font-bold text-[#1F2937] heading-font">Record Machinery Income</h2>
+          <h2 class="text-2xl font-bold text-[#1F2937] heading-font">Record Quarry Income</h2>
           <span class="bg-[#10B981]/15 text-[#10B981] text-xs font-bold px-3 py-1 rounded-full border border-[#10B981]/30">Income Entry</span>
         </div>
 
@@ -248,7 +280,7 @@
 
             <!-- Machine Selector -->
             <div class="flex flex-col gap-1.5">
-              <label class="text-xs font-semibold text-[#4B5563] uppercase tracking-wider">Select Machinery</label>
+              <label class="text-xs font-semibold text-[#4B5563] uppercase tracking-wider">Select Material / Vehicle</label>
               <select id="income-machine" required onchange="updateRateEstimate()" class="neumorphic-inset rounded-xl px-4 py-3 text-[#1F2937] focus:outline-none focus:ring-2 focus:ring-[#FF5E3A]/40 transition-all">
                 <!-- Loaded Dynamically -->
               </select>
@@ -309,19 +341,32 @@
           <span class="bg-[#EF4444]/15 text-[#EF4444] text-xs font-bold px-3 py-1 rounded-full border border-[#EF4444]/30">Expense Entry</span>
         </div>
 
+        <!-- Mode Selector Tabs for Expenses (General vs Sub-contract vs Advance) -->
+        <div class="flex gap-2 bg-gray-100 p-1.5 rounded-xl border border-gray-200">
+          <button type="button" onclick="setExpenseMode('general')" id="expense-mode-general" class="flex-1 py-2 px-3 text-sm font-bold rounded-lg bg-[#0056C6] text-white transition-all cursor-pointer">
+            General
+          </button>
+          <button type="button" onclick="setExpenseMode('subcontract')" id="expense-mode-subcontract" class="flex-1 py-2 px-3 text-sm font-medium rounded-lg text-gray-600 hover:text-gray-900 hover:bg-gray-200/50 transition-all cursor-pointer">
+            Sub-contract
+          </button>
+          <button type="button" onclick="setExpenseMode('advance')" id="expense-mode-advance" class="flex-1 py-2 px-3 text-sm font-medium rounded-lg text-gray-600 hover:text-gray-900 hover:bg-gray-200/50 transition-all cursor-pointer">
+            Advance
+          </button>
+        </div>
+
         <!-- Expense Entry Form -->
         <form id="expense-form" onsubmit="handleExpenseSubmit(event)" class="neumorphic-card p-6 space-y-4">
           <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
             <!-- Date -->
             <div class="flex flex-col gap-1.5">
               <label class="text-xs font-semibold text-[#4B5563] uppercase tracking-wider">Expense Date</label>
-              <input type="date" id="expense-date" required class="neumorphic-inset rounded-xl px-4 py-3 text-[#1F2937] focus:outline-none focus:ring-2 focus:ring-[#FF5E3A]/40 transition-all" />
+              <input type="date" id="expense-date" required class="neumorphic-inset rounded-xl px-4 py-3 text-[#1F2937] focus:outline-none focus:ring-2 focus:ring-[#0056C6]/40 transition-all" />
             </div>
 
-            <!-- Category -->
-            <div class="flex flex-col gap-1.5">
+            <!-- Category (General mode only) -->
+            <div id="field-expense-category" class="flex flex-col gap-1.5">
               <label class="text-xs font-semibold text-[#4B5563] uppercase tracking-wider">Expense Category</label>
-              <select id="expense-category" required class="neumorphic-inset rounded-xl px-4 py-3 text-[#1F2937] focus:outline-none focus:ring-2 focus:ring-[#FF5E3A]/40 transition-all">
+              <select id="expense-category" class="neumorphic-inset rounded-xl px-4 py-3 text-[#1F2937] focus:outline-none focus:ring-2 focus:ring-[#0056C6]/40 transition-all">
                 <option value="Diesel">Diesel / Fuel</option>
                 <option value="Labour Salary">Labour Salary</option>
                 <option value="Food">Food & Mess</option>
@@ -333,21 +378,55 @@
               </select>
             </div>
 
-            <!-- Amount -->
-            <div class="flex flex-col gap-1.5">
-              <label class="text-xs font-semibold text-[#4B5563] uppercase tracking-wider">Paid Amount (₹)</label>
-              <input type="number" step="any" id="expense-amount" required placeholder="e.g. 15000" class="neumorphic-inset rounded-xl px-4 py-3 text-[#1F2937] focus:outline-none focus:ring-2 focus:ring-[#FF5E3A]/40 transition-all" />
+            <!-- Sub-contract Machinery Selector (Sub-contract & Advance modes) -->
+            <div id="field-expense-sub-machine" class="hidden flex flex-col gap-1.5">
+              <label id="lbl-expense-sub-machine" class="text-xs font-semibold text-[#4B5563] uppercase tracking-wider">Sub-contract Vehicle</label>
+              <select id="expense-sub-machine" onchange="updateSubContractRateEstimate()" class="neumorphic-inset rounded-xl px-4 py-3 text-[#1F2937] focus:outline-none focus:ring-2 focus:ring-[#0056C6]/40 transition-all">
+                <!-- Dynamically populated -->
+              </select>
+            </div>
+
+            <!-- Sub-contract Unit Selector (Sub-contract mode only) -->
+            <div id="field-expense-sub-unit" class="hidden flex flex-col gap-1.5">
+              <label class="text-xs font-semibold text-[#4B5563] uppercase tracking-wider">Measuring Unit</label>
+              <select id="expense-sub-unit" onchange="updateSubContractRateEstimate()" class="neumorphic-inset rounded-xl px-4 py-3 text-[#1F2937] focus:outline-none focus:ring-2 focus:ring-[#0056C6]/40 transition-all">
+                <!-- Dynamically populated -->
+              </select>
+            </div>
+
+            <!-- Sub-contract Quantity (Sub-contract mode only) -->
+            <div id="field-expense-sub-qty" class="hidden flex flex-col gap-1.5">
+              <label class="text-xs font-semibold text-[#4B5563] uppercase tracking-wider">Quantity / Reading</label>
+              <input type="number" step="any" id="expense-sub-qty" oninput="calculateSubContractTotal()" placeholder="e.g. 45.5" class="neumorphic-inset rounded-xl px-4 py-3 text-[#1F2937] focus:outline-none focus:ring-2 focus:ring-[#0056C6]/40 transition-all" />
+            </div>
+
+            <!-- Sub-contract Rate (Sub-contract mode only) -->
+            <div id="field-expense-sub-rate" class="hidden flex flex-col gap-1.5">
+              <label class="text-xs font-semibold text-[#4B5563] uppercase tracking-wider">Rate per Unit (₹)</label>
+              <input type="number" step="any" id="expense-sub-rate" oninput="calculateSubContractTotal()" placeholder="e.g. 2500" class="neumorphic-inset rounded-xl px-4 py-3 text-[#1F2937] focus:outline-none focus:ring-2 focus:ring-[#0056C6]/40 transition-all" />
+            </div>
+
+            <!-- Live Sub-contract Display (Sub-contract mode only) -->
+            <div id="field-expense-sub-total-live" class="hidden neumorphic-inset px-5 py-3 h-full flex flex-col justify-center">
+              <span class="text-[10px] font-bold text-[#4B5563] uppercase tracking-widest">Computed Total Bill</span>
+              <p id="expense-sub-total-live-val" class="text-2xl font-black text-rose-600 mt-1 heading-font">₹0.00</p>
+            </div>
+
+            <!-- Amount (General & Advance modes) -->
+            <div id="field-expense-amount" class="flex flex-col gap-1.5">
+              <label id="lbl-expense-amount" class="text-xs font-semibold text-[#4B5563] uppercase tracking-wider">Paid Amount (₹)</label>
+              <input type="number" step="any" id="expense-amount" placeholder="e.g. 15000" class="neumorphic-inset rounded-xl px-4 py-3 text-[#1F2937] focus:outline-none focus:ring-2 focus:ring-[#0056C6]/40 transition-all" />
             </div>
 
             <!-- Remarks -->
             <div class="flex flex-col gap-1.5">
               <label class="text-xs font-semibold text-[#4B5563] uppercase tracking-wider">Remarks / Recipient</label>
-              <input type="text" id="expense-remarks" required placeholder="e.g. Fuel generator refill 150L" class="neumorphic-inset rounded-xl px-4 py-3 text-[#1F2937] focus:outline-none focus:ring-2 focus:ring-[#FF5E3A]/40 transition-all" />
+              <input type="text" id="expense-remarks" required placeholder="e.g. Fuel generator refill 150L" class="neumorphic-inset rounded-xl px-4 py-3 text-[#1F2937] focus:outline-none focus:ring-2 focus:ring-[#0056C6]/40 transition-all" />
             </div>
           </div>
 
           <!-- Save Button -->
-          <button type="submit" class="w-full h-14 neumorphic-btn text-[#EF4444] flex items-center justify-center gap-2 font-bold active:scale-98 transition-all cursor-pointer">
+          <button type="submit" class="w-full h-14 bg-rose-600 text-white rounded-xl flex items-center justify-center gap-2 font-bold hover:bg-rose-700 active:scale-98 transition-all cursor-pointer">
             <span class="material-symbols-outlined">save</span> Add Expense Entry
           </button>
         </form>
@@ -370,9 +449,9 @@
           <div class="space-y-6">
             <!-- Machines Card -->
             <div class="neumorphic-card p-6 space-y-4">
-              <h3 class="font-bold text-lg text-[#1F2937]">Manage Machinery Fleet</h3>
+              <h3 class="font-bold text-lg text-[#1F2937]">Manage Materials & Machinery</h3>
               <form id="add-machine-form" onsubmit="handleMachineSubmit(event)" class="flex gap-2">
-                <input type="text" id="new-machine-name" required placeholder="Machine Name (e.g. Caterpillar-05)" class="flex-1 neumorphic-inset rounded-xl px-4 py-3 text-[#1F2937] focus:outline-none focus:ring-2 focus:ring-[#FF5E3A]/40 transition-all" />
+                <input type="text" id="new-machine-name" required placeholder="Item/Asset Name (e.g. Boller, M-Sand, JCB)" class="flex-1 neumorphic-inset rounded-xl px-4 py-3 text-[#1F2937] focus:outline-none focus:ring-2 focus:ring-[#FF5E3A]/40 transition-all" />
                 <button type="submit" class="neumorphic-btn text-[#FF5E3A] px-4 rounded-xl font-bold flex items-center justify-center cursor-pointer">
                   <span class="material-symbols-outlined">add</span>
                 </button>
@@ -384,9 +463,9 @@
 
             <!-- Units Card -->
             <div class="neumorphic-card p-6 space-y-4">
-              <h3 class="font-bold text-lg text-[#1F2937]">Manage Unit Metrics</h3>
+              <h3 class="font-bold text-lg text-[#1F2937]">Manage Measurement Units</h3>
               <form id="add-unit-form" onsubmit="handleUnitSubmit(event)" class="flex gap-2">
-                <input type="text" id="new-unit-name" required placeholder="Unit Name (e.g. Load, Ton, Trip)" class="flex-1 neumorphic-inset rounded-xl px-4 py-3 text-[#1F2937] focus:outline-none focus:ring-2 focus:ring-[#FF5E3A]/40 transition-all" />
+                <input type="text" id="new-unit-name" required placeholder="Unit Name (e.g. foot, Bucket, Trip)" class="flex-1 neumorphic-inset rounded-xl px-4 py-3 text-[#1F2937] focus:outline-none focus:ring-2 focus:ring-[#FF5E3A]/40 transition-all" />
                 <button type="submit" class="neumorphic-btn text-[#FF5E3A] px-4 rounded-xl font-bold flex items-center justify-center cursor-pointer">
                   <span class="material-symbols-outlined">add</span>
                 </button>
@@ -399,19 +478,19 @@
 
           <!-- Add Rates Column -->
           <div class="neumorphic-card p-6 space-y-4">
-            <h3 class="font-bold text-lg text-[#1F2937]">Set Machinery Base Rates</h3>
+            <h3 class="font-bold text-lg text-[#1F2937]">Configure Base Rates</h3>
             <form id="add-rate-form" onsubmit="handleRateSubmit(event)" class="space-y-3">
               <div class="flex flex-col gap-1">
-                <label class="text-xs text-[#4B5563]">Machine</label>
+                <label class="text-xs text-[#4B5563]">Material / Vehicle</label>
                 <select id="rate-machine" required class="neumorphic-inset rounded-xl px-4 py-2.5 text-[#1F2937]"></select>
               </div>
               <div class="flex flex-col gap-1">
-                <label class="text-xs text-[#4B5563]">Unit Metric</label>
+                <label class="text-xs text-[#4B5563]">Measurement Unit</label>
                 <select id="rate-unit" required class="neumorphic-inset rounded-xl px-4 py-2.5 text-[#1F2937]"></select>
               </div>
               <div class="flex flex-col gap-1">
                 <label class="text-xs text-[#4B5563]">Base Rate (₹)</label>
-                <input type="number" step="any" id="rate-val" required placeholder="e.g. 2600" class="neumorphic-inset rounded-xl px-4 py-2.5 text-[#1F2937]" />
+                <input type="number" step="any" id="rate-val" required placeholder="e.g. 8 or 2600" class="neumorphic-inset rounded-xl px-4 py-2.5 text-[#1F2937]" />
               </div>
               <button type="submit" class="w-full h-12 neumorphic-btn text-[#FF5E3A] rounded-xl font-bold active:scale-98 transition-all cursor-pointer">
                 Save Rate Rule
@@ -419,7 +498,7 @@
             </form>
 
             <div class="pt-4 border-t border-[#BCCADF]/40 space-y-2">
-              <h4 class="text-xs font-bold text-[#4B5563] uppercase tracking-wider">Configured Rates</h4>
+              <h4 class="text-xs font-bold text-[#4B5563] uppercase tracking-wider">Configured Rates Matrix</h4>
               <div id="rates-list-configs" class="space-y-1.5 max-h-52 overflow-y-auto no-scrollbar">
                 <!-- Loaded dynamically -->
               </div>
@@ -540,24 +619,24 @@
     </main>
 
     <!-- Mobile Bottom Navigation Bar -->
-    <nav class="md:hidden fixed bottom-0 left-0 right-0 h-18 bg-[#E6EEF8] border-t border-[#BCCADF]/50 flex items-center justify-around px-2 z-50">
-      <button onclick="switchScreen('dashboard')" id="nav-btn-dashboard" class="flex flex-col items-center justify-center space-y-1 text-[#FF5E3A] nav-indicator active w-14 py-2">
+    <nav class="md:hidden fixed bottom-0 left-0 right-0 h-18 bg-white border-t border-gray-200 flex items-center justify-around px-2 z-50">
+      <button onclick="switchScreen('dashboard')" id="nav-btn-dashboard" class="flex flex-col items-center justify-center space-y-1 text-[#0056C6] nav-indicator active w-14 py-2">
         <span class="material-symbols-outlined">dashboard</span>
         <span class="text-[9px] font-bold uppercase">Home</span>
       </button>
-      <button onclick="switchScreen('income')" id="nav-btn-income" class="flex flex-col items-center justify-center space-y-1 text-[#4B5563] nav-indicator w-14 py-2">
+      <button onclick="switchScreen('income')" id="nav-btn-income" class="flex flex-col items-center justify-center space-y-1 text-gray-500 nav-indicator w-14 py-2">
         <span class="material-symbols-outlined">add_circle</span>
         <span class="text-[9px] font-bold uppercase">Incomes</span>
       </button>
-      <button onclick="switchScreen('expense')" id="nav-btn-expense" class="flex flex-col items-center justify-center space-y-1 text-[#4B5563] nav-indicator w-14 py-2">
+      <button onclick="switchScreen('expense')" id="nav-btn-expense" class="flex flex-col items-center justify-center space-y-1 text-gray-500 nav-indicator w-14 py-2">
         <span class="material-symbols-outlined">remove_circle</span>
         <span class="text-[9px] font-bold uppercase">Expenses</span>
       </button>
-      <button onclick="switchScreen('machines')" id="nav-btn-machines" class="flex flex-col items-center justify-center space-y-1 text-[#4B5563] nav-indicator w-14 py-2">
+      <button onclick="switchScreen('machines')" id="nav-btn-machines" class="flex flex-col items-center justify-center space-y-1 text-gray-500 nav-indicator w-14 py-2">
         <span class="material-symbols-outlined">construction</span>
         <span class="text-[9px] font-bold uppercase">Specs</span>
       </button>
-      <button onclick="switchScreen('reports')" id="nav-btn-reports" class="flex flex-col items-center justify-center space-y-1 text-[#4B5563] nav-indicator w-14 py-2">
+      <button onclick="switchScreen('reports')" id="nav-btn-reports" class="flex flex-col items-center justify-center space-y-1 text-gray-500 nav-indicator w-14 py-2">
         <span class="material-symbols-outlined">analytics</span>
         <span class="text-[9px] font-bold uppercase">Report</span>
       </button>
@@ -566,8 +645,8 @@
   </div>
 
   <!-- Notification Toast -->
-  <div id="toast" class="fixed bottom-22 md:bottom-6 right-6 bg-[#E6EEF8] text-[#1F2937] border border-[#BCCADF]/80 px-5 py-3 rounded-2xl shadow-2xl flex items-center gap-2 transform translate-y-20 opacity-0 transition-all duration-300 pointer-events-none z-50">
-    <span class="material-symbols-outlined text-[#FF5E3A]" id="toast-icon">check_circle</span>
+  <div id="toast" class="fixed bottom-22 md:bottom-6 right-6 bg-white text-gray-900 border border-gray-200 px-5 py-3 rounded-2xl shadow-2xl flex items-center gap-2 transform translate-y-20 opacity-0 transition-all duration-300 pointer-events-none z-50">
+    <span class="material-symbols-outlined text-[#0056C6]" id="toast-icon">check_circle</span>
     <span id="toast-text" class="text-sm font-semibold">Database updated!</span>
   </div>
 
@@ -582,6 +661,9 @@
       expenseEntries: []
     };
 
+    // Current operational expense recording mode: 'general' | 'subcontract' | 'advance'
+    let currentExpenseMode = 'general';
+
     // Chart.js reference
     let trendChartInstance = null;
     let selectedReportPeriod = 'daily';
@@ -589,56 +671,58 @@
     // Seed Data
     const defaultSeed = {
       machines: [
-        { id: 1, name: "JCB", createdTimestamp: Date.now() - 10 * 24 * 3600000 },
-        { id: 2, name: "Hitachi", createdTimestamp: Date.now() - 10 * 24 * 3600000 },
-        { id: 3, name: "Hyundai", createdTimestamp: Date.now() - 10 * 24 * 3600000 },
-        { id: 4, name: "Volvo", createdTimestamp: Date.now() - 10 * 24 * 3600000 }
+        { id: 1, name: "Boller", createdTimestamp: Date.now() - 10 * 24 * 3600000 },
+        { id: 2, name: "M-Sand", createdTimestamp: Date.now() - 10 * 24 * 3600000 },
+        { id: 3, name: "P-Sand", createdTimestamp: Date.now() - 10 * 24 * 3600000 },
+        { id: 4, name: "Gravel", createdTimestamp: Date.now() - 10 * 24 * 3600000 },
+        { id: 5, name: "JCB", createdTimestamp: Date.now() - 10 * 24 * 3600000 },
+        { id: 6, name: "Hitachi", createdTimestamp: Date.now() - 10 * 24 * 3600000 }
       ],
       unitTypes: [
-        { id: 1, name: "Bucket" },
-        { id: 2, name: "Breaker Hour" },
+        { id: 1, name: "foot" },
+        { id: 2, name: "Bucket" },
         { id: 3, name: "Hour" },
         { id: 4, name: "Trip" },
         { id: 5, name: "Ton" }
       ],
       rates: [
-        { id: 1, machineName: "JCB", unitName: "Bucket", rate: 2600.0 },
-        { id: 2, machineName: "Hitachi", unitName: "Bucket", rate: 2700.0 },
-        { id: 3, machineName: "Hyundai", unitName: "Bucket", rate: 3000.0 },
-        { id: 4, machineName: "Hitachi", unitName: "Breaker Hour", rate: 3500.0 },
-        { id: 5, machineName: "Volvo", unitName: "Hour", rate: 4000.0 },
-        { id: 6, machineName: "JCB", unitName: "Hour", rate: 2200.0 }
+        { id: 1, machineName: "Boller", unitName: "foot", rate: 8.0 },
+        { id: 2, machineName: "M-Sand", unitName: "foot", rate: 6.0 },
+        { id: 3, machineName: "P-Sand", unitName: "foot", rate: 7.0 },
+        { id: 4, machineName: "Gravel", unitName: "foot", rate: 6.5 },
+        { id: 5, machineName: "JCB", unitName: "Hour", rate: 2200.0 },
+        { id: 6, machineName: "Hitachi", unitName: "Breaker Hour", rate: 3500.0 }
       ],
       incomeEntries: [
         {
           id: 1,
           date: Date.now() - 2 * 24 * 3600000,
-          machineName: "JCB",
-          unitType: "Bucket",
-          quantity: 10,
-          rate: 2600,
-          totalAmount: 26000,
-          remarks: "North section excavation"
+          machineName: "Boller",
+          unitType: "foot",
+          quantity: 3000,
+          rate: 8,
+          totalAmount: 24000,
+          remarks: "Boller load delivery"
         },
         {
           id: 2,
           date: Date.now() - 24 * 3600000,
-          machineName: "Hitachi",
-          unitType: "Breaker Hour",
-          quantity: 5,
-          rate: 3500,
-          totalAmount: 17500,
-          remarks: "Hard granite breaking"
+          machineName: "M-Sand",
+          unitType: "foot",
+          quantity: 4500,
+          rate: 6,
+          totalAmount: 27000,
+          remarks: "M-Sand bulk consignment"
         },
         {
           id: 3,
           date: Date.now(),
-          machineName: "Hyundai",
-          unitType: "Bucket",
-          quantity: 12,
-          rate: 3000,
-          totalAmount: 36000,
-          remarks: "East wall loading"
+          machineName: "P-Sand",
+          unitType: "foot",
+          quantity: 5000,
+          rate: 7,
+          totalAmount: 35000,
+          remarks: "Plastering sand delivery"
         }
       ],
       expenseEntries: [
@@ -800,7 +884,12 @@
     function renderDashboard() {
       // Compute Totals
       let totalIncome = db.incomeEntries.reduce((sum, entry) => sum + entry.totalAmount, 0);
-      let totalExpense = db.expenseEntries.reduce((sum, entry) => sum + entry.amount, 0);
+      
+      // Expenses: General and Sub-contract bills are business operating costs.
+      // Vendor Advances are prepayments and deducted from outstandings, not double-counted as immediate expenses.
+      let generalExpenses = db.expenseEntries.filter(e => !e.isSubContract && !e.isAdvance).reduce((sum, e) => sum + e.amount, 0);
+      let subContractExpenses = db.expenseEntries.filter(e => e.isSubContract).reduce((sum, e) => sum + e.amount, 0);
+      let totalExpense = generalExpenses + subContractExpenses;
       let netBalance = totalIncome - totalExpense;
 
       // Update Stats UI
@@ -810,16 +899,60 @@
 
       const balanceBadge = document.getElementById('balance-badge');
       if (netBalance >= 0) {
-        balanceBadge.className = "bg-[#386A20] text-[#E8F3D6] px-3 py-1 rounded-full text-xs font-bold";
+        balanceBadge.className = "bg-emerald-100 text-emerald-800 px-3 py-1 rounded-full text-xs font-bold border border-emerald-200";
         balanceBadge.innerText = `Profit`;
       } else {
-        balanceBadge.className = "bg-red-900/40 text-red-300 border border-red-800 px-3 py-1 rounded-full text-xs font-bold";
+        balanceBadge.className = "bg-rose-100 text-rose-800 px-3 py-1 rounded-full text-xs font-bold border border-rose-200";
         balanceBadge.innerText = `Loss`;
       }
 
       // Metadata metrics
-      document.getElementById('metric-active-machines').innerText = `${db.machines.length} Machines`;
+      document.getElementById('metric-active-machines').innerText = `${db.machines.length} Vehicles`;
       document.getElementById('metric-total-tx').innerText = `${db.incomeEntries.length + db.expenseEntries.length} Entries`;
+
+      // Render Vendor Outstanding Balances
+      const vendorContainer = document.getElementById('vendor-outstanding-container');
+      if (vendorContainer) {
+        vendorContainer.innerHTML = '';
+        
+        // Find all subcontractor machine names
+        const subContractEntries = db.expenseEntries.filter(e => e.isSubContract || e.isAdvance);
+        const uniqueMachineNames = [...new Set(subContractEntries.map(e => e.machineName))];
+        
+        if (uniqueMachineNames.length === 0) {
+          vendorContainer.innerHTML = `
+            <div class="col-span-full neumorphic-card p-4 text-center text-sm text-gray-500 bg-white">
+              No subcontractor activity or advances logged yet.
+            </div>
+          `;
+        } else {
+          uniqueMachineNames.forEach(name => {
+            const totalBill = db.expenseEntries.filter(e => e.isSubContract && e.machineName === name).reduce((sum, e) => sum + e.amount, 0);
+            const totalAdvance = db.expenseEntries.filter(e => e.isAdvance && e.machineName === name).reduce((sum, e) => sum + e.amount, 0);
+            const outstanding = totalBill - totalAdvance;
+            
+            // Render a clean small mini card
+            const cardHtml = `
+              <div class="bg-white p-4 rounded-xl border border-gray-200 shadow-sm flex flex-col justify-between">
+                <div>
+                  <span class="text-[10px] font-bold text-gray-400 uppercase tracking-wider">Vendor</span>
+                  <h4 class="font-bold text-gray-800 text-sm truncate" title="${name}">${name}</h4>
+                </div>
+                <div class="mt-2 pt-2 border-t border-gray-100 flex flex-col">
+                  <span class="text-[9px] text-gray-500 font-medium">Outstanding:</span>
+                  <span class="text-base font-black ${outstanding >= 0 ? 'text-[#0056C6]' : 'text-emerald-600'}">
+                    ₹${outstanding.toLocaleString('en-IN', { minimumFractionDigits: 0, maximumFractionDigits: 0 })}
+                  </span>
+                  <div class="text-[9px] text-gray-400 mt-0.5 truncate" title="Bills: ₹${totalBill} | Adv: ₹${totalAdvance}">
+                    Bills: ₹${totalBill.toLocaleString('en-IN')} | Adv: ₹${totalAdvance.toLocaleString('en-IN')}
+                  </div>
+                </div>
+              </div>
+            `;
+            vendorContainer.insertAdjacentHTML('beforeend', cardHtml);
+          });
+        }
+      }
 
       // Render Feed
       renderRecentFeed();
@@ -848,14 +981,28 @@
       });
 
       db.expenseEntries.forEach(entry => {
+        let title = entry.category;
+        let subtitle = entry.remarks;
+        let badge = entry.category.substring(0, 3).toUpperCase();
+        
+        if (entry.isSubContract) {
+          title = `Sub-contract: ${entry.machineName}`;
+          subtitle = `Qty: ${entry.quantity} x ₹${entry.rate} | ${entry.remarks}`;
+          badge = "SUB";
+        } else if (entry.isAdvance) {
+          title = `Advance: ${entry.machineName}`;
+          subtitle = `Paid advance to ${entry.machineName} | ${entry.remarks}`;
+          badge = "ADV";
+        }
+
         items.push({
           type: 'expense',
           id: entry.id,
           date: entry.date,
-          title: entry.category,
-          subtitle: entry.remarks,
+          title: title,
+          subtitle: subtitle,
           amount: -entry.amount,
-          badge: entry.category.substring(0, 3).toUpperCase()
+          badge: badge
         });
       });
 
@@ -871,22 +1018,22 @@
 
       recentList.forEach(item => {
         const isIncome = item.type === 'income';
-        const colorClass = isIncome ? 'border-[#10B981]' : 'border-[#EF4444]';
-        const badgeBgClass = isIncome ? 'bg-[#10B981]/15 text-[#10B981]' : 'bg-[#EF4444]/15 text-[#EF4444]';
-        const amtColor = isIncome ? 'text-[#10B981]' : 'text-[#EF4444]';
+        const colorClass = isIncome ? 'border-[#10B981]' : 'border-rose-500';
+        const badgeBgClass = isIncome ? 'bg-emerald-50 text-emerald-700 border border-emerald-200' : 'bg-rose-50 text-rose-700 border border-rose-200';
+        const amtColor = isIncome ? 'text-emerald-600' : 'text-rose-600';
         const amtStr = isIncome ? `+${formatINR(item.amount)}` : `-${formatINR(Math.abs(item.amount))}`;
 
         const itemHtml = `
-          <div class="flex items-center neumorphic-card p-4 border-l-4 ${colorClass} transition-all">
-            <div class="w-10 h-10 rounded-xl ${badgeBgClass} flex items-center justify-center mr-4 text-xs font-bold shrink-0">
+          <div class="flex items-center bg-white border border-gray-200 rounded-xl p-4 border-l-4 ${colorClass} transition-all shadow-sm">
+            <div class="w-10 h-10 rounded-lg ${badgeBgClass} flex items-center justify-center mr-4 text-xs font-bold shrink-0">
               ${item.badge}
             </div>
             <div class="flex-1 min-w-0">
               <div class="flex justify-between items-start gap-2">
-                <p class="font-bold text-[#1F2937] truncate">${item.title}</p>
+                <p class="font-bold text-gray-900 truncate">${item.title}</p>
                 <p class="font-bold ${amtColor} shrink-0">${amtStr}</p>
               </div>
-              <p class="text-xs text-[#4B5563] truncate mt-0.5">${item.subtitle}</p>
+              <p class="text-xs text-gray-500 truncate mt-0.5">${item.subtitle}</p>
             </div>
           </div>
         `;
@@ -1099,9 +1246,113 @@
     }
 
     // Screen-specific: Operational Expenses Screen Loader
+    function setExpenseMode(mode) {
+      currentExpenseMode = mode;
+      
+      // Update Tab Styles
+      const btnGeneral = document.getElementById('expense-mode-general');
+      const btnSubcontract = document.getElementById('expense-mode-subcontract');
+      const btnAdvance = document.getElementById('expense-mode-advance');
+
+      btnGeneral.className = "flex-1 py-2 px-3 text-sm font-medium rounded-lg text-gray-600 hover:text-gray-900 hover:bg-gray-200/50 transition-all cursor-pointer";
+      btnSubcontract.className = "flex-1 py-2 px-3 text-sm font-medium rounded-lg text-gray-600 hover:text-gray-900 hover:bg-gray-200/50 transition-all cursor-pointer";
+      btnAdvance.className = "flex-1 py-2 px-3 text-sm font-medium rounded-lg text-gray-600 hover:text-gray-900 hover:bg-gray-200/50 transition-all cursor-pointer";
+
+      if (mode === 'general') {
+        btnGeneral.className = "flex-1 py-2 px-3 text-sm font-bold rounded-lg bg-[#0056C6] text-white transition-all cursor-pointer";
+        
+        document.getElementById('field-expense-category').classList.remove('hidden');
+        document.getElementById('field-expense-amount').classList.remove('hidden');
+        document.getElementById('field-expense-sub-machine').classList.add('hidden');
+        document.getElementById('field-expense-sub-unit').classList.add('hidden');
+        document.getElementById('field-expense-sub-qty').classList.add('hidden');
+        document.getElementById('field-expense-sub-rate').classList.add('hidden');
+        document.getElementById('field-expense-sub-total-live').classList.add('hidden');
+        
+        document.getElementById('lbl-expense-amount').innerText = "Paid Amount (₹)";
+        document.getElementById('expense-amount').placeholder = "e.g. 15000";
+        document.getElementById('expense-amount').required = true;
+      } else if (mode === 'subcontract') {
+        btnSubcontract.className = "flex-1 py-2 px-3 text-sm font-bold rounded-lg bg-[#0056C6] text-white transition-all cursor-pointer";
+        
+        document.getElementById('field-expense-category').classList.add('hidden');
+        document.getElementById('field-expense-amount').classList.add('hidden');
+        document.getElementById('field-expense-sub-machine').classList.remove('hidden');
+        document.getElementById('field-expense-sub-unit').classList.remove('hidden');
+        document.getElementById('field-expense-sub-qty').classList.remove('hidden');
+        document.getElementById('field-expense-sub-rate').classList.remove('hidden');
+        document.getElementById('field-expense-sub-total-live').classList.remove('hidden');
+        
+        document.getElementById('expense-amount').required = false;
+        
+        updateSubContractRateEstimate();
+      } else if (mode === 'advance') {
+        btnAdvance.className = "flex-1 py-2 px-3 text-sm font-bold rounded-lg bg-[#0056C6] text-white transition-all cursor-pointer";
+        
+        document.getElementById('field-expense-category').classList.add('hidden');
+        document.getElementById('field-expense-amount').classList.remove('hidden');
+        document.getElementById('field-expense-sub-machine').classList.remove('hidden');
+        document.getElementById('field-expense-sub-unit').classList.add('hidden');
+        document.getElementById('field-expense-sub-qty').classList.add('hidden');
+        document.getElementById('field-expense-sub-rate').classList.add('hidden');
+        document.getElementById('field-expense-sub-total-live').classList.add('hidden');
+        
+        document.getElementById('lbl-expense-amount').innerText = "Advance Payment Amount (₹)";
+        document.getElementById('expense-amount').placeholder = "e.g. 10000";
+        document.getElementById('expense-amount').required = true;
+        
+        // Relabel sub-machine selector label
+        document.getElementById('lbl-expense-sub-machine').innerText = "Select Vendor (Vehicle)";
+      }
+    }
+
+    function updateSubContractRateEstimate() {
+      const machineName = document.getElementById('expense-sub-machine').value;
+      const unitName = document.getElementById('expense-sub-unit').value;
+      if (!machineName || !unitName) return;
+
+      const rateRow = db.rates.find(r => r.machineName.toLowerCase() === machineName.toLowerCase() && r.unitName.toLowerCase() === unitName.toLowerCase());
+      if (rateRow) {
+        document.getElementById('expense-sub-rate').value = rateRow.rate;
+      } else {
+        document.getElementById('expense-sub-rate').value = '';
+      }
+      calculateSubContractTotal();
+    }
+
+    function calculateSubContractTotal() {
+      const qty = parseFloat(document.getElementById('expense-sub-qty').value) || 0;
+      const rate = parseFloat(document.getElementById('expense-sub-rate').value) || 0;
+      const total = qty * rate;
+      document.getElementById('expense-sub-total-live-val').innerText = formatINR(total);
+    }
+
     function renderExpenseScreen() {
       const today = new Date().toISOString().split('T')[0];
       document.getElementById('expense-date').value = today;
+
+      // Populate Sub-contract Vehicles/Machines Select
+      const subMachineSelect = document.getElementById('expense-sub-machine');
+      subMachineSelect.innerHTML = '';
+      db.machines.forEach(m => {
+        const opt = document.createElement('option');
+        opt.value = m.name;
+        opt.innerText = m.name;
+        subMachineSelect.appendChild(opt);
+      });
+
+      // Populate Sub-contract Units Select
+      const subUnitSelect = document.getElementById('expense-sub-unit');
+      subUnitSelect.innerHTML = '';
+      db.unitTypes.forEach(u => {
+        const opt = document.createElement('option');
+        opt.value = u.name;
+        opt.innerText = u.name;
+        subUnitSelect.appendChild(opt);
+      });
+
+      // Maintain Selected Mode
+      setExpenseMode(currentExpenseMode);
 
       renderExpenseList();
     }
@@ -1110,22 +1361,62 @@
       e.preventDefault();
       const rawDate = document.getElementById('expense-date').value;
       const dateEpoch = rawDate ? new Date(rawDate).getTime() : Date.now();
-      const category = document.getElementById('expense-category').value;
-      const amount = parseFloat(document.getElementById('expense-amount').value) || 0;
       const remarks = document.getElementById('expense-remarks').value || 'Operational Refills';
 
-      if (amount <= 0 || !category) {
-        showToast("Please input valid amount and category", true);
-        return;
-      }
-
-      const newEntry = {
+      let newEntry = {
         id: Date.now(),
         date: dateEpoch,
-        category: category,
-        amount: amount,
-        remarks: remarks
+        remarks: remarks,
+        isSubContract: false,
+        isAdvance: false
       };
+
+      if (currentExpenseMode === 'general') {
+        const category = document.getElementById('expense-category').value;
+        const amount = parseFloat(document.getElementById('expense-amount').value) || 0;
+
+        if (amount <= 0 || !category) {
+          showToast("Please input valid amount and category", true);
+          return;
+        }
+
+        newEntry.category = category;
+        newEntry.amount = amount;
+
+      } else if (currentExpenseMode === 'subcontract') {
+        const machineName = document.getElementById('expense-sub-machine').value;
+        const unitType = document.getElementById('expense-sub-unit').value;
+        const quantity = parseFloat(document.getElementById('expense-sub-qty').value) || 0;
+        const rate = parseFloat(document.getElementById('expense-sub-rate').value) || 0;
+        const amount = quantity * rate;
+
+        if (amount <= 0 || !machineName || !unitType) {
+          showToast("Please complete quantity and rate details correctly", true);
+          return;
+        }
+
+        newEntry.isSubContract = true;
+        newEntry.category = "Vehicle Sub-contract";
+        newEntry.machineName = machineName;
+        newEntry.unitType = unitType;
+        newEntry.quantity = quantity;
+        newEntry.rate = rate;
+        newEntry.amount = amount;
+
+      } else if (currentExpenseMode === 'advance') {
+        const machineName = document.getElementById('expense-sub-machine').value;
+        const amount = parseFloat(document.getElementById('expense-amount').value) || 0;
+
+        if (amount <= 0 || !machineName) {
+          showToast("Please select vendor and enter advance amount", true);
+          return;
+        }
+
+        newEntry.isAdvance = true;
+        newEntry.category = "Vendor Advance";
+        newEntry.machineName = machineName;
+        newEntry.amount = amount;
+      }
 
       db.expenseEntries.push(newEntry);
       saveDB();
@@ -1133,9 +1424,13 @@
 
       // Clear inputs
       document.getElementById('expense-amount').value = '';
+      document.getElementById('expense-sub-qty').value = '';
+      document.getElementById('expense-sub-rate').value = '';
       document.getElementById('expense-remarks').value = '';
+      document.getElementById('expense-sub-total-live-val').innerText = '₹0.00';
 
       renderExpenseScreen();
+      renderDashboard(); 
     }
 
     function deleteExpense(id) {
@@ -1144,6 +1439,7 @@
         saveDB();
         showToast("Expense entry deleted!");
         renderExpenseScreen();
+        renderDashboard();
       }
     }
 
@@ -1154,21 +1450,38 @@
       const sorted = [...db.expenseEntries].sort((a, b) => b.date - a.date);
 
       if (sorted.length === 0) {
-        container.innerHTML = `<div class="text-center py-6 text-[#4B5563] text-sm">No recorded operational expenses.</div>`;
+        container.innerHTML = `<div class="text-center py-6 text-gray-500 text-sm">No recorded operational expenses.</div>`;
         return;
       }
 
       sorted.forEach(entry => {
+        let title = entry.category;
+        let subtitle = entry.remarks;
+        let badgeHtml = '';
+
+        if (entry.isSubContract) {
+          title = `Sub-contract Bill (${entry.machineName})`;
+          subtitle = `Qty: ${entry.quantity} × ₹${entry.rate} | ${entry.remarks}`;
+          badgeHtml = `<span class="bg-blue-100 text-[#0056C6] text-[10px] font-bold px-2 py-0.5 rounded border border-blue-200 uppercase shrink-0">Vehicle</span>`;
+        } else if (entry.isAdvance) {
+          title = `Vendor Advance (${entry.machineName})`;
+          subtitle = `Paid To: ${entry.machineName} | ${entry.remarks}`;
+          badgeHtml = `<span class="bg-amber-100 text-amber-800 text-[10px] font-bold px-2 py-0.5 rounded border border-amber-200 uppercase shrink-0">Advance</span>`;
+        }
+
         const itemHtml = `
           <div class="neumorphic-card p-4 flex justify-between items-center transition-all">
-            <div class="min-w-0">
-              <p class="font-bold text-[#1F2937]">${entry.category}</p>
-              <p class="text-xs text-[#4B5563] mt-0.5">${entry.remarks}</p>
-              <p class="text-[10px] text-[#EF4444] mt-1 font-semibold">${formatDateTime(entry.date)}</p>
+            <div class="min-w-0 flex-1 pr-3">
+              <div class="flex items-center gap-2 flex-wrap">
+                <p class="font-bold text-gray-900">${title}</p>
+                ${badgeHtml}
+              </div>
+              <p class="text-xs text-gray-500 mt-0.5">${subtitle}</p>
+              <p class="text-[10px] text-rose-600 mt-1 font-semibold">${formatDateTime(entry.date)}</p>
             </div>
             <div class="flex items-center gap-3 shrink-0">
-              <span class="font-bold text-[#EF4444] text-lg">-${formatINR(entry.amount)}</span>
-              <button onclick="deleteExpense(${entry.id})" class="text-red-400 p-1.5 hover:bg-red-950/20 rounded-lg flex items-center justify-center cursor-pointer">
+              <span class="font-bold text-rose-600 text-lg">-${formatINR(entry.amount)}</span>
+              <button onclick="deleteExpense(${entry.id})" class="text-red-400 p-1.5 hover:bg-gray-100 rounded-lg flex items-center justify-center cursor-pointer">
                 <span class="material-symbols-outlined text-sm">delete</span>
               </button>
             </div>
@@ -1404,7 +1717,8 @@
       const filteredExpenses = db.expenseEntries.filter(e => period === 'all' || e.date >= limitMs);
 
       const totalIncome = filteredIncomes.reduce((sum, e) => sum + e.totalAmount, 0);
-      const totalExpense = filteredExpenses.reduce((sum, e) => sum + e.amount, 0);
+      // Advances are excluded from operating expenses for direct Net profit calculations to match VM
+      const totalExpense = filteredExpenses.filter(e => !e.isAdvance).reduce((sum, e) => sum + e.amount, 0);
 
       let merged = [];
       filteredIncomes.forEach(e => {
@@ -1418,11 +1732,20 @@
       });
 
       filteredExpenses.forEach(e => {
+        let title = `Operational: ${e.category}`;
+        let subtitle = e.remarks;
+        if (e.isSubContract) {
+          title = `Sub-contract: ${e.machineName}`;
+          subtitle = `Qty: ${e.quantity} x ₹${e.rate} | ${e.remarks}`;
+        } else if (e.isAdvance) {
+          title = `Advance: ${e.machineName}`;
+          subtitle = `Paid advance to ${e.machineName} | ${e.remarks}`;
+        }
         merged.push({
           type: 'expense',
           date: e.date,
-          title: `Operational: ${e.category}`,
-          subtitle: e.remarks,
+          title: title,
+          subtitle: subtitle,
           amount: e.amount
         });
       });
