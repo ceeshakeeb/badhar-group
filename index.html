@@ -12,6 +12,11 @@
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
   <!-- Chart.js CDN for Analytics -->
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  
+  <!-- Firebase SDK -->
+  <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js"></script>
 
   <style>
     body {
@@ -652,6 +657,45 @@
 
   <!-- JAVASCRIPT STATE AND DATABASE CONTROLLERS -->
   <script>
+    // ========== FIREBASE INITIALIZATION ==========
+    const firebaseConfig = {
+      apiKey: "AIzaSyDbz52ifxM0nMQqZ6H8IPknIfbVneICAaI",
+      authDomain: "badhar-group-quarry-tracker.firebaseapp.com",
+      projectId: "badhar-group-quarry-tracker",
+      storageBucket: "badhar-group-quarry-tracker.firebasestorage.app",
+      messagingSenderId: "85434898245",
+      appId: "1:85434898245:web:cfe111709c5979d02ad02c",
+      measurementId: "G-XMJRC71RBJ"
+    };
+
+    // Initialize Firebase
+    firebase.initializeApp(firebaseConfig);
+    const auth = firebase.auth();
+    const database = firebase.database();
+
+    // Firebase state tracking
+    let firebaseInitialized = false;
+    let firebaseUserId = null;
+    let isFirebaseSyncing = false;
+
+    // Initialize anonymous auth for Firebase
+    auth.onAuthStateChanged(async (user) => {
+      if (user) {
+        firebaseUserId = user.uid;
+        firebaseInitialized = true;
+        console.log("Firebase authenticated as:", firebaseUserId);
+        // Load data from Firebase after auth
+        await loadDBFromFirebase();
+      } else {
+        // Sign in anonymously
+        auth.signInAnonymously().catch(error => {
+          console.error("Firebase auth error:", error);
+        });
+      }
+    });
+
+    // ========== END FIREBASE INITIALIZATION ==========
+
     // Local database objects
     let db = {
       machines: [],
@@ -757,8 +801,30 @@
       ]
     };
 
-    // Load Database from LocalStorage or seed defaults
-    function loadDB() {
+    // Load Database from Firebase or LocalStorage fallback
+    async function loadDBFromFirebase() {
+      if (!firebaseInitialized || !firebaseUserId) {
+        console.warn("Firebase not initialized, loading from localStorage");
+        return loadDBLocal();
+      }
+
+      try {
+        const snapshot = await database.ref(`users/${firebaseUserId}/quarryData`).get();
+        if (snapshot.exists()) {
+          db = snapshot.val();
+          console.log("Loaded database from Firebase");
+        } else {
+          console.log("No Firebase data, seeding defaults");
+          db = JSON.parse(JSON.stringify(defaultSeed));
+          await saveDBToFirebase();
+        }
+      } catch (error) {
+        console.error("Firebase load error:", error);
+        loadDBLocal(); // Fallback to localStorage
+      }
+    }
+
+    function loadDBLocal() {
       const savedData = localStorage.getItem('badhar_quarry_db');
       if (savedData) {
         try {
@@ -766,19 +832,53 @@
         } catch (e) {
           console.error("Failed to parse database, reloading seed", e);
           db = JSON.parse(JSON.stringify(defaultSeed));
-          saveDB();
+          saveDBLocal();
         }
       } else {
         db = JSON.parse(JSON.stringify(defaultSeed));
-        saveDB();
+        saveDBLocal();
       }
     }
 
-    function saveDB() {
+    function loadDB() {
+      // This now prefers Firebase
+      if (firebaseInitialized && firebaseUserId) {
+        loadDBFromFirebase();
+      } else {
+        loadDBLocal();
+      }
+    }
+
+    // Save Database to Firebase and LocalStorage
+    async function saveDBToFirebase() {
+      if (!firebaseInitialized || !firebaseUserId) {
+        console.warn("Firebase not ready, saving locally only");
+        return saveDBLocal();
+      }
+
+      try {
+        await database.ref(`users/${firebaseUserId}/quarryData`).set(db);
+        console.log("Database saved to Firebase");
+        // Also save locally as backup
+        saveDBLocal();
+      } catch (error) {
+        console.error("Firebase save error:", error);
+        saveDBLocal(); // Fallback
+      }
+    }
+
+    function saveDBLocal() {
       localStorage.setItem('badhar_quarry_db', JSON.stringify(db));
     }
 
-    // Toast alerts helper
+    function saveDB() {
+      // This now saves to both Firebase and localStorage
+      if (firebaseInitialized && firebaseUserId) {
+        saveDBToFirebase();
+      } else {
+        saveDBLocal();
+      }
+    }
     function showToast(text, isError = false) {
       const toast = document.getElementById('toast');
       const toastText = document.getElementById('toast-text');
@@ -802,20 +902,44 @@
       }, 3000);
     }
 
-    // Sync animation simulator
-    function triggerCloudSyncSim() {
+    // Real Firebase Cloud Sync
+    async function triggerCloudSyncSim() {
       const syncIcon = document.getElementById('sync-icon');
       if (syncIcon) {
         syncIcon.classList.add('animate-spin');
       }
-      showToast("Syncing database backups to cloud security node...");
-      
-      setTimeout(() => {
+
+      if (!firebaseInitialized || !firebaseUserId) {
+        showToast("⚠️ Firebase not connected. Using local backup.", true);
+        showToast("Ensure you have internet & refresh page.");
         if (syncIcon) {
           syncIcon.classList.remove('animate-spin');
         }
-        showToast("Database backups successfully synchronized!");
-      }, 1500);
+        return;
+      }
+
+      showToast("🔄 Syncing to Firebase Cloud...");
+      isFirebaseSyncing = true;
+
+      try {
+        // Push current local data to Firebase
+        await saveDBToFirebase();
+        
+        setTimeout(() => {
+          if (syncIcon) {
+            syncIcon.classList.remove('animate-spin');
+          }
+          showToast("✅ Cloud sync complete! Data backed up to Firebase.");
+          isFirebaseSyncing = false;
+        }, 800);
+      } catch (error) {
+        console.error("Sync error:", error);
+        showToast("❌ Sync failed: " + error.message, true);
+        if (syncIcon) {
+          syncIcon.classList.remove('animate-spin');
+        }
+        isFirebaseSyncing = false;
+      }
     }
 
     // Format currency (INR formatting)
@@ -835,6 +959,18 @@
         month: 'short',
         year: 'numeric'
       });
+    }
+
+    // Re-render the currently active screen when data changes
+    function updateAllScreens() {
+      const activeScreen = document.querySelector('.screen-content:not(.hidden)');
+      if (!activeScreen) {
+        switchScreen('dashboard');
+        return;
+      }
+      
+      const screenId = activeScreen.id.replace('screen-', '');
+      switchScreen(screenId);
     }
 
     // Switch screen view
@@ -1960,7 +2096,7 @@
     function resetLedgerToDefaults() {
       if (confirm("DANGER: Wiping all transaction archives. Re-initialize default seeds?")) {
         db = JSON.parse(JSON.stringify(defaultSeed));
-        saveDB();
+        saveDB(); // This now saves to both Firebase and localStorage
         showToast("Ledger format finalized and seeded!");
         switchScreen('dashboard');
       }
