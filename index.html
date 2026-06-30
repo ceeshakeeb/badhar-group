@@ -14,9 +14,9 @@
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   
   <!-- Firebase SDK -->
-  <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
 
   <style>
     body {
@@ -671,7 +671,7 @@
     // Initialize Firebase
     firebase.initializeApp(firebaseConfig);
     const auth = firebase.auth();
-    const database = firebase.database();
+    const db_firestore = firebase.firestore();
 
     // Firebase state tracking
     let firebaseInitialized = false;
@@ -801,7 +801,7 @@
       ]
     };
 
-    // Load Database from Firebase or LocalStorage fallback
+    // Load Database from Firestore or LocalStorage fallback
     async function loadDBFromFirebase() {
       if (!firebaseInitialized || !firebaseUserId) {
         console.warn("Firebase not initialized, loading from localStorage");
@@ -809,17 +809,17 @@
       }
 
       try {
-        const snapshot = await database.ref(`users/${firebaseUserId}/quarryData`).get();
-        if (snapshot.exists()) {
-          db = snapshot.val();
-          console.log("Loaded database from Firebase");
+        const docSnap = await db_firestore.collection('users').doc(firebaseUserId).get();
+        if (docSnap.exists()) {
+          db = docSnap.data().quarryData;
+          console.log("Loaded database from Firestore");
         } else {
-          console.log("No Firebase data, seeding defaults");
+          console.log("No Firestore data, seeding defaults");
           db = JSON.parse(JSON.stringify(defaultSeed));
           await saveDBToFirebase();
         }
       } catch (error) {
-        console.error("Firebase load error:", error);
+        console.error("Firestore load error:", error);
         loadDBLocal(); // Fallback to localStorage
       }
     }
@@ -849,7 +849,7 @@
       }
     }
 
-    // Save Database to Firebase and LocalStorage
+    // Save Database to Firestore and LocalStorage
     async function saveDBToFirebase() {
       if (!firebaseInitialized || !firebaseUserId) {
         console.warn("Firebase not ready, saving locally only");
@@ -857,12 +857,12 @@
       }
 
       try {
-        await database.ref(`users/${firebaseUserId}/quarryData`).set(db);
-        console.log("Database saved to Firebase");
+        await db_firestore.collection('users').doc(firebaseUserId).set({ quarryData: db });
+        console.log("Database saved to Firestore");
         // Also save locally as backup
         saveDBLocal();
       } catch (error) {
-        console.error("Firebase save error:", error);
+        console.error("Firestore save error:", error);
         saveDBLocal(); // Fallback
       }
     }
