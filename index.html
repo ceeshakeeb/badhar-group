@@ -176,6 +176,12 @@
           <span class="text-xs font-bold text-[#4B5563] uppercase">Site:</span>
           <select id="site-selector" onchange="switchSite(this.value)" class="flex-1 neumorphic-inset rounded-lg px-3 py-1.5 text-sm text-[#1F2937] font-semibold">
             </select>
+          <button onclick="renameSite()" class="bg-gray-200 text-gray-700 px-2.5 py-1.5 rounded-lg text-sm font-bold flex items-center">
+            <span class="material-symbols-outlined text-base">edit</span>
+          </button>
+          <button onclick="deleteSite()" class="bg-red-100 text-red-600 px-2.5 py-1.5 rounded-lg text-sm font-bold flex items-center">
+            <span class="material-symbols-outlined text-base">delete</span>
+          </button>
           <button onclick="showSiteManager()" class="bg-[#0056C6] text-white px-3 py-1.5 rounded-lg text-sm font-bold flex items-center">
             <span class="material-symbols-outlined text-base">add</span>
           </button>
@@ -209,6 +215,12 @@
             <span class="text-xs font-bold text-[#4B5563] uppercase">Site:</span>
             <select id="dashboard-site-selector" onchange="switchSite(this.value)" class="neumorphic-inset rounded-lg px-3 py-2 text-sm text-[#1F2937] font-semibold">
               </select>
+            <button onclick="renameSite()" class="bg-gray-200 text-gray-700 px-2.5 py-2 rounded-lg text-sm font-bold flex items-center">
+              <span class="material-symbols-outlined text-base">edit</span>
+            </button>
+            <button onclick="deleteSite()" class="bg-red-100 text-red-600 px-2.5 py-2 rounded-lg text-sm font-bold flex items-center">
+              <span class="material-symbols-outlined text-base">delete</span>
+            </button>
             <button onclick="showSiteManager()" class="bg-[#0056C6] text-white px-3 py-2 rounded-lg text-sm font-bold flex items-center">
               <span class="material-symbols-outlined text-base">add</span>
             </button>
@@ -305,7 +317,7 @@
             </div>
 
             <div class="flex flex-col gap-1.5">
-              <label class="text-xs font-semibold text-[#4B5563] uppercase tracking-wider">Select Material / Vehicle</label>
+              <label class="text-xs font-semibold text-[#4B5563] uppercase tracking-wider">Select Material</label>
               <select id="income-machine" required onchange="updateRateEstimate()" class="neumorphic-inset rounded-xl px-4 py-3 text-[#1F2937] focus:outline-none focus:ring-2 focus:ring-[#0056C6]/40 transition-all">
                 </select>
             </div>
@@ -388,6 +400,24 @@
               </select>
             </div>
 
+            <div id="field-expense-general-vehicle" class="hidden flex flex-col gap-1.5">
+              <label class="text-xs font-semibold text-[#4B5563] uppercase tracking-wider">Vehicle</label>
+              <select id="expense-general-vehicle" onchange="" class="neumorphic-inset rounded-xl px-4 py-3 text-[#1F2937] focus:outline-none focus:ring-2 focus:ring-[#0056C6]/40 transition-all">
+                </select>
+            </div>
+
+            <div id="field-expense-general-unit" class="hidden flex flex-col gap-1.5">
+              <label class="text-xs font-semibold text-[#4B5563] uppercase tracking-wider">Unit</label>
+              <select id="expense-general-unit" class="neumorphic-inset rounded-xl px-4 py-3 text-[#1F2937] focus:outline-none focus:ring-2 focus:ring-[#0056C6]/40 transition-all">
+                </select>
+            </div>
+
+            <div id="field-expense-vendor" class="hidden flex flex-col gap-1.5">
+              <label class="text-xs font-semibold text-[#4B5563] uppercase tracking-wider">Select Vendor</label>
+              <select id="expense-vendor" onchange="onVendorChangeForExpense()" class="neumorphic-inset rounded-xl px-4 py-3 text-[#1F2937] focus:outline-none focus:ring-2 focus:ring-[#0056C6]/40 transition-all">
+                </select>
+            </div>
+
             <div id="field-expense-sub-machine" class="hidden flex flex-col gap-1.5">
               <label id="lbl-expense-sub-machine" class="text-xs font-semibold text-[#4B5563] uppercase tracking-wider">Sub-contract Vehicle</label>
               <select id="expense-sub-machine" onchange="updateSubContractRateEstimate()" class="neumorphic-inset rounded-xl px-4 py-3 text-[#1F2937] focus:outline-none focus:ring-2 focus:ring-[#0056C6]/40 transition-all">
@@ -422,7 +452,7 @@
 
             <div class="flex flex-col gap-1.5">
               <label class="text-xs font-semibold text-[#4B5563] uppercase tracking-wider">Remarks / Recipient</label>
-              <input type="text" id="expense-remarks" required placeholder="e.g. Fuel generator refill 150L" class="neumorphic-inset rounded-xl px-4 py-3 text-[#1F2937] focus:outline-none focus:ring-2 focus:ring-[#0056C6]/40 transition-all" />
+              <input type="text" id="expense-remarks" placeholder="e.g. Fuel generator refill 150L" class="neumorphic-inset rounded-xl px-4 py-3 text-[#1F2937] focus:outline-none focus:ring-2 focus:ring-[#0056C6]/40 transition-all" />
             </div>
           </div>
 
@@ -582,7 +612,7 @@
             </div>
             <div class="flex flex-wrap gap-2 w-full sm:w-auto">
               <button onclick="exportToExcel()" class="flex-1 sm:flex-none h-10 px-4 bg-emerald-600 text-white rounded-xl font-bold flex items-center justify-center gap-1.5 active:scale-98 transition-all cursor-pointer shadow-sm">
-                <span class="material-symbols-outlined text-sm">table_view</span> Export to Excel
+                <span class="material-symbols-outlined text-sm">table_view</span> Export Data Entry Sheet
               </button>
               <button onclick="printReport()" class="flex-1 sm:flex-none h-10 px-4 bg-[#0056C6] text-white rounded-xl font-bold flex items-center justify-center gap-1.5 active:scale-98 transition-all cursor-pointer shadow-sm">
                 <span class="material-symbols-outlined text-sm">print</span> Print Report
@@ -650,6 +680,36 @@
                 <input type="file" id="import-json-file" class="hidden" accept=".json" onchange="restoreFromJSON(event)" />
               </label>
             </div>
+          </div>
+
+          <div class="neumorphic-card p-6 space-y-4">
+            <h3 class="font-bold text-lg text-[#1F2937] flex items-center gap-2">
+              <span class="material-symbols-outlined text-[#0056C6]">group</span> User Accounts
+            </h3>
+            <p class="text-sm text-[#4B5563]">Add new login users or change existing usernames/passwords.</p>
+
+            <div id="users-list-configs" class="space-y-2"></div>
+
+            <form id="add-user-form" onsubmit="handleAddUserSubmit(event)" class="grid grid-cols-1 md:grid-cols-3 gap-3 pt-2 border-t border-gray-100">
+              <input type="text" id="new-user-name" required placeholder="Username" class="neumorphic-inset rounded-xl px-4 py-2.5 text-[#1F2937]" />
+              <input type="text" id="new-user-pass" required placeholder="Password" class="neumorphic-inset rounded-xl px-4 py-2.5 text-[#1F2937]" />
+              <button type="submit" class="h-11 bg-[#0056C6] text-white rounded-xl font-bold active:scale-98 transition-all cursor-pointer">Add User</button>
+            </form>
+          </div>
+
+          <div class="neumorphic-card p-6 space-y-4">
+            <h3 class="font-bold text-lg text-[#1F2937] flex items-center gap-2">
+              <span class="material-symbols-outlined text-[#0056C6]">local_shipping</span> Vendor Management
+            </h3>
+            <p class="text-sm text-[#4B5563]">Add vendors and link one or more vehicles to each, to track advances and outstanding payments per vendor.</p>
+
+            <div id="vendors-list-configs" class="space-y-3"></div>
+
+            <form id="add-vendor-form" onsubmit="handleAddVendorSubmit(event)" class="space-y-3 pt-2 border-t border-gray-100">
+              <input type="text" id="new-vendor-name" required placeholder="Vendor name" class="w-full neumorphic-inset rounded-xl px-4 py-2.5 text-[#1F2937]" />
+              <div id="new-vendor-vehicle-checks" class="flex flex-wrap gap-2"></div>
+              <button type="submit" class="h-11 px-5 bg-[#0056C6] text-white rounded-xl font-bold active:scale-98 transition-all cursor-pointer">Add Vendor</button>
+            </form>
           </div>
 
           <div class="neumorphic-card p-6 space-y-4">
@@ -738,6 +798,7 @@
           machines: [],
           unitTypes: [],
           rates: [],
+          vendors: [],
           incomeEntries: [],
           expenseEntries: []
         }
@@ -746,6 +807,9 @@
 
     // Aligned Seed Data structure respecting Multi-Site requirements
     const defaultSeed = {
+      users: [
+        { username: "admin", password: "admin123" }
+      ],
       sites: {
         'Site 1': {
           siteColor: '#0056C6',
@@ -773,6 +837,7 @@
             { id: 5, item: "JCB", unit: "Hour", rate: 2200.0, type: 'vehicle' },
             { id: 6, item: "Hitachi", unit: "Hour", rate: 3500.0, type: 'vehicle' }
           ],
+          vendors: [],
           incomeEntries: [
             { id: 1, date: Date.now() - 2 * 24 * 3600000, machineName: "Boller", unitType: "foot", quantity: 3000, rate: 8, totalAmount: 24000, remarks: "Boller load delivery" },
             { id: 2, date: Date.now() - 24 * 3600000, machineName: "M-Sand", unitType: "foot", quantity: 4500, rate: 6, totalAmount: 27000, remarks: "M-Sand bulk consignment" },
@@ -797,6 +862,7 @@
         }
         currentSite = Object.keys(db.sites)[0];
       }
+      if (!db.sites[currentSite].vendors) db.sites[currentSite].vendors = [];
       return db.sites[currentSite];
     }
 
@@ -842,6 +908,7 @@
           const remoteData = doc.data().quarryData;
           if (remoteData && JSON.stringify(remoteData) !== JSON.stringify(db)) {
             db = remoteData;
+            if (!db.users || !db.users.length) db.users = JSON.parse(JSON.stringify(defaultSeed.users));
             showToast("🔄 Data refreshed from Cloud");
             updateAllScreens();
           }
@@ -856,6 +923,7 @@
         const docSnap = await db_firestore.collection('shared').doc(SHARED_DOC_ID).get();
         if (docSnap.exists && docSnap.data().quarryData && docSnap.data().quarryData.sites) {
           db = docSnap.data().quarryData;
+          if (!db.users || !db.users.length) db.users = JSON.parse(JSON.stringify(defaultSeed.users));
         } else {
           db = JSON.parse(JSON.stringify(defaultSeed));
           await saveDBToFirestore();
@@ -872,7 +940,7 @@
       if (savedData) {
         try {
           const parsed = JSON.parse(savedData);
-          if (parsed.sites) { db = parsed; } else { throw new Error("Format mismatch"); }
+          if (parsed.sites) { db = parsed; if (!db.users || !db.users.length) db.users = JSON.parse(JSON.stringify(defaultSeed.users)); } else { throw new Error("Format mismatch"); }
         } catch (e) {
           db = JSON.parse(JSON.stringify(defaultSeed));
           saveDBLocal();
@@ -950,6 +1018,7 @@
         machines: [],
         unitTypes: [],
         rates: [],
+        vendors: [],
         incomeEntries: [],
         expenseEntries: []
       };
@@ -957,6 +1026,31 @@
       saveDB();
       updateAllScreens();
       showToast(`Created site: ${siteName}`);
+    }
+
+    function renameSite() {
+      const oldName = currentSite;
+      const newName = prompt("Enter new name for this site:", oldName);
+      if (!newName || newName.trim() === '' || newName.trim() === oldName) return;
+      const trimmed = newName.trim();
+      if (db.sites[trimmed]) { showToast("A site with that name already exists!", true); return; }
+
+      db.sites[trimmed] = db.sites[oldName];
+      delete db.sites[oldName];
+      currentSite = trimmed;
+      saveDB();
+      updateAllScreens();
+      showToast(`Site renamed to: ${trimmed}`);
+    }
+
+    function deleteSite() {
+      if (Object.keys(db.sites).length <= 1) { showToast("At least one site must remain.", true); return; }
+      if (!confirm(`Delete site "${currentSite}" and all its data? This cannot be undone.`)) return;
+      delete db.sites[currentSite];
+      currentSite = Object.keys(db.sites)[0];
+      saveDB();
+      updateAllScreens();
+      showToast(`Site deleted.`);
     }
 
     function renderSiteSelector() {
@@ -1043,6 +1137,130 @@
       saveDB(); renderMachinesScreen(); showToast(`Added vehicle: ${name}`);
     }
 
+    // ========== USER ACCOUNT MANAGEMENT ==========
+    function renderUsersConfig() {
+      if (!db.users) db.users = JSON.parse(JSON.stringify(defaultSeed.users));
+      const container = document.getElementById('users-list-configs');
+      if (!container) return;
+      container.innerHTML = db.users.map((u, idx) => `
+        <div class="neumorphic-inset px-4 py-2.5 rounded-xl flex items-center justify-between gap-2 flex-wrap">
+          <span class="font-semibold text-[#1F2937] text-sm">${u.username}</span>
+          <div class="flex items-center gap-2">
+            <input type="text" placeholder="New username" id="edit-user-name-${idx}" class="px-3 py-1.5 rounded-lg border border-gray-200 text-xs w-28" />
+            <input type="text" placeholder="New password" id="edit-user-pass-${idx}" class="px-3 py-1.5 rounded-lg border border-gray-200 text-xs w-28" />
+            <button onclick="handleUpdateUser(${idx})" class="px-3 py-1.5 bg-[#0056C6] text-white rounded-lg text-xs font-bold cursor-pointer">Update</button>
+            <button onclick="handleDeleteUser(${idx})" class="text-red-500 hover:text-red-700 font-bold px-2 cursor-pointer">×</button>
+          </div>
+        </div>`).join('');
+    }
+
+    function handleAddUserSubmit(e) {
+      e.preventDefault();
+      const username = document.getElementById('new-user-name').value.trim();
+      const password = document.getElementById('new-user-pass').value;
+      if (!username || !password) return;
+      if (db.users.some(u => u.username.toLowerCase() === username.toLowerCase())) {
+        showToast("Username already exists!", true); return;
+      }
+      db.users.push({ username, password });
+      document.getElementById('add-user-form').reset();
+      saveDB(); renderUsersConfig(); showToast(`User "${username}" added.`);
+    }
+
+    function handleUpdateUser(idx) {
+      const newName = document.getElementById(`edit-user-name-${idx}`).value.trim();
+      const newPass = document.getElementById(`edit-user-pass-${idx}`).value;
+      if (!newName && !newPass) { showToast("Enter a new username or password to update.", true); return; }
+      if (newName && db.users.some((u, i) => i !== idx && u.username.toLowerCase() === newName.toLowerCase())) {
+        showToast("That username is already taken.", true); return;
+      }
+      if (newName) db.users[idx].username = newName;
+      if (newPass) db.users[idx].password = newPass;
+      saveDB(); renderUsersConfig(); showToast("User credentials updated.");
+    }
+
+    function handleDeleteUser(idx) {
+      if (db.users.length <= 1) { showToast("At least one user must remain.", true); return; }
+      if (confirm(`Delete user "${db.users[idx].username}"?`)) {
+        db.users.splice(idx, 1);
+        saveDB(); renderUsersConfig(); showToast("User removed.");
+      }
+    }
+
+    // ========== VENDOR MANAGEMENT ==========
+    function renderVendorsConfig() {
+      const siteData = getSiteData();
+      const vehicleList = siteData.machines.filter(m => m.type === 'vehicle');
+
+      // Checkbox list for the add-vendor form
+      const checkContainer = document.getElementById('new-vendor-vehicle-checks');
+      if (checkContainer) {
+        if (vehicleList.length === 0) {
+          checkContainer.innerHTML = `<span class="text-xs text-gray-400">No vehicles configured yet — add vehicles first.</span>`;
+        } else {
+          checkContainer.innerHTML = vehicleList.map(v => `
+            <label class="flex items-center gap-1.5 px-3 py-1.5 neumorphic-inset rounded-lg text-xs cursor-pointer">
+              <input type="checkbox" class="new-vendor-vehicle-cb" value="${v.name}" /> ${v.name}
+            </label>`).join('');
+        }
+      }
+
+      const listContainer = document.getElementById('vendors-list-configs');
+      if (!listContainer) return;
+      if (siteData.vendors.length === 0) {
+        listContainer.innerHTML = `<div class="text-xs text-gray-400 text-center py-2">No vendors added yet.</div>`;
+        return;
+      }
+      listContainer.innerHTML = siteData.vendors.map((v, idx) => `
+        <div class="neumorphic-inset px-4 py-3 rounded-xl space-y-2">
+          <div class="flex items-center justify-between flex-wrap gap-2">
+            <span class="font-semibold text-[#1F2937] text-sm">${v.name}</span>
+            <button onclick="handleDeleteVendor(${idx})" class="text-red-500 hover:text-red-700 font-bold px-2 cursor-pointer">×</button>
+          </div>
+          <div class="flex flex-wrap gap-1.5">
+            ${v.vehicles.map(vn => `<span class="bg-orange-100 text-orange-900 text-[10px] font-semibold px-2 py-1 rounded-full">${vn}</span>`).join('') || '<span class="text-[10px] text-gray-400">No vehicles linked</span>'}
+          </div>
+          <div class="flex flex-wrap gap-2 pt-1 border-t border-gray-200">
+            ${vehicleList.map(veh => `
+              <label class="flex items-center gap-1 text-[10px] cursor-pointer">
+                <input type="checkbox" onchange="toggleVendorVehicle(${idx}, '${veh.name}', this.checked)" ${v.vehicles.includes(veh.name) ? 'checked' : ''} /> ${veh.name}
+              </label>`).join('')}
+          </div>
+        </div>`).join('');
+    }
+
+    function handleAddVendorSubmit(e) {
+      e.preventDefault();
+      const name = document.getElementById('new-vendor-name').value.trim();
+      if (!name) return;
+      const siteData = getSiteData();
+      if (siteData.vendors.some(v => v.name.toLowerCase() === name.toLowerCase())) {
+        showToast("Vendor already exists!", true); return;
+      }
+      const checkedVehicles = Array.from(document.querySelectorAll('.new-vendor-vehicle-cb:checked')).map(cb => cb.value);
+      siteData.vendors.push({ id: Date.now(), name, vehicles: checkedVehicles });
+      document.getElementById('add-vendor-form').reset();
+      saveDB(); renderVendorsConfig(); showToast(`Vendor "${name}" added.`);
+    }
+
+    function toggleVendorVehicle(idx, vehicleName, checked) {
+      const siteData = getSiteData();
+      const vendor = siteData.vendors[idx];
+      if (!vendor) return;
+      if (checked && !vendor.vehicles.includes(vehicleName)) vendor.vehicles.push(vehicleName);
+      else if (!checked) vendor.vehicles = vendor.vehicles.filter(v => v !== vehicleName);
+      saveDB(); renderVendorsConfig();
+    }
+
+    function handleDeleteVendor(idx) {
+      const siteData = getSiteData();
+      if (confirm(`Delete vendor "${siteData.vendors[idx].name}"?`)) {
+        siteData.vendors.splice(idx, 1);
+        saveDB(); renderVendorsConfig(); showToast("Vendor removed.");
+      }
+    }
+
+
     function handleVehicleUnitSubmit(e) {
       e.preventDefault();
       const name = document.getElementById('new-vehicle-unit-name').value.trim();
@@ -1119,6 +1337,7 @@
       else if (screenId === 'expense') renderExpenseScreen();
       else if (screenId === 'machines') renderMachinesScreen();
       else if (screenId === 'reports') renderReportsScreen();
+      else if (screenId === 'settings') { renderUsersConfig(); renderVendorsConfig(); }
     }
 
     // ========== CORE DISPLAY DRAW RENDERERS ==========
@@ -1151,14 +1370,14 @@
       if (vendorContainer) {
         vendorContainer.innerHTML = '';
         const subContractEntries = siteData.expenseEntries.filter(e => e.isSubContract || e.isAdvance);
-        const uniqueMachineNames = [...new Set(subContractEntries.map(e => e.machineName))];
-        
-        if (uniqueMachineNames.length === 0) {
+        const uniqueVendorNames = [...new Set(subContractEntries.map(e => e.vendorName || e.machineName))];
+
+        if (uniqueVendorNames.length === 0) {
           vendorContainer.innerHTML = `<div class="col-span-full neumorphic-card p-4 text-center text-xs text-gray-400 bg-white">No subcontractor metrics logged yet.</div>`;
         } else {
-          uniqueMachineNames.forEach(name => {
-            const totalBill = siteData.expenseEntries.filter(e => e.isSubContract && e.machineName === name).reduce((sum, e) => sum + e.amount, 0);
-            const totalAdvance = siteData.expenseEntries.filter(e => e.isAdvance && e.machineName === name).reduce((sum, e) => sum + e.amount, 0);
+          uniqueVendorNames.forEach(name => {
+            const totalBill = siteData.expenseEntries.filter(e => e.isSubContract && (e.vendorName || e.machineName) === name).reduce((sum, e) => sum + e.amount, 0);
+            const totalAdvance = siteData.expenseEntries.filter(e => e.isAdvance && (e.vendorName || e.machineName) === name).reduce((sum, e) => sum + e.amount, 0);
             const outstanding = totalBill - totalAdvance;
             
             vendorContainer.insertAdjacentHTML('beforeend', `
@@ -1256,10 +1475,10 @@
       const siteData = getSiteData();
 
       const mSelect = document.getElementById('income-machine');
-      mSelect.innerHTML = siteData.machines.map(m => `<option value="${m.name}">${m.name}</option>`).join('');
+      mSelect.innerHTML = siteData.machines.filter(m => m.type === 'material').map(m => `<option value="${m.name}">${m.name}</option>`).join('');
 
       const uSelect = document.getElementById('income-unit');
-      uSelect.innerHTML = siteData.unitTypes.map(u => `<option value="${u.name}">${u.name}</option>`).join('');
+      uSelect.innerHTML = siteData.unitTypes.filter(u => u.type === 'material').map(u => `<option value="${u.name}">${u.name}</option>`).join('');
 
       updateRateEstimate();
       renderIncomeList();
@@ -1349,7 +1568,12 @@
       });
 
       document.getElementById('field-expense-category').classList.toggle('hidden', mode !== 'general');
+      document.getElementById('field-expense-general-vehicle').classList.toggle('hidden', mode !== 'general');
+      document.getElementById('field-expense-general-unit').classList.toggle('hidden', mode !== 'general');
+      document.getElementById('expense-general-vehicle').required = (mode === 'general');
+      document.getElementById('expense-general-unit').required = (mode === 'general');
       document.getElementById('field-expense-amount').classList.toggle('hidden', mode === 'subcontract');
+      document.getElementById('field-expense-vendor').classList.toggle('hidden', mode === 'general');
       document.getElementById('field-expense-sub-machine').classList.toggle('hidden', mode === 'general');
       document.getElementById('field-expense-sub-unit').classList.toggle('hidden', mode !== 'subcontract');
       document.getElementById('field-expense-sub-qty').classList.toggle('hidden', mode !== 'subcontract');
@@ -1386,14 +1610,36 @@
       document.getElementById('expense-date').value = new Date().toISOString().split('T')[0];
       const siteData = getSiteData();
 
+      const vendorSelect = document.getElementById('expense-vendor');
+      vendorSelect.innerHTML = siteData.vendors.map(v => `<option value="${v.name}">${v.name}</option>`).join('');
+
       const mSelect = document.getElementById('expense-sub-machine');
-      mSelect.innerHTML = siteData.machines.map(m => `<option value="${m.name}">${m.name}</option>`).join('');
+      mSelect.innerHTML = '';
 
       const uSelect = document.getElementById('expense-sub-unit');
-      uSelect.innerHTML = siteData.unitTypes.map(u => `<option value="${u.name}">${u.name}</option>`).join('');
+      uSelect.innerHTML = siteData.unitTypes.filter(u => u.type === 'vehicle').map(u => `<option value="${u.name}">${u.name}</option>`).join('');
+
+      const genVSelect = document.getElementById('expense-general-vehicle');
+      genVSelect.innerHTML = siteData.machines.filter(m => m.type === 'vehicle').map(m => `<option value="${m.name}">${m.name}</option>`).join('');
+
+      const genUSelect = document.getElementById('expense-general-unit');
+      genUSelect.innerHTML = siteData.unitTypes.filter(u => u.type === 'vehicle').map(u => `<option value="${u.name}">${u.name}</option>`).join('');
 
       setExpenseMode(currentExpenseMode);
+      onVendorChangeForExpense();
       renderExpenseList();
+    }
+
+    function onVendorChangeForExpense() {
+      const siteData = getSiteData();
+      const vendorName = document.getElementById('expense-vendor').value;
+      const vendor = siteData.vendors.find(v => v.name === vendorName);
+      const mSelect = document.getElementById('expense-sub-machine');
+      const vehicles = vendor ? vendor.vehicles : [];
+      mSelect.innerHTML = vehicles.length
+        ? vehicles.map(vn => `<option value="${vn}">${vn}</option>`).join('')
+        : `<option value="">No vehicles linked to this vendor</option>`;
+      updateSubContractRateEstimate();
     }
 
     function handleExpenseSubmit(e) {
@@ -1407,22 +1653,29 @@
 
       if (currentExpenseMode === 'general') {
         entry.category = document.getElementById('expense-category').value;
+        entry.machineName = document.getElementById('expense-general-vehicle').value;
+        entry.unitType = document.getElementById('expense-general-unit').value;
         entry.amount = parseFloat(document.getElementById('expense-amount').value) || 0;
+        if (!entry.machineName || !entry.unitType) { showToast("Vehicle and Unit are required.", true); return; }
       } else if (currentExpenseMode === 'subcontract') {
         const qty = parseFloat(document.getElementById('expense-sub-qty').value) || 0;
         const rate = parseFloat(document.getElementById('expense-sub-rate').value) || 0;
         entry.isSubContract = true;
         entry.category = "Vehicle Sub-contract";
+        entry.vendorName = document.getElementById('expense-vendor').value;
         entry.machineName = document.getElementById('expense-sub-machine').value;
         entry.unitType = document.getElementById('expense-sub-unit').value;
         entry.quantity = qty;
         entry.rate = rate;
         entry.amount = qty * rate;
+        if (!entry.vendorName) { showToast("Select a vendor first.", true); return; }
       } else if (currentExpenseMode === 'advance') {
         entry.isAdvance = true;
         entry.category = "Vendor Advance";
+        entry.vendorName = document.getElementById('expense-vendor').value;
         entry.machineName = document.getElementById('expense-sub-machine').value;
         entry.amount = parseFloat(document.getElementById('expense-amount').value) || 0;
+        if (!entry.vendorName) { showToast("Select a vendor first.", true); return; }
       }
 
       if(entry.amount <= 0) { showToast("Invalid amount tracking details.", true); return; }
@@ -1599,14 +1852,105 @@
     // ========== SYSTEM ACTIONS EXPORTS ==========
     function exportToExcel() {
       const filtered = getFilteredData(selectedReportPeriod);
-      let csv = "\uFEFFCSV_DATA\nBADHAR BUSINESS GROUP - QUARRY LEDGER REPORT\nSite, "+currentSite+"\nPeriod, "+selectedReportPeriod.toUpperCase()+"\nNet Profit, "+filtered.netProfit+"\n\nType,Date,Description,Details,Amount\n";
-      filtered.merged.forEach(item => {
-        csv += `${item.type.toUpperCase()},${formatDateTime(item.date)},"${item.title}","${item.subtitle}",${item.amount}\n`;
+      const siteData = getSiteData();
+
+      // Collect all category columns dynamically
+      const materialCols = siteData.machines.filter(m => m.type === 'material').map(m => m.name);
+      const vehicleCols = siteData.machines.filter(m => m.type === 'vehicle').map(m => m.name);
+      const expenseCatCols = [...new Set(siteData.expenseEntries.filter(e => !e.isSubContract).map(e => e.category))];
+
+      // Group entries by date (day-level)
+      const dayKey = (epoch) => new Date(epoch).toLocaleDateString('en-IN', { day: '2-digit', month: 'short', year: 'numeric' });
+      const rowsByDate = {};
+
+      const getRow = (dateStr) => {
+        if (!rowsByDate[dateStr]) {
+          const row = { date: dateStr, totalIncome: 0, totalExpense: 0 };
+          materialCols.forEach(c => row['MatIncome_' + c] = 0);
+          vehicleCols.forEach(c => row['VehIncome_' + c] = 0);
+          vehicleCols.forEach(c => row['VehReading_' + c] = 0);
+          expenseCatCols.forEach(c => row['Exp_' + c] = 0);
+          row.subContractTotal = 0;
+          row.advanceTotal = 0;
+          rowsByDate[dateStr] = row;
+        }
+        return rowsByDate[dateStr];
+      };
+
+      // Use filtered raw entries directly (recompute from siteData with same period logic as getFilteredData)
+      let limitMs = 0; const now = Date.now();
+      if (selectedReportPeriod === 'daily') { const d = new Date(); d.setHours(0,0,0,0); limitMs = d.getTime(); }
+      else if (selectedReportPeriod === 'weekly') limitMs = now - 7 * 24 * 3600000;
+      else if (selectedReportPeriod === 'monthly') limitMs = now - 30 * 24 * 3600000;
+      const inRange = (d) => selectedReportPeriod === 'all' || d >= limitMs;
+
+      siteData.incomeEntries.filter(e => inRange(e.date)).forEach(e => {
+        const row = getRow(dayKey(e.date));
+        if (materialCols.includes(e.machineName)) row['MatIncome_' + e.machineName] += e.totalAmount;
+        else if (vehicleCols.includes(e.machineName)) {
+          row['VehIncome_' + e.machineName] += e.totalAmount;
+          row['VehReading_' + e.machineName] += e.quantity;
+        }
+        row.totalIncome += e.totalAmount;
       });
+
+      siteData.expenseEntries.filter(e => inRange(e.date)).forEach(e => {
+        const row = getRow(dayKey(e.date));
+        if (e.isSubContract) {
+          row.subContractTotal += e.amount;
+          row.totalExpense += e.amount;
+          if (vehicleCols.includes(e.machineName)) row['VehReading_' + e.machineName] += e.quantity || 0;
+        } else if (e.isAdvance) {
+          row.advanceTotal += e.amount;
+        } else {
+          if (expenseCatCols.includes(e.category)) row['Exp_' + e.category] += e.amount;
+          row.totalExpense += e.amount;
+        }
+      });
+
+      // Build header
+      let headers = ['Date'];
+      materialCols.forEach(c => headers.push('Material Income: ' + c));
+      vehicleCols.forEach(c => headers.push('Vehicle Income: ' + c));
+      vehicleCols.forEach(c => headers.push('Vehicle Reading/Units: ' + c));
+      expenseCatCols.forEach(c => headers.push('Expense: ' + c));
+      headers.push('Sub-contract Total', 'Advance Total', 'Total Income', 'Total Expense', 'Net');
+
+      let csv = "\uFEFF" + "BADHAR BUSINESS GROUP - QUARRY DATA ENTRY LEDGER\n";
+      csv += "Site," + currentSite + "\nPeriod," + selectedReportPeriod.toUpperCase() + "\n\n";
+      csv += headers.join(',') + '\n';
+
+      const sortedDates = Object.keys(rowsByDate).sort((a,b) => new Date(a) - new Date(b));
+      let grand = { totalIncome: 0, totalExpense: 0, subContractTotal: 0, advanceTotal: 0 };
+      const grandCols = {};
+      [...materialCols.map(c=>'MatIncome_'+c), ...vehicleCols.map(c=>'VehIncome_'+c), ...vehicleCols.map(c=>'VehReading_'+c), ...expenseCatCols.map(c=>'Exp_'+c)].forEach(k => grandCols[k] = 0);
+
+      sortedDates.forEach(d => {
+        const row = rowsByDate[d];
+        let line = [row.date];
+        materialCols.forEach(c => { line.push(row['MatIncome_'+c]); grandCols['MatIncome_'+c] += row['MatIncome_'+c]; });
+        vehicleCols.forEach(c => { line.push(row['VehIncome_'+c]); grandCols['VehIncome_'+c] += row['VehIncome_'+c]; });
+        vehicleCols.forEach(c => { line.push(row['VehReading_'+c]); grandCols['VehReading_'+c] += row['VehReading_'+c]; });
+        expenseCatCols.forEach(c => { line.push(row['Exp_'+c]); grandCols['Exp_'+c] += row['Exp_'+c]; });
+        line.push(row.subContractTotal, row.advanceTotal, row.totalIncome, row.totalExpense, row.totalIncome - row.totalExpense);
+        grand.totalIncome += row.totalIncome; grand.totalExpense += row.totalExpense;
+        grand.subContractTotal += row.subContractTotal; grand.advanceTotal += row.advanceTotal;
+        csv += line.join(',') + '\n';
+      });
+
+      // Grand total row
+      let grandLine = ['TOTAL'];
+      materialCols.forEach(c => grandLine.push(grandCols['MatIncome_'+c]));
+      vehicleCols.forEach(c => grandLine.push(grandCols['VehIncome_'+c]));
+      vehicleCols.forEach(c => grandLine.push(grandCols['VehReading_'+c]));
+      expenseCatCols.forEach(c => grandLine.push(grandCols['Exp_'+c]));
+      grandLine.push(grand.subContractTotal, grand.advanceTotal, grand.totalIncome, grand.totalExpense, grand.totalIncome - grand.totalExpense);
+      csv += grandLine.join(',') + '\n';
+
       const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
       const link = document.createElement("a");
       link.href = URL.createObjectURL(blob);
-      link.download = `quarry_ledger_report_${selectedReportPeriod}.csv`;
+      link.download = `quarry_data_entry_ledger_${selectedReportPeriod}.csv`;
       link.click();
     }
 
@@ -1670,7 +2014,7 @@
 
   <script>
     (function() {
-      const CREDS = { username: "admin", password: "admin123" };
+      const FALLBACK_CREDS = { username: "admin", password: "admin123" };
       const overlay = document.getElementById('login-overlay');
       const appContent = document.getElementById('app-content');
       const userInput = document.getElementById('login-username');
@@ -1686,7 +2030,10 @@
       function tryLogin() {
         const u = userInput.value.trim();
         const p = passInput.value;
-        if (u === CREDS.username && p === CREDS.password) {
+        const users = (typeof db !== 'undefined' && db && db.users && db.users.length) ? db.users : [FALLBACK_CREDS];
+        const match = users.some(acc => acc.username === u && acc.password === p) ||
+                      (u === FALLBACK_CREDS.username && p === FALLBACK_CREDS.password);
+        if (match) {
           sessionStorage.setItem('badhar_logged_in', 'true');
           errorMsg.style.display = 'none';
           showApp();
