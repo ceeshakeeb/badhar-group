@@ -162,12 +162,28 @@
   <!-- Main Content Container -->
   <div class="flex-1 flex flex-col h-full overflow-hidden bg-[#F3F4F6]">
     
-    <!-- Top Mobile Header / App Bar -->
-    <header class="md:hidden px-6 pt-6 pb-4 flex justify-between items-center bg-white border-b border-gray-200 shrink-0">
+    <!-- Top Mobile Header / App Bar with Site Selector -->
+    <header class="md:hidden px-6 pt-6 pb-4 space-y-3 bg-white border-b border-gray-200 shrink-0">
+      <!-- Site Selector Bar -->
+      <div class="flex items-center justify-between">
+        <div class="flex items-center gap-2 flex-1">
+          <span class="text-xs font-bold text-[#4B5563] uppercase">Site:</span>
+          <select id="site-selector" onchange="switchSite(this.value)" class="flex-1 neumorphic-inset rounded-lg px-3 py-1.5 text-sm text-[#1F2937] font-semibold">
+            <!-- Populated dynamically -->
+          </select>
+          <button onclick="showSiteManager()" class="neumorphic-btn text-[#FF5E3A] px-3 py-1.5 rounded-lg text-sm font-bold">
+            <span class="material-symbols-outlined text-base">add</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Title -->
       <div class="flex flex-col">
         <span class="text-gray-500 text-[10px] font-bold uppercase tracking-wider">BUSINESS DASHBOARD</span>
         <h1 class="text-xl font-bold text-[#111827] heading-font">Badhar group <span class="text-[#0056C6]">business Tracker</span></h1>
       </div>
+      
+      <!-- Action buttons -->
       <div class="flex items-center gap-2">
         <button onclick="triggerCloudSyncSim()" class="w-10 h-10 neumorphic-btn text-white flex items-center justify-center">
           <span class="material-symbols-outlined" id="sync-icon">sync</span>
@@ -448,66 +464,142 @@
 
       <!-- SCREEN: MACHINES & RATES -->
       <div id="screen-machines" class="screen-content space-y-6 hidden">
-        <h2 class="text-2xl font-bold text-[#1F2937] heading-font">Machine & Rate Configuration</h2>
+        <h2 class="text-2xl font-bold text-[#1F2937] heading-font">Configure Rates & Assets</h2>
 
-        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
-          <!-- Add Machine & Unit Column -->
-          <div class="space-y-6">
-            <!-- Machines Card -->
-            <div class="neumorphic-card p-6 space-y-4">
-              <h3 class="font-bold text-lg text-[#1F2937]">Manage Materials & Machinery</h3>
-              <form id="add-machine-form" onsubmit="handleMachineSubmit(event)" class="flex gap-2">
-                <input type="text" id="new-machine-name" required placeholder="Item/Asset Name (e.g. Boller, M-Sand, JCB)" class="flex-1 neumorphic-inset rounded-xl px-4 py-3 text-[#1F2937] focus:outline-none focus:ring-2 focus:ring-[#FF5E3A]/40 transition-all" />
-                <button type="submit" class="neumorphic-btn text-[#FF5E3A] px-4 rounded-xl font-bold flex items-center justify-center cursor-pointer">
+        <!-- Tab Selector: Material vs Vehicle -->
+        <div class="flex gap-2 border-b border-gray-200">
+          <button onclick="switchRateTab('material')" id="tab-material" class="px-6 py-3 font-bold text-sm border-b-2 border-[#0056C6] text-[#0056C6]">
+            <span class="material-symbols-outlined align-middle mr-1">layers</span> MATERIALS
+          </button>
+          <button onclick="switchRateTab('vehicle')" id="tab-vehicle" class="px-6 py-3 font-bold text-sm border-b-2 border-transparent text-[#4B5563] hover:text-[#1F2937]">
+            <span class="material-symbols-outlined align-middle mr-1">local_shipping</span> VEHICLES
+          </button>
+        </div>
+
+        <!-- MATERIAL SECTION -->
+        <div id="material-section" class="space-y-6">
+          <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+            <!-- Add Material Card -->
+            <div class="neumorphic-card p-6 space-y-4 bg-blue-50">
+              <h3 class="font-bold text-lg text-[#1F2937]">
+                <span class="material-symbols-outlined align-middle">layers</span> Add Material
+              </h3>
+              <form id="add-material-form" onsubmit="handleMaterialSubmit(event)" class="flex gap-2">
+                <input type="text" id="new-material-name" required placeholder="e.g., Boller, M-Sand, P-Sand" class="flex-1 neumorphic-inset rounded-xl px-4 py-3 text-[#1F2937] focus:outline-none focus:ring-2 focus:ring-blue-400 transition-all" />
+                <button type="submit" class="neumorphic-btn text-blue-600 px-4 rounded-xl font-bold flex items-center justify-center cursor-pointer">
                   <span class="material-symbols-outlined">add</span>
                 </button>
               </form>
-              <div id="machines-list-configs" class="flex flex-wrap gap-2 pt-2">
+              <div id="materials-list-configs" class="flex flex-wrap gap-2 pt-2">
                 <!-- Loaded dynamically -->
               </div>
             </div>
 
-            <!-- Units Card -->
-            <div class="neumorphic-card p-6 space-y-4">
-              <h3 class="font-bold text-lg text-[#1F2937]">Manage Measurement Units</h3>
-              <form id="add-unit-form" onsubmit="handleUnitSubmit(event)" class="flex gap-2">
-                <input type="text" id="new-unit-name" required placeholder="Unit Name (e.g. foot, Bucket, Trip)" class="flex-1 neumorphic-inset rounded-xl px-4 py-3 text-[#1F2937] focus:outline-none focus:ring-2 focus:ring-[#FF5E3A]/40 transition-all" />
-                <button type="submit" class="neumorphic-btn text-[#FF5E3A] px-4 rounded-xl font-bold flex items-center justify-center cursor-pointer">
+            <!-- Material Units Card -->
+            <div class="neumorphic-card p-6 space-y-4 bg-blue-50">
+              <h3 class="font-bold text-lg text-[#1F2937]">
+                <span class="material-symbols-outlined align-middle">straighten</span> Material Units
+              </h3>
+              <form id="add-material-unit-form" onsubmit="handleMaterialUnitSubmit(event)" class="flex gap-2">
+                <input type="text" id="new-material-unit-name" required placeholder="e.g., foot, Ton, Bucket" class="flex-1 neumorphic-inset rounded-xl px-4 py-3 text-[#1F2937] focus:outline-none focus:ring-2 focus:ring-blue-400 transition-all" />
+                <button type="submit" class="neumorphic-btn text-blue-600 px-4 rounded-xl font-bold flex items-center justify-center cursor-pointer">
                   <span class="material-symbols-outlined">add</span>
                 </button>
               </form>
-              <div id="units-list-configs" class="flex flex-wrap gap-2 pt-2">
+              <div id="material-units-list-configs" class="flex flex-wrap gap-2 pt-2">
                 <!-- Loaded dynamically -->
               </div>
             </div>
           </div>
 
-          <!-- Add Rates Column -->
-          <div class="neumorphic-card p-6 space-y-4">
-            <h3 class="font-bold text-lg text-[#1F2937]">Configure Base Rates</h3>
-            <form id="add-rate-form" onsubmit="handleRateSubmit(event)" class="space-y-3">
+          <!-- Material Rates Card -->
+          <div class="neumorphic-card p-6 space-y-4 bg-blue-50">
+            <h3 class="font-bold text-lg text-[#1F2937]">
+              <span class="material-symbols-outlined align-middle">price_check</span> Material Rates
+            </h3>
+            <form id="add-material-rate-form" onsubmit="handleMaterialRateSubmit(event)" class="grid grid-cols-1 md:grid-cols-3 gap-3">
               <div class="flex flex-col gap-1">
-                <label class="text-xs text-[#4B5563]">Material / Vehicle</label>
-                <select id="rate-machine" required class="neumorphic-inset rounded-xl px-4 py-2.5 text-[#1F2937]"></select>
+                <label class="text-xs text-[#4B5563]">Material</label>
+                <select id="material-rate-item" required class="neumorphic-inset rounded-xl px-4 py-2.5 text-[#1F2937]"></select>
               </div>
               <div class="flex flex-col gap-1">
-                <label class="text-xs text-[#4B5563]">Measurement Unit</label>
-                <select id="rate-unit" required class="neumorphic-inset rounded-xl px-4 py-2.5 text-[#1F2937]"></select>
+                <label class="text-xs text-[#4B5563]">Unit</label>
+                <select id="material-rate-unit" required class="neumorphic-inset rounded-xl px-4 py-2.5 text-[#1F2937]"></select>
               </div>
               <div class="flex flex-col gap-1">
-                <label class="text-xs text-[#4B5563]">Base Rate (₹)</label>
-                <input type="number" step="any" id="rate-val" required placeholder="e.g. 8 or 2600" class="neumorphic-inset rounded-xl px-4 py-2.5 text-[#1F2937]" />
+                <label class="text-xs text-[#4B5563]">Rate (₹)</label>
+                <input type="number" step="any" id="material-rate-val" required placeholder="e.g. 8" class="neumorphic-inset rounded-xl px-4 py-2.5 text-[#1F2937]" />
               </div>
-              <button type="submit" class="w-full h-12 neumorphic-btn text-[#FF5E3A] rounded-xl font-bold active:scale-98 transition-all cursor-pointer">
-                Save Rate Rule
+              <button type="submit" class="col-span-1 md:col-span-3 h-10 neumorphic-btn text-blue-600 rounded-xl font-bold cursor-pointer">
+                Save Material Rate
               </button>
             </form>
+            <div id="material-rates-list-configs" class="space-y-1.5 max-h-52 overflow-y-auto">
+              <!-- Loaded dynamically -->
+            </div>
+          </div>
+        </div>
 
-            <div class="pt-4 border-t border-[#BCCADF]/40 space-y-2">
-              <h4 class="text-xs font-bold text-[#4B5563] uppercase tracking-wider">Configured Rates Matrix</h4>
-              <div id="rates-list-configs" class="space-y-1.5 max-h-52 overflow-y-auto no-scrollbar">
+        <!-- VEHICLE SECTION (Hidden by default) -->
+        <div id="vehicle-section" class="space-y-6 hidden">
+          <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+            <!-- Add Vehicle Card -->
+            <div class="neumorphic-card p-6 space-y-4 bg-orange-50">
+              <h3 class="font-bold text-lg text-[#1F2937]">
+                <span class="material-symbols-outlined align-middle">local_shipping</span> Add Vehicle
+              </h3>
+              <form id="add-vehicle-form" onsubmit="handleVehicleSubmit(event)" class="flex gap-2">
+                <input type="text" id="new-vehicle-name" required placeholder="e.g., JCB, Excavator, Truck" class="flex-1 neumorphic-inset rounded-xl px-4 py-3 text-[#1F2937] focus:outline-none focus:ring-2 focus:ring-orange-400 transition-all" />
+                <button type="submit" class="neumorphic-btn text-orange-600 px-4 rounded-xl font-bold flex items-center justify-center cursor-pointer">
+                  <span class="material-symbols-outlined">add</span>
+                </button>
+              </form>
+              <div id="vehicles-list-configs" class="flex flex-wrap gap-2 pt-2">
                 <!-- Loaded dynamically -->
               </div>
+            </div>
+
+            <!-- Vehicle Load Units Card -->
+            <div class="neumorphic-card p-6 space-y-4 bg-orange-50">
+              <h3 class="font-bold text-lg text-[#1F2937]">
+                <span class="material-symbols-outlined align-middle">scale</span> Load Units
+              </h3>
+              <form id="add-vehicle-unit-form" onsubmit="handleVehicleUnitSubmit(event)" class="flex gap-2">
+                <input type="text" id="new-vehicle-unit-name" required placeholder="e.g., Trip, Hour, Hour" class="flex-1 neumorphic-inset rounded-xl px-4 py-3 text-[#1F2937] focus:outline-none focus:ring-2 focus:ring-orange-400 transition-all" />
+                <button type="submit" class="neumorphic-btn text-orange-600 px-4 rounded-xl font-bold flex items-center justify-center cursor-pointer">
+                  <span class="material-symbols-outlined">add</span>
+                </button>
+              </form>
+              <div id="vehicle-units-list-configs" class="flex flex-wrap gap-2 pt-2">
+                <!-- Loaded dynamically -->
+              </div>
+            </div>
+          </div>
+
+          <!-- Vehicle Rates Card -->
+          <div class="neumorphic-card p-6 space-y-4 bg-orange-50">
+            <h3 class="font-bold text-lg text-[#1F2937]">
+              <span class="material-symbols-outlined align-middle">price_check</span> Vehicle Rates
+            </h3>
+            <form id="add-vehicle-rate-form" onsubmit="handleVehicleRateSubmit(event)" class="grid grid-cols-1 md:grid-cols-3 gap-3">
+              <div class="flex flex-col gap-1">
+                <label class="text-xs text-[#4B5563]">Vehicle</label>
+                <select id="vehicle-rate-item" required class="neumorphic-inset rounded-xl px-4 py-2.5 text-[#1F2937]"></select>
+              </div>
+              <div class="flex flex-col gap-1">
+                <label class="text-xs text-[#4B5563]">Load Unit</label>
+                <select id="vehicle-rate-unit" required class="neumorphic-inset rounded-xl px-4 py-2.5 text-[#1F2937]"></select>
+              </div>
+              <div class="flex flex-col gap-1">
+                <label class="text-xs text-[#4B5563]">Rate (₹)</label>
+                <input type="number" step="any" id="vehicle-rate-val" required placeholder="e.g. 2600" class="neumorphic-inset rounded-xl px-4 py-2.5 text-[#1F2937]" />
+              </div>
+              <button type="submit" class="col-span-1 md:col-span-3 h-10 neumorphic-btn text-orange-600 rounded-xl font-bold cursor-pointer">
+                Save Vehicle Rate
+              </button>
+            </form>
+            <div id="vehicle-rates-list-configs" class="space-y-1.5 max-h-52 overflow-y-auto">
+              <!-- Loaded dynamically -->
             </div>
           </div>
         </div>
@@ -743,17 +835,28 @@
 
     // ========== END FIREBASE INITIALIZATION ==========
 
-    // Local database objects
+    // Local database objects - NOW SITE-BASED
+    let currentSite = 'Site 1'; // Default site
+    let currentExpenseMode = 'general'; // 'general' | 'subcontract' | 'advance'
+    
     let db = {
-      machines: [],
-      unitTypes: [],
-      rates: [],
-      incomeEntries: [],
-      expenseEntries: []
+      sites: {
+        'Site 1': {
+          siteColor: '#0056C6', // Blue
+          siteDesign: 'modern',
+          machines: [], // Contains type: 'material' or 'vehicle'
+          unitTypes: [],
+          rates: [],
+          incomeEntries: [],
+          expenseEntries: []
+        }
+      }
     };
 
-    // Current operational expense recording mode: 'general' | 'subcontract' | 'advance'
-    let currentExpenseMode = 'general';
+    // Shortcut to current site data
+    function getSiteData() {
+      return db.sites[currentSite];
+    }
 
     // Chart.js reference
     let trendChartInstance = null;
@@ -953,6 +1056,194 @@
         toast.classList.remove('translate-y-0', 'opacity-100');
         toast.classList.add('translate-y-20', 'opacity-0');
       }, 3000);
+    }
+
+    // ========== SITE MANAGEMENT ==========
+    function switchSite(siteName) {
+      currentSite = siteName;
+      console.log("Switched to site:", currentSite);
+      renderDashboard();
+      renderMachinesScreen();
+      saveDB();
+      showToast(`Switched to ${siteName}`);
+    }
+
+    function showSiteManager() {
+      const newSiteName = prompt("Enter new site name (e.g., 'Site 2', 'Quarry B'):");
+      if (!newSiteName || newSiteName.trim() === '') return;
+      
+      const siteName = newSiteName.trim();
+      if (db.sites[siteName]) {
+        showToast("Site already exists!", true);
+        return;
+      }
+
+      const colors = ['#0056C6', '#FF5E3A', '#10B981', '#8B5CF6', '#F59E0B', '#EC4899'];
+      const randomColor = colors[Math.floor(Math.random() * colors.length)];
+
+      db.sites[siteName] = {
+        siteColor: randomColor,
+        siteDesign: 'modern',
+        machines: [],
+        unitTypes: [],
+        rates: [],
+        incomeEntries: [],
+        expenseEntries: []
+      };
+
+      currentSite = siteName;
+      renderSiteSelector();
+      renderDashboard();
+      renderMachinesScreen();
+      saveDB();
+      showToast(`✓ Created site: ${siteName}`);
+    }
+
+    function renderSiteSelector() {
+      const selector = document.getElementById('site-selector');
+      if (!selector) return;
+      selector.innerHTML = Object.keys(db.sites).map(site => 
+        `<option value="${site}" ${site === currentSite ? 'selected' : ''}>${site}</option>`
+      ).join('');
+    }
+
+    // ========== RATE TAB SWITCHING ==========
+    let activeRateTab = 'material';
+
+    function switchRateTab(tab) {
+      activeRateTab = tab;
+      const materialSection = document.getElementById('material-section');
+      const vehicleSection = document.getElementById('vehicle-section');
+      const tabMaterial = document.getElementById('tab-material');
+      const tabVehicle = document.getElementById('tab-vehicle');
+
+      if (tab === 'material') {
+        materialSection.classList.remove('hidden');
+        vehicleSection.classList.add('hidden');
+        tabMaterial.classList.add('text-[#0056C6]');
+        tabMaterial.classList.remove('text-[#4B5563]');
+        tabVehicle.classList.add('text-[#4B5563]');
+        tabVehicle.classList.remove('text-[#FF5E3A]');
+      } else {
+        vehicleSection.classList.remove('hidden');
+        materialSection.classList.add('hidden');
+        tabVehicle.classList.add('text-[#FF5E3A]');
+        tabVehicle.classList.remove('text-[#4B5563]');
+        tabMaterial.classList.add('text-[#4B5563]');
+        tabMaterial.classList.remove('text-[#0056C6]');
+      }
+    }
+
+    // ========== MATERIAL HANDLERS ==========
+    function handleMaterialSubmit(e) {
+      e.preventDefault();
+      const name = document.getElementById('new-material-name').value.trim();
+      if (!name) return;
+
+      const siteData = getSiteData();
+      if (siteData.machines.some(m => m.name.toLowerCase() === name.toLowerCase() && m.type === 'material')) {
+        showToast("Material already exists!", true);
+        return;
+      }
+
+      siteData.machines.push({ name, type: 'material', id: Date.now() });
+      document.getElementById('new-material-name').value = '';
+      renderMachinesScreen();
+      saveDB();
+      showToast(`✓ Added material: ${name}`);
+    }
+
+    function handleMaterialUnitSubmit(e) {
+      e.preventDefault();
+      const name = document.getElementById('new-material-unit-name').value.trim();
+      if (!name) return;
+
+      const siteData = getSiteData();
+      if (siteData.unitTypes.some(u => u.name.toLowerCase() === name.toLowerCase() && u.type === 'material')) {
+        showToast("Unit already exists!", true);
+        return;
+      }
+
+      siteData.unitTypes.push({ name, type: 'material', id: Date.now() });
+      document.getElementById('new-material-unit-name').value = '';
+      renderMachinesScreen();
+      saveDB();
+      showToast(`✓ Added unit: ${name}`);
+    }
+
+    function handleMaterialRateSubmit(e) {
+      e.preventDefault();
+      const item = document.getElementById('material-rate-item').value;
+      const unit = document.getElementById('material-rate-unit').value;
+      const rate = parseFloat(document.getElementById('material-rate-val').value);
+
+      if (!item || !unit || !rate || rate <= 0) {
+        showToast("Please fill all fields with valid values", true);
+        return;
+      }
+
+      const siteData = getSiteData();
+      siteData.rates.push({ item, unit, rate, type: 'material', id: Date.now() });
+      document.getElementById('add-material-rate-form').reset();
+      renderMachinesScreen();
+      saveDB();
+      showToast(`✓ Rate saved: ${item} - ₹${rate}/${unit}`);
+    }
+
+    // ========== VEHICLE HANDLERS ==========
+    function handleVehicleSubmit(e) {
+      e.preventDefault();
+      const name = document.getElementById('new-vehicle-name').value.trim();
+      if (!name) return;
+
+      const siteData = getSiteData();
+      if (siteData.machines.some(m => m.name.toLowerCase() === name.toLowerCase() && m.type === 'vehicle')) {
+        showToast("Vehicle already exists!", true);
+        return;
+      }
+
+      siteData.machines.push({ name, type: 'vehicle', id: Date.now() });
+      document.getElementById('new-vehicle-name').value = '';
+      renderMachinesScreen();
+      saveDB();
+      showToast(`✓ Added vehicle: ${name}`);
+    }
+
+    function handleVehicleUnitSubmit(e) {
+      e.preventDefault();
+      const name = document.getElementById('new-vehicle-unit-name').value.trim();
+      if (!name) return;
+
+      const siteData = getSiteData();
+      if (siteData.unitTypes.some(u => u.name.toLowerCase() === name.toLowerCase() && u.type === 'vehicle')) {
+        showToast("Unit already exists!", true);
+        return;
+      }
+
+      siteData.unitTypes.push({ name, type: 'vehicle', id: Date.now() });
+      document.getElementById('new-vehicle-unit-name').value = '';
+      renderMachinesScreen();
+      saveDB();
+      showToast(`✓ Added load unit: ${name}`);
+    }
+
+    function handleVehicleRateSubmit(e) {
+      e.preventDefault();
+      const item = document.getElementById('vehicle-rate-item').value;
+      const unit = document.getElementById('vehicle-rate-unit').value;
+      const rate = parseFloat(document.getElementById('vehicle-rate-val').value);
+
+      if (!item || !unit || !rate || rate <= 0) {
+        showToast("Please fill all fields with valid values", true);
+        return;
+      }
+
+      const siteData = getSiteData();
+      siteData.rates.push({ item, unit, rate, type: 'vehicle', id: Date.now() });
+      document.getElementById('add-vehicle-rate-form').reset();
+      renderMachinesScreen();
+      saveDB();
+      showToast(`✓ Rate saved: ${item} - ₹${rate}/${unit}`);
     }
 
     // Real Firebase Cloud Sync
@@ -1679,98 +1970,118 @@
 
     // Screen-specific: Machines Screen Loader
     function renderMachinesScreen() {
-      renderFleetAndMetrics();
+      renderSiteSelector();
+      const siteData = getSiteData();
+      
+      // Render materials section
+      const materialsList = document.getElementById('materials-list-configs');
+      if (materialsList) {
+        materialsList.innerHTML = siteData.machines
+          .filter(m => m.type === 'material')
+          .map(m => `
+            <span class="neumorphic-inset text-blue-900 px-3.5 py-1.5 rounded-full text-xs font-semibold flex items-center gap-2 bg-blue-100">
+              <span class="material-symbols-outlined text-sm">layers</span>
+              ${m.name}
+              <button onclick="deleteSiteMachine(${m.id})" class="text-red-400 hover:text-red-300 font-bold">×</button>
+            </span>
+          `).join('');
+      }
+
+      // Render vehicles section
+      const vehiclesList = document.getElementById('vehicles-list-configs');
+      if (vehiclesList) {
+        vehiclesList.innerHTML = siteData.machines
+          .filter(m => m.type === 'vehicle')
+          .map(m => `
+            <span class="neumorphic-inset text-orange-900 px-3.5 py-1.5 rounded-full text-xs font-semibold flex items-center gap-2 bg-orange-100">
+              <span class="material-symbols-outlined text-sm">local_shipping</span>
+              ${m.name}
+              <button onclick="deleteSiteMachine(${m.id})" class="text-red-400 hover:text-red-300 font-bold">×</button>
+            </span>
+          `).join('');
+      }
+
+      // Render material units
+      const materialUnitsList = document.getElementById('material-units-list-configs');
+      if (materialUnitsList) {
+        materialUnitsList.innerHTML = siteData.unitTypes
+          .filter(u => u.type === 'material')
+          .map(u => `
+            <span class="neumorphic-inset text-blue-900 px-3.5 py-1.5 rounded-full text-xs font-semibold flex items-center gap-2 bg-blue-100">
+              ${u.name}
+              <button onclick="deleteSiteUnit(${u.id})" class="text-red-400 hover:text-red-300 font-bold">×</button>
+            </span>
+          `).join('');
+      }
+
+      // Render vehicle units
+      const vehicleUnitsList = document.getElementById('vehicle-units-list-configs');
+      if (vehicleUnitsList) {
+        vehicleUnitsList.innerHTML = siteData.unitTypes
+          .filter(u => u.type === 'vehicle')
+          .map(u => `
+            <span class="neumorphic-inset text-orange-900 px-3.5 py-1.5 rounded-full text-xs font-semibold flex items-center gap-2 bg-orange-100">
+              ${u.name}
+              <button onclick="deleteSiteUnit(${u.id})" class="text-red-400 hover:text-red-300 font-bold">×</button>
+            </span>
+          `).join('');
+      }
+
+      // Material rate selector dropdowns
+      const materialItemSel = document.getElementById('material-rate-item');
+      if (materialItemSel) {
+        materialItemSel.innerHTML = siteData.machines
+          .filter(m => m.type === 'material')
+          .map(m => `<option value="${m.name}">${m.name}</option>`)
+          .join('');
+      }
+
+      const materialUnitSel = document.getElementById('material-rate-unit');
+      if (materialUnitSel) {
+        materialUnitSel.innerHTML = siteData.unitTypes
+          .filter(u => u.type === 'material')
+          .map(u => `<option value="${u.name}">${u.name}</option>`)
+          .join('');
+      }
+
+      // Vehicle rate selector dropdowns
+      const vehicleItemSel = document.getElementById('vehicle-rate-item');
+      if (vehicleItemSel) {
+        vehicleItemSel.innerHTML = siteData.machines
+          .filter(m => m.type === 'vehicle')
+          .map(m => `<option value="${m.name}">${m.name}</option>`)
+          .join('');
+      }
+
+      const vehicleUnitSel = document.getElementById('vehicle-rate-unit');
+      if (vehicleUnitSel) {
+        vehicleUnitSel.innerHTML = siteData.unitTypes
+          .filter(u => u.type === 'vehicle')
+          .map(u => `<option value="${u.name}">${u.name}</option>`)
+          .join('');
+      }
+
+      // Render configured rates
       renderConfiguredRates();
-
-      // Populate Selector dropdowns in rate form
-      const machineSel = document.getElementById('rate-machine');
-      machineSel.innerHTML = '';
-      db.machines.forEach(m => {
-        machineSel.insertAdjacentHTML('beforeend', `<option value="${m.name}">${m.name}</option>`);
-      });
-
-      const unitSel = document.getElementById('rate-unit');
-      unitSel.innerHTML = '';
-      db.unitTypes.forEach(u => {
-        unitSel.insertAdjacentHTML('beforeend', `<option value="${u.name}">${u.name}</option>`);
-      });
     }
 
-    function renderFleetAndMetrics() {
-      // Machines config
-      const machContainer = document.getElementById('machines-list-configs');
-      machContainer.innerHTML = '';
-      db.machines.forEach(m => {
-        machContainer.insertAdjacentHTML('beforeend', `
-          <span class="neumorphic-inset text-[#1F2937] px-3.5 py-1.5 rounded-full text-xs font-semibold flex items-center gap-2">
-            ${m.name}
-            <button onclick="deleteMachine(${m.id})" class="text-red-400 hover:text-red-300 font-bold">×</button>
-          </span>
-        `);
-      });
-
-      // Units Config
-      const unitContainer = document.getElementById('units-list-configs');
-      unitContainer.innerHTML = '';
-      db.unitTypes.forEach(u => {
-        unitContainer.insertAdjacentHTML('beforeend', `
-          <span class="neumorphic-inset text-[#1F2937] px-3.5 py-1.5 rounded-full text-xs font-semibold flex items-center gap-2">
-            ${u.name}
-            <button onclick="deleteUnit(${u.id})" class="text-red-400 hover:text-red-300 font-bold">×</button>
-          </span>
-        `);
-      });
-    }
-
-    function handleMachineSubmit(e) {
-      e.preventDefault();
-      const val = document.getElementById('new-machine-name').value.trim();
-      if (!val) return;
-
-      if (db.machines.some(m => m.name.toLowerCase() === val.toLowerCase())) {
-        showToast("Machine already exists!", true);
-        return;
-      }
-
-      db.machines.push({ id: Date.now(), name: val, createdTimestamp: Date.now() });
-      saveDB();
-      document.getElementById('new-machine-name').value = '';
-      showToast("Machinery fleet updated!");
-      renderMachinesScreen();
-    }
-
-    function deleteMachine(id) {
-      if (confirm("Are you sure you want to retire this machine?")) {
-        db.machines = db.machines.filter(m => m.id !== id);
+    function deleteSiteMachine(id) {
+      if (confirm("Delete this item?")) {
+        const siteData = getSiteData();
+        siteData.machines = siteData.machines.filter(m => m.id !== id);
         saveDB();
-        showToast("Machine retired!");
         renderMachinesScreen();
+        showToast("Item deleted!");
       }
     }
 
-    function handleUnitSubmit(e) {
-      e.preventDefault();
-      const val = document.getElementById('new-unit-name').value.trim();
-      if (!val) return;
-
-      if (db.unitTypes.some(u => u.name.toLowerCase() === val.toLowerCase())) {
-        showToast("Metric already exists!", true);
-        return;
-      }
-
-      db.unitTypes.push({ id: Date.now(), name: val });
-      saveDB();
-      document.getElementById('new-unit-name').value = '';
-      showToast("Unit metrics updated!");
-      renderMachinesScreen();
-    }
-
-    function deleteUnit(id) {
-      if (confirm("Are you sure you want to delete this unit metric?")) {
-        db.unitTypes = db.unitTypes.filter(u => u.id !== id);
+    function deleteSiteUnit(id) {
+      if (confirm("Delete this unit?")) {
+        const siteData = getSiteData();
+        siteData.unitTypes = siteData.unitTypes.filter(u => u.id !== id);
         saveDB();
-        showToast("Metric deleted!");
         renderMachinesScreen();
+        showToast("Unit deleted!");
       }
     }
 
@@ -1785,52 +2096,70 @@
         return;
       }
 
-      // Check if existing
-      const existingIdx = db.rates.findIndex(r => r.machineName === machine && r.unitName === unit);
-      if (existingIdx !== -1) {
-        db.rates[existingIdx].rate = rateVal;
-      } else {
-        db.rates.push({ id: Date.now(), machineName: machine, unitName: unit, rate: rateVal });
-      }
-
-      saveDB();
-      showToast("Rule base rate updated!");
-      document.getElementById('rate-val').value = '';
-      renderMachinesScreen();
+      // DEPRECATED - use handleMaterialRateSubmit or handleVehicleRateSubmit instead
+      showToast("Use Material or Vehicle tab to add rates!", true);
     }
 
     function deleteRate(id) {
-      if (confirm("Are you sure you want to delete this rate config?")) {
-        db.rates = db.rates.filter(r => r.id !== id);
-        saveDB();
-        showToast("Rate configuration deleted!");
-        renderMachinesScreen();
-      }
+      // DEPRECATED - use deleteSiteRate instead
+    }
+
+    function deleteUnit(id) {
+      // DEPRECATED - use deleteSiteUnit instead
     }
 
     function renderConfiguredRates() {
-      const container = document.getElementById('rates-list-configs');
-      container.innerHTML = '';
-
-      if (db.rates.length === 0) {
-        container.innerHTML = `<div class="text-xs text-[#4B5563]">No rates configured. Default is manually inputted during log.</div>`;
-        return;
+      const siteData = getSiteData();
+      
+      // Material rates
+      const materialRatesContainer = document.getElementById('material-rates-list-configs');
+      if (materialRatesContainer) {
+        const materialRates = siteData.rates.filter(r => r.type === 'material');
+        materialRatesContainer.innerHTML = materialRates.length === 0 
+          ? '<div class="text-xs text-[#4B5563]">No material rates configured yet.</div>'
+          : materialRates.map(r => `
+            <div class="flex justify-between items-center neumorphic-inset p-3 rounded-xl text-xs bg-blue-50">
+              <div>
+                <p class="font-bold text-blue-900">${r.item}</p>
+                <p class="text-[10px] text-blue-700">${r.unit}</p>
+              </div>
+              <div class="flex items-center gap-2">
+                <span class="font-bold text-[#0056C6]">₹${r.rate.toFixed(2)}</span>
+                <button onclick="deleteSiteRate(${r.id})" class="text-red-400 hover:text-red-300 font-bold">×</button>
+              </div>
+            </div>
+          `).join('');
       }
 
-      db.rates.forEach(r => {
-        container.insertAdjacentHTML('beforeend', `
-          <div class="flex justify-between items-center neumorphic-inset p-3 rounded-xl text-xs">
-            <div>
-              <p class="font-bold text-[#1F2937]">${r.machineName}</p>
-              <p class="text-[10px] text-[#4B5563] mt-0.5">${r.unitName}</p>
+      // Vehicle rates
+      const vehicleRatesContainer = document.getElementById('vehicle-rates-list-configs');
+      if (vehicleRatesContainer) {
+        const vehicleRates = siteData.rates.filter(r => r.type === 'vehicle');
+        vehicleRatesContainer.innerHTML = vehicleRates.length === 0 
+          ? '<div class="text-xs text-[#4B5563]">No vehicle rates configured yet.</div>'
+          : vehicleRates.map(r => `
+            <div class="flex justify-between items-center neumorphic-inset p-3 rounded-xl text-xs bg-orange-50">
+              <div>
+                <p class="font-bold text-orange-900">${r.item}</p>
+                <p class="text-[10px] text-orange-700">${r.unit}</p>
+              </div>
+              <div class="flex items-center gap-2">
+                <span class="font-bold text-[#FF5E3A]">₹${r.rate.toFixed(2)}</span>
+                <button onclick="deleteSiteRate(${r.id})" class="text-red-400 hover:text-red-300 font-bold">×</button>
+              </div>
             </div>
-            <div class="flex items-center gap-2">
-              <span class="font-bold text-[#FF5E3A]">${formatINR(r.rate)}</span>
-              <button onclick="deleteRate(${r.id})" class="text-red-400 hover:text-red-300 font-bold text-sm">×</button>
-            </div>
-          </div>
-        `);
-      });
+          `).join('');
+      }
+    }
+
+    function deleteSiteRate(id) {
+      if (confirm("Delete this rate?")) {
+        const siteData = getSiteData();
+        siteData.rates = siteData.rates.filter(r => r.id !== id);
+        saveDB();
+        renderMachinesScreen();
+        showToast("Rate deleted!");
+      }
     }
 
     // Screen-specific: Reports Screen Loader
