@@ -832,7 +832,7 @@
     async function loadDBFromFirestore() {
       try {
         const docSnap = await db_firestore.collection('users').doc(firebaseUserId).get();
-        if (docSnap.exists() && docSnap.data().quarryData && docSnap.data().quarryData.sites) {
+        if (docSnap.exists && docSnap.data().quarryData && docSnap.data().quarryData.sites) {
           db = docSnap.data().quarryData;
         } else {
           db = JSON.parse(JSON.stringify(defaultSeed));
