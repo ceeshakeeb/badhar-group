@@ -13,7 +13,8 @@
   <!-- Chart.js CDN for Analytics -->
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   
-  <!-- Firebase SDK -->
+  
+  <!-- Firebase SDK - Firestore + Auth -->
   <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-auth-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
@@ -676,16 +677,23 @@
     // Firebase state tracking
     let firebaseInitialized = false;
     let firebaseUserId = null;
-    let isFirebaseSyncing = false;
+    let firestoreUnsubscribe = null;
 
-    // Initialize anonymous auth for Firebase
+    // Disable Firestore offline persistence (we use localStorage)
+    db_firestore.settings({ experimentalForceLongPolling: true });
+
+    // Initialize anonymous auth for Firebase + real-time sync
     auth.onAuthStateChanged(async (user) => {
       if (user) {
         firebaseUserId = user.uid;
         firebaseInitialized = true;
         console.log("Firebase authenticated as:", firebaseUserId);
-        // Load data from Firebase after auth
-        await loadDBFromFirebase();
+        
+        // Load data from Firestore after auth
+        await loadDBFromFirestore();
+        
+        // Set up real-time listener for cross-device sync
+        setupRealtimeSync();
       } else {
         // Sign in anonymously
         auth.signInAnonymously().catch(error => {
@@ -693,6 +701,31 @@
         });
       }
     });
+
+    // Real-time sync listener - updates when another device changes data
+    function setupRealtimeSync() {
+      if (firestoreUnsubscribe) firestoreUnsubscribe(); // Cleanup old listener
+      
+      firestoreUnsubscribe = db_firestore
+        .collection('users')
+        .doc(firebaseUserId)
+        .onSnapshot((doc) => {
+          if (doc.exists) {
+            const remoteData = doc.data().quarryData;
+            // Only update if different from current (avoid loop)
+            if (JSON.stringify(remoteData) !== JSON.stringify(db)) {
+              db = remoteData;
+              console.log("Real-time sync: data updated from cloud");
+              // Refresh UI if on dashboard
+              if (document.querySelector('[data-screen="dashboard"]')?.style.display !== 'none') {
+                renderDashboard();
+              }
+            }
+          }
+        }, (error) => {
+          console.error("Real-time sync error:", error);
+        });
+    }
 
     // ========== END FIREBASE INITIALIZATION ==========
 
@@ -802,7 +835,7 @@
     };
 
     // Load Database from Firestore or LocalStorage fallback
-    async function loadDBFromFirebase() {
+    async function loadDBFromFirestore() {
       if (!firebaseInitialized || !firebaseUserId) {
         console.warn("Firebase not initialized, loading from localStorage");
         return loadDBLocal();
@@ -816,7 +849,7 @@
         } else {
           console.log("No Firestore data, seeding defaults");
           db = JSON.parse(JSON.stringify(defaultSeed));
-          await saveDBToFirebase();
+          await saveDBToFirestore();
         }
       } catch (error) {
         console.error("Firestore load error:", error);
@@ -841,16 +874,16 @@
     }
 
     function loadDB() {
-      // This now prefers Firebase
+      // This now prefers Firestore
       if (firebaseInitialized && firebaseUserId) {
-        loadDBFromFirebase();
+        loadDBFromFirestore();
       } else {
         loadDBLocal();
       }
     }
 
     // Save Database to Firestore and LocalStorage
-    async function saveDBToFirebase() {
+    async function saveDBToFirestore() {
       if (!firebaseInitialized || !firebaseUserId) {
         console.warn("Firebase not ready, saving locally only");
         return saveDBLocal();
@@ -872,9 +905,9 @@
     }
 
     function saveDB() {
-      // This now saves to both Firebase and localStorage
+      // This now saves to both Firestore and localStorage
       if (firebaseInitialized && firebaseUserId) {
-        saveDBToFirebase();
+        saveDBToFirestore();
       } else {
         saveDBLocal();
       }
@@ -910,7 +943,7 @@
       }
 
       if (!firebaseInitialized || !firebaseUserId) {
-        showToast("⚠️ Firebase not connected. Using local backup.", true);
+        showToast("⚠️ Firestore not connected. Using local backup.", true);
         showToast("Ensure you have internet & refresh page.");
         if (syncIcon) {
           syncIcon.classList.remove('animate-spin');
@@ -918,19 +951,17 @@
         return;
       }
 
-      showToast("🔄 Syncing to Firebase Cloud...");
-      isFirebaseSyncing = true;
+      showToast("🔄 Syncing to Firestore Cloud...");
 
       try {
-        // Push current local data to Firebase
-        await saveDBToFirebase();
+        // Push current local data to Firestore
+        await saveDBToFirestore();
         
         setTimeout(() => {
           if (syncIcon) {
             syncIcon.classList.remove('animate-spin');
           }
-          showToast("✅ Cloud sync complete! Data backed up to Firebase.");
-          isFirebaseSyncing = false;
+          showToast("✅ Cloud sync complete! Real-time sync active across devices.");
         }, 800);
       } catch (error) {
         console.error("Sync error:", error);
@@ -938,7 +969,6 @@
         if (syncIcon) {
           syncIcon.classList.remove('animate-spin');
         }
-        isFirebaseSyncing = false;
       }
     }
 
