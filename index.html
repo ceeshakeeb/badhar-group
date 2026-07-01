@@ -683,11 +683,13 @@
     db_firestore.settings({ experimentalForceLongPolling: true });
 
     // Initialize anonymous auth for Firebase + real-time sync
+    let authReady = false;
     auth.onAuthStateChanged(async (user) => {
       if (user) {
         firebaseUserId = user.uid;
         firebaseInitialized = true;
-        console.log("Firebase authenticated as:", firebaseUserId);
+        authReady = true;
+        console.log("✓ Firebase authenticated as:", firebaseUserId);
         
         // Load data from Firestore after auth
         await loadDBFromFirestore();
@@ -696,9 +698,12 @@
         setupRealtimeSync();
       } else {
         // Sign in anonymously
-        auth.signInAnonymously().catch(error => {
-          console.error("Firebase auth error:", error);
-        });
+        try {
+          await auth.signInAnonymously();
+        } catch (error) {
+          console.error("✗ Firebase auth error:", error);
+          authReady = true; // Proceed with localStorage fallback
+        }
       }
     });
 
@@ -715,15 +720,24 @@
             // Only update if different from current (avoid loop)
             if (JSON.stringify(remoteData) !== JSON.stringify(db)) {
               db = remoteData;
-              console.log("Real-time sync: data updated from cloud");
-              // Refresh UI if on dashboard
-              if (document.querySelector('[data-screen="dashboard"]')?.style.display !== 'none') {
-                renderDashboard();
-              }
+              console.log("✓ Real-time sync: data updated from cloud");
+              showToast("🔄 Received update from cloud");
+              // Refresh all visible screens based on current active screen
+              const activeScreen = document.querySelector('.screen-content:not(.hidden)')?.id?.replace('screen-', '') || 'dashboard';
+              if (activeScreen === 'dashboard') renderDashboard();
+              else if (activeScreen === 'income') renderIncomeScreen();
+              else if (activeScreen === 'expense') renderExpenseScreen();
+              else if (activeScreen === 'machines') renderMachinesScreen();
+              else if (activeScreen === 'reports') renderReportsScreen();
             }
           }
         }, (error) => {
-          console.error("Real-time sync error:", error);
+          console.error("❌ Real-time sync error:", error);
+          if (error.code === 'permission-denied') {
+            showToast("❌ Firestore permission denied. Check security rules.", true);
+          } else if (error.code === 'not-found') {
+            showToast("❌ Firestore database not found.", true);
+          }
         });
     }
 
@@ -904,10 +918,16 @@
       localStorage.setItem('badhar_quarry_db', JSON.stringify(db));
     }
 
-    function saveDB() {
+    async function saveDB() {
       // This now saves to both Firestore and localStorage
       if (firebaseInitialized && firebaseUserId) {
-        saveDBToFirestore();
+        try {
+          await saveDBToFirestore();
+          console.log("✓ Data synced to Firestore");
+        } catch (error) {
+          console.error("✗ Firestore save error:", error);
+          showToast("⚠️ Cloud sync failed, saved locally", true);
+        }
       } else {
         saveDBLocal();
       }
@@ -2132,10 +2152,24 @@
       }
     }
 
-    // App Init
-    window.addEventListener('load', () => {
-      loadDB();
+    // App Init - Wait for Firebase auth to complete
+    window.addEventListener('load', async () => {
+      // Wait for Firebase auth to be ready (max 5 seconds)
+      let waited = 0;
+      while (!authReady && waited < 5000) {
+        await new Promise(r => setTimeout(r, 100));
+        waited += 100;
+      }
+      
+      // If auth ready and not already loaded, load from Firestore
+      if (authReady && firebaseInitialized && firebaseUserId) {
+        await loadDBFromFirestore();
+      } else {
+        loadDB(); // Fallback to localStorage
+      }
+      
       switchScreen('dashboard');
+      console.log("✓ App initialized, Firebase ready:", firebaseInitialized);
     });
   </script>
 </body>
