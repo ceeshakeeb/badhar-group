@@ -95,6 +95,21 @@
 </head>
 <body class="flex flex-col md:flex-row h-full">
 
+  <!-- ===== LOGIN OVERLAY ===== -->
+  <div id="login-overlay" style="position:fixed;inset:0;z-index:9999;background:#f3f4f6;display:flex;align-items:center;justify-content:center;">
+    <div style="background:#fff;padding:32px;border-radius:12px;box-shadow:0 4px 20px rgba(0,0,0,0.1);width:320px;">
+      <h2 style="font-size:20px;font-weight:700;margin-bottom:4px;">Badhar Group</h2>
+      <p style="font-size:13px;color:#6b7280;margin-bottom:20px;">Sign in to continue</p>
+      <input id="login-username" type="text" placeholder="Username" autocomplete="username" style="width:100%;padding:10px 12px;margin-bottom:10px;border:1px solid #d1d5db;border-radius:8px;font-size:14px;box-sizing:border-box;">
+      <input id="login-password" type="password" placeholder="Password" autocomplete="current-password" style="width:100%;padding:10px 12px;margin-bottom:10px;border:1px solid #d1d5db;border-radius:8px;font-size:14px;box-sizing:border-box;">
+      <p id="login-error" style="color:#dc2626;font-size:12px;margin-bottom:10px;display:none;">Invalid username or password.</p>
+      <button id="login-submit" style="width:100%;padding:10px;background:#0056C6;color:#fff;border:none;border-radius:8px;font-weight:600;font-size:14px;cursor:pointer;">Sign In</button>
+    </div>
+  </div>
+
+  <div id="app-content" style="display:none;" class="flex flex-col md:flex-row h-full">
+
+
   <aside class="hidden md:flex flex-col w-64 bg-white border-r border-gray-200 px-4 py-6 justify-between shrink-0">
     <div class="space-y-8">
       <div class="px-3">
@@ -126,6 +141,10 @@
         <button onclick="switchScreen('settings')" id="aside-btn-settings" class="sidebar-link w-full flex items-center gap-4 px-4 py-3 rounded-2xl text-gray-600 hover:bg-gray-100 hover:text-gray-900 font-medium transition-all">
           <span class="material-symbols-outlined">settings</span>
           Data Settings
+        </button>
+        <button onclick="sessionStorage.removeItem('badhar_logged_in'); location.reload();" class="sidebar-link w-full flex items-center gap-4 px-4 py-3 rounded-2xl text-gray-600 hover:bg-red-50 hover:text-red-600 font-medium transition-all">
+          <span class="material-symbols-outlined">logout</span>
+          Logout
         </button>
       </nav>
     </div>
@@ -696,6 +715,9 @@
     const auth = firebase.auth();
     const db_firestore = firebase.firestore();
 
+    // Single shared doc for whole org — all devices/browsers sync to this one doc
+    const SHARED_DOC_ID = "badhar-group-main";
+
     // Firebase state tracking
     let firebaseInitialized = false;
     let firebaseUserId = null;
@@ -815,7 +837,7 @@
 
     function setupRealtimeSync() {
       if (firestoreUnsubscribe) firestoreUnsubscribe(); 
-      firestoreUnsubscribe = db_firestore.collection('users').doc(firebaseUserId).onSnapshot((doc) => {
+      firestoreUnsubscribe = db_firestore.collection('shared').doc(SHARED_DOC_ID).onSnapshot((doc) => {
         if (doc.exists) {
           const remoteData = doc.data().quarryData;
           if (remoteData && JSON.stringify(remoteData) !== JSON.stringify(db)) {
@@ -831,7 +853,7 @@
 
     async function loadDBFromFirestore() {
       try {
-        const docSnap = await db_firestore.collection('users').doc(firebaseUserId).get();
+        const docSnap = await db_firestore.collection('shared').doc(SHARED_DOC_ID).get();
         if (docSnap.exists && docSnap.data().quarryData && docSnap.data().quarryData.sites) {
           db = docSnap.data().quarryData;
         } else {
@@ -875,7 +897,7 @@
     }
 
     async function saveDBToFirestore() {
-      await db_firestore.collection('users').doc(firebaseUserId).set({ quarryData: db });
+      await db_firestore.collection('shared').doc(SHARED_DOC_ID).set({ quarryData: db });
       updateUICloudStatus(true);
     }
 
@@ -1643,5 +1665,45 @@
       if (!firebaseInitialized) { loadDBLocal(); }
     });
   </script>
+  </div>
+  <!-- /app-content -->
+
+  <script>
+    (function() {
+      const CREDS = { username: "admin", password: "admin123" };
+      const overlay = document.getElementById('login-overlay');
+      const appContent = document.getElementById('app-content');
+      const userInput = document.getElementById('login-username');
+      const passInput = document.getElementById('login-password');
+      const errorMsg = document.getElementById('login-error');
+      const submitBtn = document.getElementById('login-submit');
+
+      function showApp() {
+        overlay.style.display = 'none';
+        appContent.style.display = 'flex';
+      }
+
+      function tryLogin() {
+        const u = userInput.value.trim();
+        const p = passInput.value;
+        if (u === CREDS.username && p === CREDS.password) {
+          sessionStorage.setItem('badhar_logged_in', 'true');
+          errorMsg.style.display = 'none';
+          showApp();
+        } else {
+          errorMsg.style.display = 'block';
+        }
+      }
+
+      submitBtn.addEventListener('click', tryLogin);
+      passInput.addEventListener('keydown', (e) => { if (e.key === 'Enter') tryLogin(); });
+      userInput.addEventListener('keydown', (e) => { if (e.key === 'Enter') passInput.focus(); });
+
+      if (sessionStorage.getItem('badhar_logged_in') === 'true') {
+        showApp();
+      }
+    })();
+  </script>
+
 </body>
 </html>
